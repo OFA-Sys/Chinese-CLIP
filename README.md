@@ -276,6 +276,12 @@ cat output.json
 {"success": true, "score": 85.67, "scoreJson": {"score": 85.67, "mean_recall": 85.67, "r1": 71.2, "r5": 90.5, "r10": 95.3}}
 ```
 
+## 后续计划
++ 开源ViT-L-14规模Chinese-CLIP模型（训练中）
++ 提供基于Chinese-CLIP的图文检索demo，以及用户在自己的环境下部署demo的流程
++ 在更多图文检索下游任务验证结果
++ 开源Chinese-CLIP技术报告
+
 ## 引用
 如果觉得本项目好用，希望能给我们提个star并分享给身边的用户，欢迎给相关工作citation，感谢支持！
 

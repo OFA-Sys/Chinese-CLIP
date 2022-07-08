@@ -279,6 +279,12 @@ The printed results are shown below:
 {"success": true, "score": 85.67, "scoreJson": {"score": 85.67, "mean_recall": 85.67, "r1": 71.2, "r5": 90.5, "r10": 95.3}}
 ```
 
+## Future Plans
++ Release pretrained Chinese-CLIP checkpoint with ViT-L-14 visual backbone (under training).
++ Provide online text-to-image retrieval demo based on Chinese-CLIP, with easy-to-use tutorials for deploying on users' own environments.
++ Obtain evaluation results on more cross-modal retrieval benchmarks.
++ Release technical report of Chinese-CLIP.
+
 ## Citation
 If you find the project helpful, please star this project and cite the related articles. Thanks for your support!
 
