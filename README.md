@@ -5,6 +5,11 @@
     <img src="assets/Chinese_CLIP_logo_tp.svg" width="400" />
     <br>
 <p>
+<p align="center">
+    <a href="https://opensource.org/licenses/MIT">
+        <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg">
+    </a>
+</p>
 
 本项目为CLIP模型的**中文**版本，使用大规模中文数据进行训练（~2亿图文对），旨在帮助用户实现中文领域的跨模态检索、图像表示等。本项目代码基于<b>[open_clip project](https://github.com/mlfoundations/open_clip)</b>建设，并针对中文领域数据以及在中文数据上实现更好的效果做了优化。更多细节将在下文中介绍。
 
