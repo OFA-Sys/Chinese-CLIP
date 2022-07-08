@@ -191,11 +191,11 @@ python -u src/eval/extract_features.py \
 ```
 
 产出图文特征默认将保存于`${DATAPATH}/datasets/${dataset_name}`目录下，图片特征保存于`${split}_imgs.img_feat.jsonl`文件，每行以json存储一张图片的特征，格式如下：
-```json
+```
 {"image_id": 1000002, "feature": [0.0198, ..., -0.017, 0.0248]}
 ```
 文本特征则保存于`${split}_texts.txt_feat.jsonl`，格式如下：
-```json
+```
 {"text_id": 248816, "feature": [0.1314, ..., 0.0018, -0.0002]}
 ```
 
