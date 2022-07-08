@@ -52,7 +52,7 @@ pip install -r requirements.txt
 <br>
 
 **Flickr30K-CN Retrieval**:
-<table border="1" width="100%">
+<table border="1" width="120%">
 	<tr align="center">
         <th>Task</th><th colspan="6">Text-to-Image</th><th colspan="6">Image-to-Text</th>
     </tr>
