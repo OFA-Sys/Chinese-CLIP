@@ -192,11 +192,11 @@ python -u src/eval/extract_features.py \
 ```
 
 By default, the representations are stored at `${DATAPATH}/datasets/${dataset_name}`. Specifically, the image representations are stored at `${split}_imgs.img_feat.jsonl`. Each line stores a json of image representation, as shown below:
-```json
+```
 {"image_id": 1000002, "feature": [0.0198, ..., -0.017, 0.0248]}
 ```
 Text representations are stored at `${split}_texts.txt_feat.jsonl`，as shown below:
-```json
+```
 {"text_id": 248816, "feature": [0.1314, ..., 0.0018, -0.0002]}
 ```
 
