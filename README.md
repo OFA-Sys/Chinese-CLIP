@@ -2,7 +2,7 @@
 
 <p align="center">
     <br>
-    <img src="assets/Chinese_CLIP_logo_tp.svg" width="150" />
+    <img src="assets/Chinese_CLIP_logo_tp.svg" width="400" />
     <br>
 <p>
 
