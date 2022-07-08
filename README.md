@@ -12,6 +12,7 @@
 </p>
 
 本项目为CLIP模型的**中文**版本，使用大规模中文数据进行训练（~2亿图文对），旨在帮助用户实现中文领域的跨模态检索、图像表示等。本项目代码基于<b>[open_clip project](https://github.com/mlfoundations/open_clip)</b>建设，并针对中文领域数据以及在中文数据上实现更好的效果做了优化。更多细节将在下文中介绍。
+<br><br>
 
 ## 安装要求
 开始本项目前，需先检查是否满足下列环境配置要求:
@@ -25,6 +26,78 @@
 ```bash
 pip install -r requirements.txt
 ```
+<br><br>
+
+## 实验结果
+我们在MUGE Retrieval、Flickr30K-CN和COCO-CN上进行了zero-shot和finetune的实验，实验结果如下：
+52.1	76.7	84.4	71.1
+
+**MUGE Text-to-Image Retrieval**:
+<table border="1" width="100%">
+    <tr align="center">
+        <th>Setup</th><th colspan="4">Zero-shot</th><th colspan="4">Finetune</th>
+    </tr>
+    <tr align="center">
+        <td>Metric</td><td>R@1</td><td>R@5</td><td>R@10</td><td>MR</td><td>R@1</td><td>R@5</td><td>R@10</td><td>MR</td>
+    </tr>
+	<tr align="center">
+        <td>Wukong<sub>ViT-B</sub></td><td>33.4</td><td>59.3</td><td>69.7</td><td>54.1</td><td>39.2</td><td>66.9</td><td>77.4</td><td>61.2</td>
+    </tr>
+	<tr align="center">
+        <td>R2D2<sub>ViT-B</sub></td><td>-</td><td>-</td><td>-</td><td>-</td><td>47.4</td><td>75.1</td><td>83.5</td><td>68.7</td>
+    </tr>
+	<tr align="center">
+        <td>CN-CLIP<sub>ViT-B</sub></td><td>52.1</td><td>76.7</td><td>84.4</td><td>71.1</td><td>56.8</td><td>82.4</td><td>89.3</td><td>76.2</td>
+    </tr>
+</table>
+<br>
+
+**Flickr30K-CN Retrieval**:
+<table border="1" width="100%">
+	<tr align="center">
+        <th>Task</th><th colspan="6">Text-to-Image</th><th colspan="6">Image-to-Text</th>
+    </tr>
+    <tr align="center">
+        <th>Setup</th><th colspan="3">Zero-shot</th><th colspan="3">Finetune</th><th colspan="3">Zero-shot</th><th colspan="3">Finetune</th>
+    </tr>
+    <tr align="center">
+        <td>Metric</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td>
+    </tr>
+	<tr align="center">
+        <td>Wukong<sub>ViT-B</sub></td><td>45.7</td><td>73.8</td><td>82.2</td></td><td>67.6</td><td>89.6</td><td>94.2</td><td>66.2</td><td>88.7</td><td>94.3</td></td><td>83.9</td><td>97.6</td><td>99.0</td>
+    </tr>
+	<tr align="center">
+        <td>R2D2<sub>ViT-B</sub></td><td>-</td><td>-</td><td>-</td><td>78.3</td><td>94.6</td><td>97.0</td></td><td>-</td><td>-</td><td>-</td><td>92.6</td><td>99.1</td><td>99.8</td>
+    </tr>
+	<tr align="center">
+        <td>CN-CLIP<sub>ViT-B</sub></td><td>57.0</td><td>82.8</td><td>89.6</td><td>72.9</td><td>92.8</td><td>96.2</td><td>71.0</td><td>90.6</td><td>95.3</td><td>88.6</td><td>98.0</td><td>99.3</td>
+    </tr>
+</table>
+<br>
+
+**COCO-CN Retrieval**:
+<table border="1" width="100%">
+	<tr align="center">
+        <th>Task</th><th colspan="6">Text-to-Image</th><th colspan="6">Image-to-Text</th>
+    </tr>
+    <tr align="center">
+        <th>Setup</th><th colspan="3">Zero-shot</th><th colspan="3">Finetune</th><th colspan="3">Zero-shot</th><th colspan="3">Finetune</th>
+    </tr>
+    <tr align="center">
+        <td>Metric</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td>
+    </tr>
+	<tr align="center">
+        <td>Wukong<sub>ViT-B</sub></td><td>49.2</td><td>79.4</td><td>87.9</td></td><td>67.0</td><td>91.4</td><td>96.7</td><td>48.3</td><td>77.8</td><td>88.8</td></td><td>65.8</td><td>90.3</td><td>96.6</td>
+    </tr>
+	<tr align="center">
+        <td>R2D2<sub>ViT-B</sub></td><td>-</td><td>-</td><td>-</td><td>75.1</td><td>94.2</td><td>98.1</td></td><td>-</td><td>-</td><td>-</td><td>76.1</td><td>95.3</td><td>98.5</td>
+    </tr>
+	<tr align="center">
+        <td>CN-CLIP<sub>ViT-B</sub></td><td>58.8</td><td>85.3</td><td>93.3</td><td>73.6</td><td>94.9</td><td>97.8</td><td>54.7</td><td>84.7</td><td>92.3</td><td>73.6</td><td>94.8</td><td>98.1</td>
+    </tr>
+</table>
+<br><br>
+
 
 ## 开始用起来！
 
@@ -275,12 +348,14 @@ cat output.json
 ```json
 {"success": true, "score": 85.67, "scoreJson": {"score": 85.67, "mean_recall": 85.67, "r1": 71.2, "r5": 90.5, "r10": 95.3}}
 ```
+<br><br>
 
 ## 后续计划
 + 开源ViT-L-14规模Chinese-CLIP模型（训练中）
 + 提供基于Chinese-CLIP的图文检索demo，以及用户在自己的环境下部署demo的流程
 + 在更多图文检索下游任务验证结果
 + 开源Chinese-CLIP技术报告
+<br><br>
 
 ## 引用
 如果觉得本项目好用，希望能给我们提个star并分享给身边的用户，欢迎给相关工作citation，感谢支持！
