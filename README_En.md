@@ -30,7 +30,6 @@ pip install -r requirements.txt
 
 ## Results
 We conducted zero-shot inference and finetuning experiments on MUGE Retrieval, Flickr30K-CN and COCO-CN. Results are shown below:
-52.1	76.7	84.4	71.1
 
 **MUGE Text-to-Image Retrieval**:
 <table border="1" width="100%">
