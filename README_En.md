@@ -1,6 +1,10 @@
 [**中文说明**](README.md) | [**English**](README_En.md)
 
-# Chinese-CLIP
+<p align="center">
+    <br>
+    <img src="assets/Chinese_CLIP_logo_tp.svg" width="150" />
+    <br>
+<p>
 
 This is the Chinese version of CLIP. We use a large-scale internal Chinese image-text pair dataset (~200M) to train the model, and we hope that it can help users to achieve cross-modal retrieval and image representation generation for Chinese data. This repo is based on <b>[open_clip project](https://github.com/mlfoundations/open_clip)</b>. We have made some optimization for better performance on Chinese data, and we provide the details in the following. 
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xl="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" viewBox="157 206 1409.6904 328.00195" width="1409.6904" height="328.00195">
+  <defs/>
+  <g id="Canvas_1" fill="none" stroke-opacity="1" fill-opacity="1" stroke="none" stroke-dasharray="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <text transform="translate(162 211)" fill="#c4252a">
+          <tspan font-family="Futura" font-style="italic" font-size="239" fill="#c4252a" x="0" y="248">Chinese</tspan>
+          <tspan font-family="Futura" font-style="italic" font-size="239" fill="#3661af" y="248"> </tspan>
+          <tspan font-family="Futura" font-style="italic" font-size="239" fill="#3669ad" y="248">CLIP</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
