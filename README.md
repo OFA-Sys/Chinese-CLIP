@@ -256,7 +256,7 @@ export CUDA_VISIBLE_DEVICES=0
 export PYTHONPATH=${PYTHONPATH}:`pwd`/src
 
 split=valid # 指定计算valid或test集特征
-resume=${DATAPATH}/pretrained_weights/clip_vit-b-16_roberta-base.pt
+resume=${DATAPATH}/pretrained_weights/clip_cn_vit-b-16.pt
 
 python -u src/eval/extract_features.py \
     --extract-image-feats \
