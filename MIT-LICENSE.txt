@@ -1,6 +1,4 @@
-Copyright (c) 2012-2022 OFA-Sys Team
-
-Copyright (c) 2012-2021 Gabriel Ilharco, Mitchell Wortsman, 
+Copyright (c) 2012-2022 OFA-Sys Team, Gabriel Ilharco, Mitchell Wortsman, 
 Nicholas Carlini, Rohan Taori, Achal Dave, Vaishaal Shankar, 
 John Miller, Hongseok Namkoong, Hannaneh Hajishirzi, Ali Farhadi, 
 Ludwig Schmidt
