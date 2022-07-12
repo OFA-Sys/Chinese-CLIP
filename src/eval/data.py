@@ -10,7 +10,7 @@ from io import BytesIO
 
 import lmdb
 
-from torchvision.transforms import Compose, Resize, ToTensor, Normalize
+from torchvision.transforms import Compose, Resize, ToTensor, Normalize, InterpolationMode
 
 import torch
 from torch.utils.data import Dataset, DataLoader, SubsetRandomSampler
@@ -34,7 +34,7 @@ def _preprocess_text(text):
 class EvalTxtDataset(Dataset):
     def __init__(self, jsonl_filename, max_txt_length=24):
         assert os.path.exists(jsonl_filename), "The annotation datafile {} not exists!".format(jsonl_filename)
-        
+
         logging.debug(f'Loading jsonl data from {jsonl_filename}.')
         self.texts = []
         with open(jsonl_filename, "r") as fin:
@@ -44,7 +44,7 @@ class EvalTxtDataset(Dataset):
                 text = obj['text']
                 self.texts.append((text_id, text))
         logging.debug(f'Finished loading jsonl data from {jsonl_filename}.')
-        
+
         self.max_txt_length = max_txt_length
 
     def __len__(self):
@@ -58,7 +58,7 @@ class EvalTxtDataset(Dataset):
 class EvalImgDataset(Dataset):
     def __init__(self, lmdb_imgs, resolution=224):
         assert os.path.isdir(lmdb_imgs), "The image LMDB directory {} not exists!".format(lmdb_imgs)
-        
+
         logging.debug(f'Loading image LMDB from {lmdb_imgs}.')
 
         self.env_imgs = lmdb.open(lmdb_imgs, readonly=True, create=False, lock=False, readahead=False, meminit=False)
@@ -73,7 +73,7 @@ class EvalImgDataset(Dataset):
     def _build_transform(self, resolution):
         normalize = Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711))
         return Compose([
-                Resize((resolution, resolution), interpolation=Image.BICUBIC),
+                Resize((resolution, resolution), interpolation=InterpolationMode.BICUBIC),
                 _convert_to_rgb,
                 ToTensor(),
                 normalize,
