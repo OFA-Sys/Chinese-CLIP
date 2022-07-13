@@ -19,8 +19,7 @@ from torch.utils.data.sampler import SequentialSampler
 
 import torchvision.datasets as datasets
 
-from clip import _tokenizer
-from clip.clip import tokenize
+from cn_clip.clip import tokenize
 
 def _convert_to_rgb(image):
     return image.convert('RGB')
@@ -125,7 +124,7 @@ def get_eval_txt_dataset(args, max_txt_length=24):
 
 def fetch_resolution(vision_model):
     # fetch the resolution from the vision model config
-    vision_model_config_file = Path(__file__).parent / f"../training/model_configs/{vision_model.replace('/', '-')}.json"
+    vision_model_config_file = Path(__file__).parent.parent / f"clip/model_configs/{vision_model.replace('/', '-')}.json"
     with open(vision_model_config_file, 'r') as fv:
         model_info = json.load(fv)
     return model_info["image_resolution"]

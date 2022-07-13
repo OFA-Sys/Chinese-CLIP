@@ -20,8 +20,8 @@ from torch.utils.data.distributed import DistributedSampler
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 from timm.data import create_transform
 
-from clip import _tokenizer
-from clip.clip import tokenize
+from cn_clip.clip import _tokenizer
+from cn_clip.clip import tokenize
 
 
 def _convert_to_rgb(image):
@@ -123,7 +123,7 @@ def pad_dataset(dataset, global_batch_size):
 
 def fetch_resolution(vision_model):
     # fetch the resolution from the vision model config
-    vision_model_config_file = Path(__file__).parent / f"model_configs/{vision_model.replace('/', '-')}.json"
+    vision_model_config_file = Path(__file__).parent.parent / f"clip/model_configs/{vision_model.replace('/', '-')}.json"
     with open(vision_model_config_file, 'r') as fv:
         model_info = json.load(fv)
     return model_info["image_resolution"]

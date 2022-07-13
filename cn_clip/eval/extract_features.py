@@ -12,9 +12,9 @@ import json
 import torch
 from tqdm import tqdm
 
-from clip.model import convert_weights, CLIP
-from training.main import convert_models_to_fp32
-from eval.data import get_eval_img_dataset, get_eval_txt_dataset
+from cn_clip.clip.model import convert_weights, CLIP
+from cn_clip.training.main import convert_models_to_fp32
+from cn_clip.eval.data import get_eval_img_dataset, get_eval_txt_dataset
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -113,11 +113,11 @@ if __name__ == "__main__":
     torch.cuda.set_device(args.gpu)
 
     # Initialize the model.
-    vision_model_config_file = Path(__file__).parent / f"../training/model_configs/{args.vision_model.replace('/', '-')}.json"
+    vision_model_config_file = Path(__file__).parent.parent / f"clip/model_configs/{args.vision_model.replace('/', '-')}.json"
     print('Loading vision model config from', vision_model_config_file)
     assert os.path.exists(vision_model_config_file)
     
-    text_model_config_file = Path(__file__).parent / f"../training/model_configs/{args.text_model.replace('/', '-')}.json"
+    text_model_config_file = Path(__file__).parent.parent / f"clip/model_configs/{args.text_model.replace('/', '-')}.json"
     print('Loading text model config from', text_model_config_file)
     assert os.path.exists(text_model_config_file)
     

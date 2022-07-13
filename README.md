@@ -11,21 +11,12 @@
     </a>
 </p>
 
-本项目为CLIP模型的**中文**版本，使用大规模中文数据进行训练（~2亿图文对），旨在帮助用户实现中文领域的跨模态检索、图像表示等。本项目代码基于<b>[open_clip project](https://github.com/mlfoundations/open_clip)</b>建设，并针对中文领域数据以及在中文数据上实现更好的效果做了优化。更多细节将在下文中介绍。
+本项目为CLIP模型的**中文**版本，使用大规模中文数据进行训练（~2亿图文对），旨在帮助用户实现中文领域的跨模态检索、图像表示等。本项目代码基于<b>[open_clip project](https://github.com/mlfoundations/open_clip)</b>建设，并针对中文领域数据以及在中文数据上实现更好的效果做了优化。本项目提供了API、训练代码和测试代码，下文中将详细介绍细节。
 <br><br>
 
-## 安装要求
-开始本项目前，需先检查是否满足下列环境配置要求:
-
-* python >= 3.6.4
-* pytorch >= 1.7.1 (with torchvision)
-* CUDA Version >= 10.1
-
-运行下列命令即可安装本项目所需的三方库。
-
-```bash
-pip install -r requirements.txt
-```
+## 新闻
+* 2022.7.13 新增API功能，方便快速调用中文CLIP模型
+* 2022.7.8 Chinese CLIP项目正式开源
 <br><br>
 
 ## 实验结果
@@ -98,6 +89,52 @@ pip install -r requirements.txt
 <br><br>
 
 
+## 安装要求
+开始本项目前，需先检查是否满足下列环境配置要求:
+
+* python >= 3.6.4
+* pytorch >= 1.7.1 (with torchvision)
+* CUDA Version >= 10.1
+
+运行下列命令即可安装本项目所需的三方库。
+
+```bash
+pip install -r requirements.txt
+```
+<br><br>
+
+## API快速上手
+下面提供一段简单的代码示例说明如何使用中文CLIP的API。开始使用前，请先安装cn_clip：
+```
+cd cn_clip
+pip install -e .
+```
+安装成功后，即可通过如下方式轻松调用API：
+```python
+import torch 
+from PIL import Image
+
+import cn_clip.clip as clip
+from cn_clip.clip import load_from_name
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model, preprocess = load_from_name("ViT-B-16", device=device, download_root='./')
+model.eval()
+image = preprocess(Image.open("examples/pokemon.jpeg")).unsqueeze(0).to(device)
+text = clip.tokenize(["杰尼龟", "妙蛙种子", "小火龙", "皮卡丘"]).to(device)
+
+with torch.no_grad():
+    image_features = model.encode_image(image)
+    text_features = model.encode_text(text)
+
+    logits_per_image, logits_per_text = model.get_similarity(image, text)
+    probs = logits_per_image.softmax(dim=-1).cpu().numpy()
+
+print("Label probs:", probs)  # [[1.268734e-03 5.436878e-02 6.795761e-04 9.436829e-01]]
+```
+如果你不满足于仅仅使用API，欢迎继续阅读本文档，了解如何使用我们的项目进行CLIP模型的训练和测试。
+<br><br>
+
+
 ## 开始用起来！
 
 ### 代码组织
@@ -110,7 +147,7 @@ Chinese-CLIP/
 │   ├── muge_finetune_vit-b-16_rbt-base.sh
 │   ├── flickr30k_finetune_vit-b-16_rbt-base.sh
 │   └── ...           # 更多finetune或评测脚本...
-└── src/
+└── cn_clip/
     ├── clip/
     ├── eval/
     ├── preprocess/
@@ -175,7 +212,7 @@ base64_str = base64_str.decode("utf-8") # str
 
 最后，我们还需要将tsv和jsonl文件一起序列化，转换为内存索引的LMDB数据库文件，方便训练时的随机读取
 ```
-python src/preprocess/build_lmdb_dataset.py \
+python cn_clip/preprocess/build_lmdb_dataset.py \
     --data_dir ${DATAPATH}/datasets/${dataset_name}
     --splits train,valid,test
 ```
@@ -253,12 +290,12 @@ bash run_scripts/muge_finetune_vit-b-16_rbt-base.sh ${DATAPATH}
 ```bash
 cd Chinese-CLIP/
 export CUDA_VISIBLE_DEVICES=0
-export PYTHONPATH=${PYTHONPATH}:`pwd`/src
+export PYTHONPATH=${PYTHONPATH}:`pwd`/cn_clip
 
 split=valid # 指定计算valid或test集特征
 resume=${DATAPATH}/pretrained_weights/clip_cn_vit-b-16.pt
 
-python -u src/eval/extract_features.py \
+python -u cn_clip/eval/extract_features.py \
     --extract-image-feats \
     --extract-text-feats \
     --image-data="${DATAPATH}/datasets/${dataset_name}/lmdb/${split}/imgs" \
@@ -288,7 +325,7 @@ python -u src/eval/extract_features.py \
 ```bash
 cd Chinese-CLIP/
 split=valid # 指定计算valid或test集特征
-python -u src/eval/make_topk_predictions.py \
+python -u cn_clip/eval/make_topk_predictions.py \
     --image-feats="${DATAPATH}/datasets/${dataset_name}/${split}_imgs.img_feat.jsonl" \
     --text-feats="${DATAPATH}/datasets/${dataset_name}/${split}_texts.txt_feat.jsonl" \
     --top-k=10 \
@@ -303,7 +340,7 @@ python -u src/eval/make_topk_predictions.py \
 对于图到文检索（图片召回相关文本），类似地，请运行以下命令：
 ```bash
 split=valid # 指定计算valid或test集特征
-python -u src/eval/make_topk_predictions_tr.py \
+python -u cn_clip/eval/make_topk_predictions_tr.py \
     --image-feats="${DATAPATH}/datasets/${dataset_name}/${split}_imgs.img_feat.jsonl" \
     --text-feats="${DATAPATH}/datasets/${dataset_name}/${split}_texts.txt_feat.jsonl" \
     --top-k=10 \
@@ -322,7 +359,7 @@ python -u src/eval/make_topk_predictions_tr.py \
 对于文到图检索，请运行命令：
 ```bash
 split=valid # 指定计算valid或test集特征
-python src/eval/evaluation.py \
+python cn_clip/eval/evaluation.py \
         ${DATAPATH}/datasets/${dataset_name}/${split}_texts.jsonl \
         ${DATAPATH}/datasets/${dataset_name}/${split}_predictions.jsonl \
         output.json
@@ -331,13 +368,13 @@ cat output.json
 
 对于图到文检索，请先运行下面的命令，将图文对标注的jsonl文件由文到图的格式转为图到文：
 ```bash
-python src/eval/transform_ir_annotation_to_tr.py \
+python cn_clip/eval/transform_ir_annotation_to_tr.py \
         --input ${DATAPATH}/datasets/${dataset_name}/${split}_texts.jsonl
 ```
 完成后，请运行命令：
 ```bash
 split=valid # 指定计算valid或test集特征
-python src/eval/evaluation_tr.py \
+python cn_clip/eval/evaluation_tr.py \
         ${DATAPATH}/datasets/${dataset_name}/${split}_texts.tr.jsonl \
         ${DATAPATH}/datasets/${dataset_name}/${split}_tr_predictions.jsonl \
         output.json
