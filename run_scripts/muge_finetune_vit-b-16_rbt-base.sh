@@ -18,7 +18,7 @@ export MASTER_PORT=8514
 # The rank of this worker, should be in {0, ..., WORKER_CNT-1}, for single-worker training, please set to 0
 export RANK=0 
 
-export PYTHONPATH=${PYTHONPATH}:`pwd`/src/
+export PYTHONPATH=${PYTHONPATH}:`pwd`/cn_clip/
 
 DATAPATH=${1}
 
@@ -57,7 +57,7 @@ use_augment="--use-augment"
 # use_augment=""
 
 python3 -m torch.distributed.launch --nproc_per_node=${GPUS_PER_NODE} --nnodes=${WORKER_CNT} --node_rank=${RANK} \
-          --master_addr=${MASTER_ADDR} --master_port=${MASTER_PORT} src/training/main.py \
+          --master_addr=${MASTER_ADDR} --master_port=${MASTER_PORT} cn_clip/training/main.py \
           --train-data=${train_data} \
           --val-data=${val_data} \
           --resume=${resume} \

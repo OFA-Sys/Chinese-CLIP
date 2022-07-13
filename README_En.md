@@ -14,19 +14,11 @@
 This is the Chinese version of CLIP. We use a large-scale internal Chinese image-text pair dataset (~200M) to train the model, and we hope that it can help users to achieve cross-modal retrieval and image representation generation for Chinese data. This repo is based on <b>[open_clip project](https://github.com/mlfoundations/open_clip)</b>. We have made some optimization for better performance on Chinese data, and we provide the details in the following. 
 <br><br>
 
-## Installation Requirements
-To start with this project, make sure that your environment meets the requirements below:
-
-* python >= 3.6.4
-* pytorch >= 1.7.1 (with torchvision)
-* CUDA Version >= 10.1
-
-Run the following command to install required packages.
-
-```bash
-pip install -r requirements.txt
-```
+## News
+* 2022.7.13 Released API for Chinese-CLIP, which facitilates usage of our CLIP models.
+* 2022.7.8 Released the project Chinese-CLIP!
 <br><br>
+
 
 ## Results
 We conducted zero-shot inference and finetuning experiments on MUGE Retrieval, Flickr30K-CN and COCO-CN. Results are shown below:
@@ -96,6 +88,54 @@ We conducted zero-shot inference and finetuning experiments on MUGE Retrieval, F
     </tr>
 </table>
 <br><br>
+
+
+## Installation Requirements
+To start with this project, make sure that your environment meets the requirements below:
+
+* python >= 3.6.4
+* pytorch >= 1.7.1 (with torchvision)
+* CUDA Version >= 10.1
+
+Run the following command to install required packages.
+
+```bash
+pip install -r requirements.txt
+```
+<br><br>
+
+## API Use Case
+We provide a simple code snippet to show how to use the API for Chinese-CLIP. For starters, please install cn_clip:
+```
+cd cn_clip
+pip install -e .
+```
+After installation, use Chinese CLIP as shown below:
+```python
+import torch 
+from PIL import Image
+
+import cn_clip.clip as clip
+from cn_clip.clip import load_from_name
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model, preprocess = load_from_name("ViT-B-16", device=device, download_root='./')
+model.eval()
+image = preprocess(Image.open("examples/pokemon.jpeg")).unsqueeze(0).to(device)
+text = clip.tokenize(["杰尼龟", "妙蛙种子", "小火龙", "皮卡丘"]).to(device)
+
+with torch.no_grad():
+    image_features = model.encode_image(image)
+    text_features = model.encode_text(text)
+
+    logits_per_image, logits_per_text = model.get_similarity(image, text)
+    probs = logits_per_image.softmax(dim=-1).cpu().numpy()
+
+print("Label probs:", probs)  # [[1.268734e-03 5.436878e-02 6.795761e-04 9.436829e-01]]
+```
+
+However, if you are not satisfied with only using the API, move on for more details about training and inference. 
+<br><br>
+
 
 ## Getting Started
 

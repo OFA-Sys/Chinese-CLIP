@@ -12,13 +12,13 @@ import torch.distributed as dist
 import torch.backends.cudnn as cudnn
 from torch.cuda.amp import GradScaler
 
-from clip.clip import load
-from clip.model import convert_weights, CLIP
-from training.train import train, evaluate
-from training.data import get_data
-from training.params import parse_args
-from training.logger import setup_primary_logging, setup_worker_logging
-from training.scheduler import cosine_lr
+from cn_clip.clip import load
+from cn_clip.clip.model import convert_weights, CLIP
+from cn_clip.training.train import train, evaluate
+from cn_clip.training.data import get_data
+from cn_clip.training.params import parse_args
+from cn_clip.training.logger import setup_primary_logging, setup_worker_logging
+from cn_clip.training.scheduler import cosine_lr
 
 
 # Used by https://github.com/openai/CLIP/issues/83 but not below.
@@ -65,11 +65,11 @@ def main():
     setup_worker_logging(args.rank, log_queue, args.log_level)
 
     # Build the CLIP model
-    vision_model_config_file = Path(__file__).parent / f"model_configs/{args.vision_model.replace('/', '-')}.json"
+    vision_model_config_file = Path(__file__).parent.parent / f"clip/model_configs/{args.vision_model.replace('/', '-')}.json"
     print('Loading vision model config from', vision_model_config_file)
     assert os.path.exists(vision_model_config_file)
     
-    text_model_config_file = Path(__file__).parent / f"model_configs/{args.text_model.replace('/', '-')}.json"
+    text_model_config_file = Path(__file__).parent.parent / f"clip/model_configs/{args.text_model.replace('/', '-')}.json"
     print('Loading text model config from', text_model_config_file)
     assert os.path.exists(text_model_config_file)
     

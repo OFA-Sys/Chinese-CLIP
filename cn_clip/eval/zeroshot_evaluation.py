@@ -11,12 +11,12 @@ from tqdm import tqdm
 
 import torch
 
-from clip.model import convert_weights, CLIP
-from clip.clip import tokenize
-from training.main import convert_models_to_fp32
-from preprocess.transform_eval_images import build_transform
-from eval.data import get_imagenet_dataset, _preprocess_text
-from eval.imagenet_zeroshot_templates import imagenet_classnames, openai_imagenet_template
+from cn_clip.clip.model import convert_weights, CLIP
+from cn_clip.clip import tokenize
+from cn_clip.training.main import convert_models_to_fp32
+from cn_clip.clip.utils import image_transform
+from cn_clip.eval.data import get_imagenet_dataset, _preprocess_text
+from cn_clip.eval.imagenet_zeroshot_templates import imagenet_classnames, openai_imagenet_template
 
 
 def parse_args():
@@ -125,11 +125,11 @@ if __name__ == "__main__":
     torch.cuda.set_device(args.gpu)
 
     # Initialize the model.
-    vision_model_config_file = Path(__file__).parent / f"../training/model_configs/{args.vision_model.replace('/', '-')}.json"
+    vision_model_config_file = Path(__file__).parent.parent / f"clip/model_configs/{args.vision_model.replace('/', '-')}.json"
     print('Loading vision model config from', vision_model_config_file)
     assert os.path.exists(vision_model_config_file)
     
-    text_model_config_file = Path(__file__).parent / f"../training/model_configs/{args.text_model.replace('/', '-')}.json"
+    text_model_config_file = Path(__file__).parent.parent / f"clip/model_configs/{args.text_model.replace('/', '-')}.json"
     print('Loading text model config from', text_model_config_file)
     assert os.path.exists(text_model_config_file)
     
@@ -151,7 +151,7 @@ if __name__ == "__main__":
     # Get imagenet eval data.
     print("Preparing imagenet val dataset.")
     data = {}
-    data["imagenet-val"] = get_imagenet_dataset(args, build_transform(model_info['image_resolution']), "val")
+    data["imagenet-val"] = get_imagenet_dataset(args, image_transform(model_info['image_resolution']), "val")
 
     # Resume from a checkpoint.
     print("Begin to load model checkpoint from {}.".format(args.resume))

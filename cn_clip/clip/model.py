@@ -1,16 +1,15 @@
 from collections import OrderedDict
 from typing import Tuple, Union
 
-import os
-import json
 import numpy as np
 import torch
 import torch.nn.functional as F
 from torch import nn
 
-from clip import _tokenizer
-from clip.modeling_bert import BertModel
-from clip.configuration_bert import BertConfig
+from cn_clip.clip import _tokenizer
+from cn_clip.clip.configuration_bert import BertConfig
+from cn_clip.clip.modeling_bert import BertModel
+
 
 class Bottleneck(nn.Module):
     expansion = 4
@@ -240,6 +239,7 @@ class VisualTransformer(nn.Module):
 
         return x
 
+
 class CLIP(nn.Module):
     def __init__(self,
                  embed_dim: int,
@@ -351,8 +351,31 @@ class CLIP(nn.Module):
 
         image_features = image_features / image_features.norm(dim=-1, keepdim=True)
         text_features = text_features / text_features.norm(dim=-1, keepdim=True)
-        
+
         return image_features, text_features, self.logit_scale.exp()
+
+    def get_similarity(self, image, text):
+        image_features = self.encode_image(image)
+        text_features = self.encode_text(text)
+
+        # normalized features
+        image_features = image_features / image_features.norm(dim=1, keepdim=True)
+        text_features = text_features / text_features.norm(dim=1, keepdim=True)
+
+        # cosine similarity as logits
+        logit_scale = self.logit_scale.exp()
+        logits_per_image = logit_scale * image_features @ text_features.t()
+        logits_per_text = logits_per_image.t()
+
+        # shape = [global_batch_size, global_batch_size]
+        return logits_per_image, logits_per_text
+
+
+def convert_models_to_fp32(model):
+    for p in model.parameters():
+        p.data = p.data.float()
+        if p.grad:
+            p.grad.data = p.grad.data.float()
 
 
 def convert_weights(model: nn.Module):
