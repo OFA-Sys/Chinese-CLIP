@@ -105,7 +105,8 @@ pip install -r requirements.txt
 
 ## API快速上手
 下面提供一段简单的代码示例说明如何使用中文CLIP的API。开始使用前，请先安装cn_clip：
-```
+```bash
+cd Chinese-CLIP/
 pip install -e .
 ```
 安装成功后，即可通过如下方式轻松调用API：
