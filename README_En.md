@@ -107,6 +107,9 @@ pip install -r requirements.txt
 ## API Use Case
 We provide a simple code snippet to show how to use the API for Chinese-CLIP. For starters, please install cn_clip:
 ```bash
+# to install the latest stable release
+pip install cn_clip
+# or install from source code
 cd Chinese-CLIP/
 pip install -e .
 ```
