@@ -164,7 +164,7 @@ def create_model(model_name, checkpoint=None):
     if checkpoint:
         sd = checkpoint["state_dict"]
         if next(iter(sd.items()))[0].startswith('module'):
-            sd = {k[len('module.'):]: v for k, v in sd.items()}
+            sd = {k[len('module.'):]: v for k, v in sd.items() if "bert.pooler" not in k}
         model.load_state_dict(sd)
     return model
 
