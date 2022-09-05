@@ -13,7 +13,7 @@ import torch.backends.cudnn as cudnn
 from torch.cuda.amp import GradScaler
 
 from cn_clip.clip import load
-from cn_clip.clip.model import convert_weights, CLIP
+from cn_clip.clip.model import convert_weights, resize_pos_embed, CLIP
 from cn_clip.training.train import train, evaluate
 from cn_clip.training.data import get_data
 from cn_clip.training.params import parse_args
@@ -93,6 +93,10 @@ def main():
     if args.precision == "fp16":
         convert_weights(model)
 
+    if args.grad_checkpointing:
+        model.set_grad_checkpointing()
+        logging.info("Grad-checkpointing activated.")
+
     if args.use_bn_sync:
         model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
 
@@ -101,7 +105,7 @@ def main():
             v.requires_grad = False
         logging.info("The visual encoder is freezed during training.")
 
-    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_device_rank], find_unused_parameters=True)
+    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_device_rank], find_unused_parameters=False)
 
     if args.precision == "fp16":
         convert_weights(model)
@@ -172,7 +176,10 @@ def main():
             # Restore the model weight, map model to be loaded to specified single gpu.
             # loc = "cuda:{}".format(args.local_device_rank)
             checkpoint = torch.load(args.resume, map_location="cpu")
-            sd = checkpoint["state_dict"]
+            sd = {k: v for k, v in checkpoint["state_dict"].items() if "bert.pooler" not in k}
+            # Resize the positional embedding by interpolation, if needed
+            resize_pos_embed(sd, model, prefix="module.")
+            # Load the state dict
             model.load_state_dict(sd)
             # Restore the epoch and steps info, reload the dataset and dataloader for the resume epoch
             if not args.reset_data_offset:

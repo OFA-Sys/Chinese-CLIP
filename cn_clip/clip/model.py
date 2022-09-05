@@ -1,10 +1,15 @@
 from collections import OrderedDict
 from typing import Tuple, Union
+from itertools import repeat
+import collections.abc
 
+import math
+import logging
 import numpy as np
 import torch
 import torch.nn.functional as F
 from torch import nn
+from torch.utils.checkpoint import checkpoint
 
 from cn_clip.clip import _tokenizer
 from cn_clip.clip.configuration_bert import BertConfig
@@ -136,6 +141,11 @@ class ModifiedResNet(nn.Module):
 
         return nn.Sequential(*layers)
 
+    @torch.jit.ignore
+    def set_grad_checkpointing(self, enable=True):
+        # FIXME support for non-transformer
+        pass
+
     def forward(self, x):
         def stem(x):
             for conv, bn in [(self.conv1, self.bn1), (self.conv2, self.bn2), (self.conv3, self.bn3)]:
@@ -197,9 +207,14 @@ class Transformer(nn.Module):
         super().__init__()
         self.width = width
         self.layers = layers
+        self.grad_checkpointing = False
         self.resblocks = nn.Sequential(*[ResidualAttentionBlock(width, heads, attn_mask) for _ in range(layers)])
 
     def forward(self, x: torch.Tensor):
+        if self.grad_checkpointing and not torch.jit.is_scripting():
+            for r in self.resblocks:
+                x = checkpoint(r, x)
+            return x        
         return self.resblocks(x)
 
 
@@ -207,6 +222,7 @@ class VisualTransformer(nn.Module):
     def __init__(self, input_resolution: int, patch_size: int, width: int, layers: int, heads: int, output_dim: int):
         super().__init__()
         self.input_resolution = input_resolution
+        self.grid_size = (self.input_resolution // patch_size, self.input_resolution // patch_size)
         self.output_dim = output_dim
         self.conv1 = nn.Conv2d(in_channels=3, out_channels=width, kernel_size=patch_size, stride=patch_size, bias=False)
 
@@ -219,6 +235,10 @@ class VisualTransformer(nn.Module):
 
         self.ln_post = LayerNorm(width)
         self.proj = nn.Parameter(scale * torch.randn(width, output_dim))
+
+    @torch.jit.ignore
+    def set_grad_checkpointing(self, enable=True):
+        self.transformer.grad_checkpointing = enable
 
     def forward(self, x: torch.Tensor):
         x = self.conv1(x)  # shape = [*, width, grid, grid]
@@ -326,6 +346,11 @@ class CLIP(nn.Module):
         if self.text_projection is not None:
             nn.init.normal_(self.text_projection, std=self.bert_config.hidden_size ** -0.5)
 
+    @torch.jit.ignore
+    def set_grad_checkpointing(self, enable=True):
+        self.visual.set_grad_checkpointing(enable)
+        self.bert.set_grad_checkpointing(enable)
+
     @property
     def dtype(self):
         return self.visual.conv1.weight.dtype
@@ -417,9 +442,60 @@ def restore_model(model, clip_state_dict: dict, bert_state_dict: dict):
     # use bert_state_dict to initialize the text encoder
     if bert_state_dict is not None:
         for k, v in bert_state_dict.items():
-            if k.startswith("bert"):
+            if k.startswith("bert") and "bert.pooler" not in k:
                 merged_state_dict[k] = v
 
     convert_weights(model)
+    resize_pos_embed(merged_state_dict, model)
     model.load_state_dict(merged_state_dict, strict=False)
     return model.eval()
+
+
+def resize_pos_embed(state_dict, model, interpolation: str = 'bicubic', seq_dim=1, prefix=""):
+    # Rescale the grid of position embeddings when loading from state_dict
+    old_pos_embed = state_dict.get(prefix + 'visual.positional_embedding', None)
+    model = model.module if hasattr(model, 'module') else model
+    if old_pos_embed is None or not hasattr(model.visual, 'grid_size'):
+        return
+    grid_size = to_2tuple(model.visual.grid_size)
+    extra_tokens = 1  # FIXME detect different token configs (ie no class token, or more)
+    new_seq_len = grid_size[0] * grid_size[1] + extra_tokens
+    if new_seq_len == old_pos_embed.shape[0]:
+        return
+
+    if extra_tokens:
+        pos_emb_tok, pos_emb_img = old_pos_embed[:extra_tokens], old_pos_embed[extra_tokens:]
+    else:
+        pos_emb_tok, pos_emb_img = None, old_pos_embed
+    old_grid_size = to_2tuple(int(math.sqrt(len(pos_emb_img))))
+
+    logging.info('Resizing position embedding grid-size from %s to %s', old_grid_size, grid_size)
+    pos_emb_img = pos_emb_img.reshape(1, old_grid_size[0], old_grid_size[1], -1).permute(0, 3, 1, 2)
+    pos_emb_img = F.interpolate(
+        pos_emb_img,
+        size=grid_size,
+        mode=interpolation,
+        align_corners=True,
+    )
+    pos_emb_img = pos_emb_img.permute(0, 2, 3, 1).reshape(1, grid_size[0] * grid_size[1], -1)[0]
+    if pos_emb_tok is not None:
+        new_pos_embed = torch.cat([pos_emb_tok, pos_emb_img], dim=0)
+    else:
+        new_pos_embed = pos_emb_img
+    state_dict[prefix + 'visual.positional_embedding'] = new_pos_embed
+
+
+# From PyTorch internals
+def _ntuple(n):
+    def parse(x):
+        if isinstance(x, collections.abc.Iterable):
+            return x
+        return tuple(repeat(x, n))
+    return parse
+
+
+to_1tuple = _ntuple(1)
+to_2tuple = _ntuple(2)
+to_3tuple = _ntuple(3)
+to_4tuple = _ntuple(4)
+to_ntuple = lambda n, x: _ntuple(n)(x)

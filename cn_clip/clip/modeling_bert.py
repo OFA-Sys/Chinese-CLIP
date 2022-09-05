@@ -26,6 +26,7 @@ from io import open
 
 import torch
 from torch import nn
+from torch.utils.checkpoint import checkpoint
 
 from .configuration_bert import BertConfig
 
@@ -217,6 +218,8 @@ class BertLayer(nn.Module):
         intermediate_output = self.intermediate(attention_output)
         layer_output = self.output(intermediate_output, attention_output)
         outputs = (layer_output,) + attention_outputs[1:]  # add attentions if we output them
+        if len(outputs) == 1:
+            return outputs[0]        
         return outputs
 
 
@@ -225,6 +228,7 @@ class BertEncoder(nn.Module):
         super(BertEncoder, self).__init__()
         self.output_attentions = config.output_attentions
         self.output_hidden_states = config.output_hidden_states
+        self.grad_checkpointing = False
         self.layer = nn.ModuleList([BertLayer(config) for _ in range(config.num_hidden_layers)])
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None):
@@ -234,7 +238,12 @@ class BertEncoder(nn.Module):
             if self.output_hidden_states:
                 all_hidden_states = all_hidden_states + (hidden_states,)
 
-            layer_outputs = layer_module(hidden_states, attention_mask, head_mask[i])
+            if self.grad_checkpointing and not torch.jit.is_scripting():
+                layer_outputs = checkpoint(layer_module, hidden_states, attention_mask, head_mask[i])
+            else:
+                layer_outputs = layer_module(hidden_states, attention_mask, head_mask[i])
+            if not isinstance(layer_outputs, tuple):
+                layer_outputs = (layer_outputs, )
             hidden_states = layer_outputs[0]
 
             if self.output_attentions:
@@ -390,9 +399,17 @@ class BertModel(BertPreTrainedModel):
 
         self.embeddings = BertEmbeddings(config)
         self.encoder = BertEncoder(config)
-        self.pooler = BertPooler(config)
+        # self.pooler = BertPooler(config)
 
         self.apply(self._init_weights)
+
+    @torch.jit.ignore
+    def set_grad_checkpointing(self, enable=True):
+        if enable:
+            assert not self.config.output_attentions, \
+                "Grad checkpointing is currently conflict with output_attentions for BertEncoder, \
+                    please set it to False in BertConfig"
+        self.encoder.grad_checkpointing = enable
 
     def forward(self, input_ids, attention_mask=None, token_type_ids=None, position_ids=None, head_mask=None):
         if attention_mask is None:
@@ -435,7 +452,8 @@ class BertModel(BertPreTrainedModel):
                                        extended_attention_mask,
                                        head_mask=head_mask)
         sequence_output = encoder_outputs[0]
-        pooled_output = self.pooler(sequence_output)
+        # pooled_output = self.pooler(sequence_output)
+        pooled_output = None
 
         outputs = (sequence_output, pooled_output,) + encoder_outputs[1:]  # add hidden_states and attentions if they are here
         return outputs  # sequence_output, pooled_output, (hidden_states), (attentions)

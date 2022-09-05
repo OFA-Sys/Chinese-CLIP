@@ -7,6 +7,7 @@ import torch.distributed as dist
 import torch.multiprocessing as mp
 from torch.multiprocessing import Queue
 
+logging.raiseExceptions = False
 
 def setup_primary_logging(log_file, level, rank):
     log_queue = Queue(-1)

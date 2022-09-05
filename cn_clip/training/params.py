@@ -7,7 +7,7 @@ def get_default_params(model_name):
         return {"lr": 5.0e-4, "beta1": 0.9, "beta2": 0.999, "eps": 1.0e-8}
     elif model_name in ["ViT-B-32", "ViT-B-16"]:
         return {"lr": 5.0e-4, "beta1": 0.9, "beta2": 0.98, "eps": 1.0e-6}
-    elif model_name in ["ViT-L-14"]:
+    elif model_name in ["ViT-L-14", "ViT-L-14-336"]:
         return {"lr": 4.0e-4, "beta1": 0.9, "beta2": 0.98, "eps": 1.0e-6}
     else:
         return {}
@@ -125,7 +125,7 @@ def parse_args():
     )
     parser.add_argument(
         "--vision-model",
-        choices=["ViT-B-32", "ViT-B-16", "ViT-L-14"],
+        choices=["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336"],
         default="ViT-B-16",
         help="Name of the vision backbone to use.",
     )
@@ -153,6 +153,12 @@ def parse_args():
         type=str,
         help="The path of bert pretrained weight, used to initialize the text encoder, should be set to None if you do not use pretrained BERT",
     )
+    parser.add_argument(
+        "--grad-checkpointing",
+        default=False,
+        action='store_true',
+        help="Enable gradient checkpointing.",
+    )        
     # arguments for distributed training
     parser.add_argument(
         "--local_rank", 

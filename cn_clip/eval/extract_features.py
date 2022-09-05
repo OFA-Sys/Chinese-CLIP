@@ -77,7 +77,7 @@ def parse_args():
     )
     parser.add_argument(
         "--vision-model",
-        choices=["ViT-B-32", "ViT-B-16", "ViT-L-14"],
+        choices=["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336"],
         default="ViT-B-16",
         help="Name of the vision backbone to use.",
     )
@@ -153,7 +153,7 @@ if __name__ == "__main__":
     start_epoch = checkpoint["epoch"]
     sd = checkpoint["state_dict"]
     if next(iter(sd.items()))[0].startswith('module'):
-        sd = {k[len('module.'):]: v for k, v in sd.items()}
+        sd = {k[len('module.'):]: v for k, v in sd.items() if "bert.pooler" not in k}
     model.load_state_dict(sd)
     print(
         f"=> loaded checkpoint '{args.resume}' (epoch {checkpoint['epoch']} @ {checkpoint['step']} steps)"
