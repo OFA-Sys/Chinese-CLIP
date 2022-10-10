@@ -77,7 +77,7 @@ def parse_args():
     )
     parser.add_argument(
         "--vision-model",
-        choices=["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50"],
+        choices=["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "ViT-H-14", "RN50"],
         default="ViT-B-16",
         help="Name of the vision backbone to use.",
     )

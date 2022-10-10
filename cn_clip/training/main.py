@@ -34,6 +34,15 @@ def is_master(args):
     return args.rank == 0
 
 
+# used to compare the pytorch version
+def torch_version_str_compare_lessequal(version1, version2):
+    v1 = [int(entry) for entry in version1.split("+")[0].split(".")]
+    v2 = [int(entry) for entry in version2.split("+")[0].split(".")]
+    assert len(v1) == 3, "Cannot parse the version of your installed pytorch! ({})".format(version1)
+    assert len(v2) == 3, "Illegal version specification ({}). Should be in 1.X.Y format.".format(version2)
+    return sorted([v1, v2])[0] == v1
+
+
 def main():
     args = parse_args()
 
@@ -96,6 +105,8 @@ def main():
         convert_weights(model)
 
     if args.grad_checkpointing:
+        assert not torch_version_str_compare_lessequal(torch.__version__, "1.8.0"), \
+            "Currently our grad_checkpointing is not compatible with torch version <= 1.8.0."        
         model.set_grad_checkpointing()
         logging.info("Grad-checkpointing activated.")
 
@@ -112,7 +123,10 @@ def main():
                     m.eval()
         logging.info("The visual encoder is freezed during training.")
 
-    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_device_rank], find_unused_parameters=False)
+    # To make compatible with torch version <= 1.8.0, set find_unused_parameters to True
+    # In other cases, set find_unused_parameters to False
+    find_unused_parameters = torch_version_str_compare_lessequal(torch.__version__, "1.8.0")
+    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_device_rank], find_unused_parameters=find_unused_parameters)
 
     if args.precision == "fp16":
         convert_weights(model)
