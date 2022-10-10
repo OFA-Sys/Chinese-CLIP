@@ -2,12 +2,12 @@
 
 <p align="center">
     <br>
-    <img src="assets/Chinese_CLIP_logo_tp_path.svg" width="400" />
+    <img src="assets/Chinese_CLIP_logo_tp.svg" width="400" />
     <br>
 <p>
 <p align="center">
     <a href="https://opensource.org/licenses/MIT">
-        <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg">
+        <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
     </a>
 </p>
 
@@ -15,6 +15,7 @@
 <br><br>
 
 ## 新闻
+* 2022.9.22 新增ViT-L-14, ViT-L-14-336模型
 * 2022.7.13 新增API功能，方便快速调用中文CLIP模型
 * 2022.7.8 Chinese CLIP项目正式开源
 <br><br>
@@ -106,9 +107,7 @@ pip install -r requirements.txt
 ## API快速上手
 下面提供一段简单的代码示例说明如何使用中文CLIP的API。开始使用前，请先安装cn_clip：
 ```bash
-# 安装最新的稳定版本
-pip install cn_clip
-# 或从源代码安装
+# 从源代码安装
 cd Chinese-CLIP/
 pip install -e .
 ```
@@ -118,7 +117,9 @@ import torch
 from PIL import Image
 
 import cn_clip.clip as clip
-from cn_clip.clip import load_from_name
+from cn_clip.clip import load_from_name, available_models
+print("Available models:", available_models())  # Available models: ['ViT-B-16', 'ViT-L-14', 'ViT-L-14-336']
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model, preprocess = load_from_name("ViT-B-16", device=device, download_root='./')
 model.eval()
@@ -390,7 +391,6 @@ cat output.json
 <br><br>
 
 ## 后续计划
-+ 开源ViT-L-14规模Chinese-CLIP模型（训练中）
 + 提供基于Chinese-CLIP的图文检索demo，以及用户在自己的环境下部署demo的流程
 + 在更多图文检索下游任务验证结果
 + 开源Chinese-CLIP技术报告

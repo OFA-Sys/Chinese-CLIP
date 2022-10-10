@@ -72,6 +72,12 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
     # os.environ["WDS_EPOCH"] = str(epoch)
     
     model.train()
+    # freeze bn running mean and variance
+    if args.freeze_vision and args.vision_model in ['RN50']:
+        RN_visual_modules = model.module.visual.modules() if isinstance(model, nn.parallel.DistributedDataParallel) else model.visual.modules()
+        for m in RN_visual_modules:
+            if isinstance(m, nn.BatchNorm2d):
+                m.eval()
 
     dataloader, sampler = data['train'].dataloader,  data['train'].sampler
 

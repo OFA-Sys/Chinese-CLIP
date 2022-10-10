@@ -17,11 +17,21 @@ __all__ = ["load", "tokenize", "available_models", "image_transform", "load_from
 
 _MODELS = {
     "ViT-B-16": "https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-b-16.pt",
+    "ViT-L-14": "https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-l-14.pt",
+    "ViT-L-14-336": "https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-l-14-336.pt",
 }
 _MODEL_INFO = {
     "ViT-B-16": {
         "struct": "ViT-B-16@RoBERTa-wwm-ext-base-chinese",
         "input_resolution": 224
+    },
+    "ViT-L-14": {
+        "struct": "ViT-L-14@RoBERTa-wwm-ext-base-chinese",
+        "input_resolution": 224
+    },
+    "ViT-L-14-336": {
+        "struct": "ViT-L-14-336@RoBERTa-wwm-ext-base-chinese",
+        "input_resolution": 336
     }
 }
 

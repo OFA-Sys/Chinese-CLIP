@@ -75,6 +75,8 @@ def main():
     
     with open(vision_model_config_file, 'r') as fv, open(text_model_config_file, 'r') as ft:
         model_info = json.load(fv)
+        if isinstance(model_info['vision_layers'], str):
+            model_info['vision_layers'] = eval(model_info['vision_layers'])         
         for k, v in json.load(ft).items():
             model_info[k] = v
     
@@ -103,6 +105,11 @@ def main():
     if args.freeze_vision:
         for k, v in model.visual.named_parameters():
             v.requires_grad = False
+	    # freeze bn running mean and variance
+        if args.vision_model in ['RN50']:
+            for m in model.visual.modules():
+                if isinstance(m, torch.nn.BatchNorm2d):
+                    m.eval()
         logging.info("The visual encoder is freezed during training.")
 
     model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_device_rank], find_unused_parameters=False)

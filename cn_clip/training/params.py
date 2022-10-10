@@ -125,7 +125,7 @@ def parse_args():
     )
     parser.add_argument(
         "--vision-model",
-        choices=["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336"],
+        choices=["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50"],
         default="ViT-B-16",
         help="Name of the vision backbone to use.",
     )
@@ -143,7 +143,7 @@ def parse_args():
     )
     parser.add_argument(
         "--text-model",
-        choices=["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese"],
+        choices=["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"],
         default="RoBERTa-wwm-ext-base-chinese",
         help="Name of the text backbone to use.",
     )    

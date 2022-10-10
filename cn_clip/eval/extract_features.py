@@ -77,13 +77,13 @@ def parse_args():
     )
     parser.add_argument(
         "--vision-model",
-        choices=["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336"],
+        choices=["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50"],
         default="ViT-B-16",
         help="Name of the vision backbone to use.",
     )
     parser.add_argument(
         "--text-model",
-        choices=["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese"],
+        choices=["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"],
         default="RoBERTa-wwm-ext-base-chinese",
         help="Name of the text backbone to use.",
     )
@@ -123,6 +123,8 @@ if __name__ == "__main__":
     
     with open(vision_model_config_file, 'r') as fv, open(text_model_config_file, 'r') as ft:
         model_info = json.load(fv)
+        if isinstance(model_info['vision_layers'], str):
+            model_info['vision_layers'] = eval(model_info['vision_layers'])        
         for k, v in json.load(ft).items():
             model_info[k] = v
 
