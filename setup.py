@@ -6,15 +6,23 @@ from setuptools import setup, find_packages
 packages = find_packages(exclude=["tests*"])
 with open('README_En.md', 'r', encoding='utf-8') as fp:
     long_description = fp.read()
+
+long_description = long_description.replace('assets/Chinese_CLIP_logo_tp_path.svg',
+                                            'https://raw.githubusercontent.com/OFA-Sys/Chinese-CLIP/master/assets/Chinese_CLIP_logo_tp_path.svg')
+long_description = long_description.replace('[**中文说明**](README.md)',
+                                            '[**中文说明**](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/README.md)')
+long_description = long_description.replace('[**English**](README_En.md)',
+                                            '[**English**](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/README_En.md)')
+long_description = long_description.replace('&nbsp','')
 setup(
     name="cn_clip",
     py_modules=["cn_clip"],
-    version="1.2",
+    version="1.2.2",
     author="OFA-Sys",
     author_email="",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages = packages,
+    packages=packages,
     keywords='clip',
     install_requires=[
         str(r)
