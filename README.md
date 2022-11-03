@@ -1,3 +1,8 @@
+<style>
+  table td:nth-child(1) {
+      white-space: nowrap; 
+  }
+</style>
 [**中文说明**](README.md) | [**English**](README_En.md)
 
 <p align="center">
