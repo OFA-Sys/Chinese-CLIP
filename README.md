@@ -49,7 +49,7 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 <br></br>
 
 ## 实验结果
-我们在MUGE Retrieval、Flickr30K-CN和COCO-CN上进行了zero-shot和finetune的实验，实验结果如下：
+我们在MUGE Retrieval、Flickr30K-CN和COCO-CN上进行了zero-shot和finetune的实验，实验结果如下表所示。
 
 **MUGE Text-to-Image Retrieval**:
 <table border="1" width="100%">
@@ -60,13 +60,13 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
         <td>Metric</td><td>R@1</td><td>R@5</td><td>R@10</td><td>MR</td><td>R@1</td><td>R@5</td><td>R@10</td><td>MR</td>
     </tr>
 	<tr align="center">
-        <td width="120%">Wukong<sub>ViT-B</sub></td><td>33.4</td><td>59.3</td><td>69.7</td><td>54.1</td><td>39.2</td><td>66.9</td><td>77.4</td><td>61.2</td>
+        <td width="120%">Wukong</td><td>42.7</td><td>69.0</td><td>78.0</td><td>63.2</td><td>52.7</td><td>77.9</td><td>85.6</td><td>72.1</td>
     </tr>
 	<tr align="center">
-        <td width="120%">R2D2<sub>ViT-B</sub></td><td>-</td><td>-</td><td>-</td><td>-</td><td>47.4</td><td>75.1</td><td>83.5</td><td>68.7</td>
+        <td width="120%">R2D2</td><td>49.5</td><td>75.7</td><td>83.2</td><td>69.5</td><td>60.1</td><td>82.9</td><td>89.4</td><td>77.5</td>
     </tr>
 	<tr align="center">
-        <td width="120%">CN-CLIP<sub>ViT-B</sub></td><td>52.1</td><td>76.7</td><td>84.4</td><td>71.1</td><td>56.8</td><td>82.4</td><td>89.3</td><td>76.2</td>
+        <td width="120%">CN-CLIP</td><td>63.0</td><td>84.1</td><td>89.2</td><td>78.8</td><td>68.9</td><td>88.7</td><td>93.1</td><td>83.6</td>
     </tr>
 </table>
 <br>
@@ -83,13 +83,13 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
         <td>Metric</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td>
     </tr>
 	<tr align="center">
-        <td width="120%">Wukong<sub>ViT-B</sub></td><td>45.7</td><td>73.8</td><td>82.2</td></td><td>67.6</td><td>89.6</td><td>94.2</td><td>66.2</td><td>88.7</td><td>94.3</td></td><td>83.9</td><td>97.6</td><td>99.0</td>
+        <td width="120%">Wukong</td><td>51.7</td><td>78.9</td><td>86.3</td><td>77.4</td><td>94.5</td><td>97.0</td><td>76.1</td><td>94.8</td><td>97.5</td><td>92.7</td><td>99.1</td><td>99.6</td>
     </tr>
 	<tr align="center">
-        <td width="120%">R2D2<sub>ViT-B</sub></td><td>-</td><td>-</td><td>-</td><td>78.3</td><td>94.6</td><td>97.0</td></td><td>-</td><td>-</td><td>-</td><td>92.6</td><td>99.1</td><td>99.8</td>
+        <td width="120%">R2D2</td><td>60.9</td><td>86.8</td><td>92.7</td><td>84.4</td><td>96.7</td><td>98.4</td><td>77.6</td><td>96.7</td><td>98.9</td><td>95.6</td><td>99.8</td><td>100.0</td>
     </tr>
 	<tr align="center">
-        <td width="120%">CN-CLIP<sub>ViT-B</sub></td><td>57.0</td><td>82.8</td><td>89.6</td><td>72.9</td><td>92.8</td><td>96.2</td><td>71.0</td><td>90.6</td><td>95.3</td><td>88.6</td><td>98.0</td><td>99.3</td>
+        <td width="120%">CN-CLIP</td><td>71.2</td><td>91.4</td><td>95.5</td><td>83.8</td><td>96.9</td><td>98.6</td><td>81.6</td><td>97.5</td><td>98.8</td><td>95.3</td><td>99.7</td><td>100.0</td>
     </tr>
 </table>
 <br>
@@ -106,13 +106,13 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
         <td>Metric</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td>
     </tr>
 	<tr align="center">
-        <td width="120%">Wukong<sub>ViT-B</sub></td><td>49.2</td><td>79.4</td><td>87.9</td></td><td>67.0</td><td>91.4</td><td>96.7</td><td>48.3</td><td>77.8</td><td>88.8</td></td><td>65.8</td><td>90.3</td><td>96.6</td>
+        <td width="120%">Wukong</td><td>53.4</td><td>80.2</td><td>90.1</td><td>74.0</td><td>94.4</td><td>98.1</td><td>55.2</td><td>81.0</td><td>90.6</td><td>73.3</td><td>94.0</td><td>98.0</td>
     </tr>
 	<tr align="center">
-        <td width="120%">R2D2<sub>ViT-B</sub></td><td>-</td><td>-</td><td>-</td><td>75.1</td><td>94.2</td><td>98.1</td></td><td>-</td><td>-</td><td>-</td><td>76.1</td><td>95.3</td><td>98.5</td>
+        <td width="120%">R2D2</td><td>56.4</td><td>85.0</td><td>93.1</td><td>79.1</td><td>96.5</td><td>98.9</td><td>63.3</td><td>89.3</td><td>95.7</td><td>79.3</td><td>97.1</td><td>98.7</td>
     </tr>
 	<tr align="center">
-        <td width="120%">CN-CLIP<sub>ViT-B</sub></td><td>58.8</td><td>85.3</td><td>93.3</td><td>73.6</td><td>94.9</td><td>97.8</td><td>54.7</td><td>84.7</td><td>92.3</td><td>73.6</td><td>94.8</td><td>98.1</td>
+        <td width="120%">CN-CLIP</td><td>69.2</td><td>89.9</td><td>96.1</td><td>81.5</td><td>96.9</td><td>99.1</td><td>63.0</td><td>86.6</td><td>92.9</td><td>83.5</td><td>97.3</td><td>99.2</td>
     </tr>
 </table>
 <br><br>
