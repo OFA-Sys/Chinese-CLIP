@@ -284,8 +284,8 @@ bash run_scripts/muge_finetune_vit-b-16_rbt-base.sh ${DATAPATH}
   + `val-data`: 验证数据LMDB目录。
   + `num-workers`: 训练数据处理（DataLoader）的进程数，默认为4
 + 训练超参数
-  + `vision-model`: 指定视觉backbone, 从 `["ViT-B-32", "ViT-B-16", "ViT-L-14"]`选择。
-  + `text-model`: 指定文本backbone, 从 `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese"]`选择。
+  + `vision-model`: 指定视觉backbone, 从 `["ViT-B-16", "ViT-L-14", "ViT-L-14-336", "ViT-H-14", "RN50"]`选择。
+  + `text-model`: 指定文本backbone, 从 `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`选择。
   + `context-length`: 文本输入序列长度。
   + `warmup`: warmup步数。
   + `batch-size`: 训练时单卡batch-size。（请保证`训练样本总数 > batch-size * GPU数`，至少满足1个训练batch）
@@ -293,9 +293,10 @@ bash run_scripts/muge_finetune_vit-b-16_rbt-base.sh ${DATAPATH}
   + `wd`: weight decay。
   + `max-steps`: 训练步数，也可通过`max-epochs`指定训练轮数。
   + `freeze-vision`: 是否freeze视觉backbone。
-  + `use-augment`: 是否使用[AutoAugment](https://arxiv.org/abs/1805.09501)对图片进行数据增强
+  + `use-augment`: 是否使用[AutoAugment](https://arxiv.org/abs/1805.09501)对图片进行数据增强。
   + `valid-batch-size`: 验证时单机batch-size。（请保证`验证集样本总数 > batch-size * GPU数`，至少满足1个验证batch）
-  + `valid-step-interval`和`valid-epoch-interval`: 验证step/epoch频率，指定为-1时则在训练中不进行验证
+  + `valid-step-interval`和`valid-epoch-interval`: 验证step/epoch频率，指定为-1时则在训练中不进行验证。
+  + `grad-checkpointing`: 使用[重计算策略](https://pytorch.org/docs/stable/checkpoint.html)，在前向过程中不保存中间结果，以训练时间换取更小的显存开销，适用于显存不足的情况。（目前要求Pytorch>1.8.0）
 + 输出选项
   + `name`: 指定输出路径。超参日志, 训练日志以及产出ckpt均会存放至 `${DATAPATH}/experiments/${name}/`。
   + `save-step-frequency`及`save-epoch-frequency`: 存ckpt的步数或轮数间隔。
