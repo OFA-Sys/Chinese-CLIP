@@ -289,6 +289,8 @@ ${DATAPATH}
             └── test
 ```
 
+为了降低上手难度，我们也提供了按上述步骤预处理好的MUGE数据（[下载链接](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/MUGE.zip)）和Flickr30K-CN数据（[下载链接](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/Flickr30k-CN.zip)）压缩包，直接下载解压并放置于`${DATAPATH}/datasets/`目录下即可。
+
 ### 模型finetune
 
 在此我们介绍训练的步骤，方便其他用户了解模型细节，使用我们提供的中文CLIP预训练模型进行finetune。基于MUGE和Flickr30K-CN两个下游检索数据集，我们提供了训练样例脚本`run_scripts/muge_finetune_vit-b-16_rbt-base.sh`和`run_scripts/flickr30k_finetune_vit-b-16_rbt-base.sh`。运行脚本同时支持单机和多机分布式训练，请在运行前，先根据脚本开头的指引注释，填写好分布式相关配置，之后运行如下命令即可开始训练（多机训练请在各机器上都运行命令）。训练产生的log和模型ckpt文件，会自动保存在用户指定的目录下：
