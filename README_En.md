@@ -49,7 +49,7 @@ Currently, we release 5 different sizes of Chinese-CLIP models. Detailed informa
 <br></br>
 
 ## Results
-We conducted zero-shot inference and finetuning experiments on MUGE Retrieval, Flickr30K-CN and COCO-CN. Results are shown below:
+We conducted zero-shot inference and finetuning experiments on MUGE Retrieval, Flickr30K-CN and COCO-CN for the evaluation of cross-modal retrieval, and conducted experiments on 10 image classification datasets of the ELEVATER benchmark for the evaluation of zero-shot image classification. Results are shown below:
 
 **MUGE Text-to-Image Retrieval**:
 <table border="1" width="100%">
@@ -113,6 +113,29 @@ We conducted zero-shot inference and finetuning experiments on MUGE Retrieval, F
     </tr>
 	<tr align="center">
         <td width="120%">CN-CLIP</td><td>69.2</td><td>89.9</td><td>96.1</td><td>81.5</td><td>96.9</td><td>99.1</td><td>63.0</td><td>86.6</td><td>92.9</td><td>83.5</td><td>97.3</td><td>99.2</td>
+    </tr>
+</table>
+<br>
+
+**Zero-shot Image Classification**:
+<table border="1" width="100%">
+	<tr align="center">
+        <th>Task</th><th>CIFAR10</th><th>CIFAR100</th><th>DTD</th><th>EuroSAT</th><th>FER</th><th>FGVC</th><th>KITTI</th><th>MNIST</th><th>PC</th><th>VOC</th>
+    </tr>
+	<tr align="center">
+        <td width="150%">GIT</td><td>88.5</td><td>61.1</td><td>42.9</td><td>43.4</td><td>41.4</td><td>6.7</td><td>22.1</td><td>68.9</td><td>50.0</td><td>80.2</td>
+    </tr>
+    	<tr align="center">
+        <td width="150%">ALIGN</td><td>94.9</td><td>76.8</td><td>66.1</td><td>52.1</td><td>50.8</td><td>25.0</td><td>41.2</td><td>74.0</td><td>55.2</td><td>83.0</td>
+    </tr>
+	<tr align="center">
+        <td width="150%">CLIP</td><td>94.9</td><td>77.0</td><td>56.0</td><td>63.0</td><td>48.3</td><td>33.3</td><td>11.5</td><td>79.0</td><td>62.3</td><td>84.0</td>
+    </tr>
+    	<tr align="center">
+        <td width="150%">Wukong</td><td>95.4</td><td>77.1</td><td>40.9</td><td>50.3</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+    </tr>
+    	<tr align="center">
+        <td width="150%">CN-CLIP</td><td>96.0</td><td>79.7</td><td>51.2</td><td>52.0</td><td>55.1</td><td>26.2</td><td>49.9</td><td>79.4</td><td>63.5</td><td>84.9</td>
     </tr>
 </table>
 <br><br>
