@@ -49,7 +49,7 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 <br></br>
 
 ## 实验结果
-针对图文检索任务，我们在MUGE Retrieval、Flickr30K-CN和COCO-CN上进行了zero-shot和finetune的实验。针对图像零样本分类，我们在ELEVATER的10个数据集上进行了实验。实验结果如下表所示。
+针对图文检索任务，我们在MUGE Retrieval、Flickr30K-CN和COCO-CN上进行了zero-shot和finetune的实验。针对图像零样本分类，我们在ELEVATER的10个数据集上进行了实验。实验结果如下表所示。篇幅所限，我们这里给出baseline模型和Chinese-CLIP的最大规模模型结果，关于Chinese-CLIP各规模的详细结果指标，请详见[Results.md](Results.md)。
 
 **MUGE Text-to-Image Retrieval**:
 <table border="1" width="100%">
