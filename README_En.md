@@ -24,7 +24,7 @@ This is the Chinese version of CLIP. We use a large-scale internal Chinese image
 
 <span id="model_card"></span>
 ## Model Card
-Currently, we release 5 different sizes of Chinese-CLIP model. Detailed information and download link of each Chinese-CLIP model are provided below:
+Currently, we release 5 different sizes of Chinese-CLIP models. Detailed information and download link of each Chinese-CLIP model are provided below:
 
 <table border="1" width="100%">
     <tr align="center">
