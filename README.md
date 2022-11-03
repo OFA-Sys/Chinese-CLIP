@@ -49,7 +49,7 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 <br></br>
 
 ## 实验结果
-我们在MUGE Retrieval、Flickr30K-CN和COCO-CN上进行了zero-shot和finetune的实验，实验结果如下表所示。
+针对图文检索任务，我们在MUGE Retrieval、Flickr30K-CN和COCO-CN上进行了zero-shot和finetune的实验。针对图像零样本分类，我们在ELEVATER的10个数据集上进行了实验。实验结果如下表所示。
 
 **MUGE Text-to-Image Retrieval**:
 <table border="1" width="100%">
@@ -106,15 +106,39 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
         <td>Metric</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td><td>R@1</td><td>R@5</td><td>R@10</td>
     </tr>
 	<tr align="center">
-        <td width="120%">Wukong</td><td>53.4</td><td>80.2</td><td>90.1</td><td>74.0</td><td>94.4</td><td>98.1</td><td>55.2</td><td>81.0</td><td>90.6</td><td>73.3</td><td>94.0</td><td>98.0</td>
+        <td width="150%">Wukong</td><td>53.4</td><td>80.2</td><td>90.1</td><td>74.0</td><td>94.4</td><td>98.1</td><td>55.2</td><td>81.0</td><td>90.6</td><td>73.3</td><td>94.0</td><td>98.0</td>
     </tr>
 	<tr align="center">
-        <td width="120%">R2D2</td><td>56.4</td><td>85.0</td><td>93.1</td><td>79.1</td><td>96.5</td><td>98.9</td><td>63.3</td><td>89.3</td><td>95.7</td><td>79.3</td><td>97.1</td><td>98.7</td>
+        <td width="150%">R2D2</td><td>56.4</td><td>85.0</td><td>93.1</td><td>79.1</td><td>96.5</td><td>98.9</td><td>63.3</td><td>89.3</td><td>95.7</td><td>79.3</td><td>97.1</td><td>98.7</td>
     </tr>
 	<tr align="center">
-        <td width="120%">CN-CLIP</td><td>69.2</td><td>89.9</td><td>96.1</td><td>81.5</td><td>96.9</td><td>99.1</td><td>63.0</td><td>86.6</td><td>92.9</td><td>83.5</td><td>97.3</td><td>99.2</td>
+        <td width="150%">CN-CLIP</td><td>69.2</td><td>89.9</td><td>96.1</td><td>81.5</td><td>96.9</td><td>99.1</td><td>63.0</td><td>86.6</td><td>92.9</td><td>83.5</td><td>97.3</td><td>99.2</td>
     </tr>
 </table>
+<br>
+
+**Zero-shot Image Classification**:
+<table border="1" width="100%">
+	<tr align="center">
+        <th>Task</th><th>CIFAR10</th><th>CIFAR100</th><th>DTD</th><th>EuroSAT</th><th>FER</th><th>FGVC</th><th>KITTI</th><th>MNIST</th><th>PC</th><th>VOC</th>
+    </tr>
+	<tr align="center">
+        <td width="150%">GIT</td><td>88.5</td><td>61.1</td><td>42.9</td><td>43.4</td><td>41.4</td><td>6.7</td><td>22.1</td><td>68.9</td><td>50.0</td><td>80.2</td>
+    </tr>
+    	<tr align="center">
+        <td width="150%">ALIGN</td><td>94.9</td><td>76.8</td><td>66.1</td><td>52.1</td><td>50.8</td><td>25.0</td><td>41.2</td><td>74.0</td><td>55.2</td><td>83.0</td>
+    </tr>
+	<tr align="center">
+        <td width="150%">CLIP</td><td>94.9</td><td>77.0</td><td>56.0</td><td>63.0</td><td>48.3</td><td>33.3</td><td>11.5</td><td>79.0</td><td>62.3</td><td>84.0</td>
+    </tr>
+    	<tr align="center">
+        <td width="150%">Wukong</td><td>95.4</td><td>77.1</td><td>40.9</td><td>50.3</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+    </tr>
+    	<tr align="center">
+        <td width="150%">CN-CLIP</td><td>96.0</td><td>79.7</td><td>51.2</td><td>52.0</td><td>55.1</td><td>26.2</td><td>49.9</td><td>79.4</td><td>63.5</td><td>84.9</td>
+    </tr>
+</table>
+
 <br><br>
 
 
