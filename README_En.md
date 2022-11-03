@@ -394,44 +394,15 @@ The printed results are shown below:
 ```
 <br><br>
 
-## Future Plans
-+ Release pretrained Chinese-CLIP checkpoint with ViT-L-14 visual backbone (under training).
-+ Provide online text-to-image retrieval demo based on Chinese-CLIP, with easy-to-use tutorials for deploying on users' own environments.
-+ Obtain evaluation results on more cross-modal retrieval benchmarks.
-+ Release technical report of Chinese-CLIP.
-<br><br>
-
 
 ## Citation
 If you find the project helpful, please star this project and cite the related articles. Thanks for your support!
 
 ```
-@software{ilharco_gabriel_2021_5143773,
-  author       = {Ilharco, Gabriel and
-                  Wortsman, Mitchell and
-                  Carlini, Nicholas and
-                  Taori, Rohan and
-                  Dave, Achal and
-                  Shankar, Vaishaal and
-                  Namkoong, Hongseok and
-                  Miller, John and
-                  Hajishirzi, Hannaneh and
-                  Farhadi, Ali and
-                  Schmidt, Ludwig},
-  title        = {OpenCLIP},
-  month        = jul,
-  year         = 2021,
-  note         = {If you use this software, please cite it as below.},
-  publisher    = {Zenodo},
-  version      = {0.1},
-  doi          = {10.5281/zenodo.5143773},
-  url          = {https://doi.org/10.5281/zenodo.5143773}
-}
-
-@inproceedings{Radford2021LearningTV,
-  title={Learning Transferable Visual Models From Natural Language Supervision},
-  author={Alec Radford and Jong Wook Kim and Chris Hallacy and A. Ramesh and Gabriel Goh and Sandhini Agarwal and Girish Sastry and Amanda Askell and Pamela Mishkin and Jack Clark and Gretchen Krueger and Ilya Sutskever},
-  booktitle={ICML},
-  year={2021}
+@article{chinese-clip,
+  title={Chinese CLIP: Contrastive Vision-Language Pretraining in Chinese},
+  author={Yang, An and Pan, Junshu and Lin, Junyang and Men, Rui and Zhang, Yichang and Zhou, Jingren and Zhou, Chang},
+  journal={arXiv preprint arXiv:2211.01335},
+  year={2022}
 }
 ```
