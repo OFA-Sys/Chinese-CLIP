@@ -19,6 +19,8 @@ _MODELS = {
     "ViT-B-16": "https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-b-16.pt",
     "ViT-L-14": "https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-l-14.pt",
     "ViT-L-14-336": "https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-l-14-336.pt",
+    "ViT-H-14": "https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-h-14.pt",
+    "RN50": "https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_rn50.pt",
 }
 _MODEL_INFO = {
     "ViT-B-16": {
@@ -32,7 +34,15 @@ _MODEL_INFO = {
     "ViT-L-14-336": {
         "struct": "ViT-L-14-336@RoBERTa-wwm-ext-base-chinese",
         "input_resolution": 336
-    }
+    },
+    "ViT-H-14": {
+        "struct": "ViT-H-14@RoBERTa-wwm-ext-large-chinese",
+        "input_resolution": 224
+    },
+    "RN50": {
+        "struct": "RN50@RBT3-chinese",
+        "input_resolution": 224
+    },
 }
 
 
@@ -168,7 +178,7 @@ def create_model(model_name, checkpoint=None):
         model_info = json.load(fv)
         for k, v in json.load(ft).items():
             model_info[k] = v
-
+    print('Model info', model_info)
     model = CLIP(**model_info)
     convert_weights(model)
     if checkpoint:

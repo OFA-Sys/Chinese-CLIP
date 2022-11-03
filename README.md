@@ -15,6 +15,7 @@
 <br><br>
 
 ## 新闻
+* 2022.11.3 新增RN50, ViT-H-14模型
 * 2022.9.22 新增ViT-L-14, ViT-L-14-336模型
 * 2022.7.13 新增API功能，方便快速调用中文CLIP模型
 * 2022.7.8 Chinese CLIP项目正式开源
@@ -118,7 +119,8 @@ from PIL import Image
 
 import cn_clip.clip as clip
 from cn_clip.clip import load_from_name, available_models
-print("Available models:", available_models())  # Available models: ['ViT-B-16', 'ViT-L-14', 'ViT-L-14-336']
+print("Available models:", available_models())  
+# Available models: ['ViT-B-16', 'ViT-L-14', 'ViT-L-14-336', 'ViT-H-14', 'RN50']
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model, preprocess = load_from_name("ViT-B-16", device=device, download_root='./')
@@ -400,6 +402,13 @@ cat output.json
 如果觉得本项目好用，希望能给我们提个star并分享给身边的用户，欢迎给相关工作citation，感谢支持！
 
 ```
+@article{chinese-clip,
+  title={Chinese CLIP: Contrastive Vision-Language Pretraining in Chinese},
+  author={Yang, An and Pan, Junshu and Lin, Junyang and Men, Rui and Zhang, Yichang and Zhou, Jingren and Zhou, Chang},
+  journal={arXiv preprint arXiv:2211.01335},
+  year={2022}
+}
+
 @software{ilharco_gabriel_2021_5143773,
   author       = {Ilharco, Gabriel and
                   Wortsman, Mitchell and
