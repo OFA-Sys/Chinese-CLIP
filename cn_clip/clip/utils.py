@@ -178,6 +178,8 @@ def create_model(model_name, checkpoint=None):
         model_info = json.load(fv)
         for k, v in json.load(ft).items():
             model_info[k] = v
+    if isinstance(model_info['vision_layers'], str):
+        model_info['vision_layers'] = eval(model_info['vision_layers'])
     print('Model info', model_info)
     model = CLIP(**model_info)
     convert_weights(model)
