@@ -22,6 +22,31 @@ This is the Chinese version of CLIP. We use a large-scale internal Chinese image
 * 2022.7.8 Released the project Chinese-CLIP!
 <br><br>
 
+<span id="model_card"></span>
+# Model Card
+Currently, we release 5 different sizes of Chinese-CLIP model. Detailed information and download link of each Chinese-CLIP model are provided below:
+
+<table border="1" width="100%">
+    <tr align="center">
+        <th>Model</th><th>Ckpt</th><th>#Params (All)</th><th>Backbone (I)</th><th>#Params (I)</th><th>Backbone (T)</th><th>#Params (T)</th><th>Resolution</th>
+    </tr>
+    <tr align="center">
+        <td>CN-CLIP<sub>RN50</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_rn50.pt">Download</a></td><td>77M</td><td>ResNet50</td><td>38M</td><td>RBT3</td><td>39M</td><td>224</td>
+    </tr>
+    <tr align="center">
+        <td>CN-CLIP<sub>ViT-B/16</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-b-16.pt">Download</a></td><td>188M</td><td>ViT-B/16</td><td>86M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>224</td>
+    </tr>
+    <tr align="center">
+        <td>CN-CLIP<sub>ViT-L/14</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-l-14.pt">Download</a></td><td>406M</td><td>ViT-L/14</td><td>304M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>224</td>
+    </tr>
+    <tr align="center">
+        <td>CN-CLIP<sub>ViT-L/14@336px</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-l-14-336.pt">Download</a></td><td>407M</td><td>ViT-L/14</td><td>304M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>336</td>
+    </tr>
+    <tr align="center">
+        <td>CN-CLIP<sub>ViT-H/14</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-h-14.pt">Download</a></td><td>958M</td><td>ViT-H/14</td><td>632M</td><td>RoBERTa-wwm-Large</td><td>326M</td><td>224</td>
+    </tr>
+</table>
+<br></br>
 
 ## Results
 We conducted zero-shot inference and finetuning experiments on MUGE Retrieval, Flickr30K-CN and COCO-CN. Results are shown below:
@@ -178,7 +203,7 @@ We provide links for the downloading of pretrained checkpoints, as well as the d
 
 #### Pretrained Checkpoints
 
-Download the ViT-B checkpoint ([Link](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-b-16.pt)). We recommend putting the checkpoint in `${DATAPATH}/pretrained_weights/`. 
+Please refer to [model card section](#model_card) above and download the model checkpoint. We recommend putting the checkpoint in `${DATAPATH}/pretrained_weights/`. 
 
 #### Data Preprocessing
 
