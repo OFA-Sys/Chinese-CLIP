@@ -22,6 +22,32 @@
 * 2022.7.8 Chinese CLIP项目正式开源
 <br><br>
 
+<span id="model_card"></span>
+## 模型规模 & 下载链接
+Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下表：
+
+<table border="1" width="100%">
+    <tr align="center">
+        <th>模型规模</th><th>下载链接</th><th>参数量</th><th>视觉侧骨架</th><th>视觉侧参数量</th><th>文本侧骨架</th><th>文本侧参数量</th><th>分辨率</th>
+    </tr>
+    <tr align="center">
+        <td>CN-CLIP<sub>RN50</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_rn50.pt">Download</a></td><td>77M</td><td>ResNet50</td><td>38M</td><td>RBT3</td><td>39M</td><td>224</td>
+    </tr>
+    <tr align="center">
+        <td>CN-CLIP<sub>ViT-B/16</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-b-16.pt">Download</a></td><td>188M</td><td>ViT-B/16</td><td>86M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>224</td>
+    </tr>
+    <tr align="center">
+        <td>CN-CLIP<sub>ViT-L/14</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-l-14.pt">Download</a></td><td>406M</td><td>ViT-L/14</td><td>304M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>224</td>
+    </tr>
+    <tr align="center">
+        <td>CN-CLIP<sub>ViT-L/14@336px</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-l-14-336.pt">Download</a></td><td>407M</td><td>ViT-L/14</td><td>304M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>336</td>
+    </tr>
+    <tr align="center">
+        <td>CN-CLIP<sub>ViT-H/14</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-h-14.pt">Download</a></td><td>958M</td><td>ViT-H/14</td><td>632M</td><td>RoBERTa-wwm-Large</td><td>326M</td><td>224</td>
+    </tr>
+</table>
+<br></br>
+
 ## 实验结果
 我们在MUGE Retrieval、Flickr30K-CN和COCO-CN上进行了zero-shot和finetune的实验，实验结果如下：
 
@@ -177,7 +203,7 @@ ${DATAPATH}
 
 #### 预训练CKPT
 
-目前我们提供ViT-B规模的预训练中文CLIP权重下载（[下载链接](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-b-16.pt)）。推荐将下载的ckpt文件存放于`${DATAPATH}/pretrained_weights/`目录下。
+请参考前文[模型规模 & 下载链接](#model_card)部分，下载对应模型ckpt。推荐将下载的ckpt文件存放于`${DATAPATH}/pretrained_weights/`目录下。
 
 #### 数据集格式预处理
 
