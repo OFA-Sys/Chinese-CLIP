@@ -16,6 +16,8 @@ This is the Chinese version of CLIP. We use a large-scale internal Chinese image
 <br><br>
 
 ## News
+* 2022.11.3 Released RN50, ViT-H-14.
+* 2022.9.22 Released ViT-L-14, ViT-L-14-336.
 * 2022.7.13 Released API for Chinese-CLIP, which facitilates usage of our CLIP models.
 * 2022.7.8 Released the project Chinese-CLIP!
 <br><br>
@@ -120,7 +122,10 @@ import torch
 from PIL import Image
 
 import cn_clip.clip as clip
-from cn_clip.clip import load_from_name
+from cn_clip.clip import load_from_name, available_models
+print("Available models:", available_models())  
+# Available models: ['ViT-B-16', 'ViT-L-14', 'ViT-L-14-336', 'ViT-H-14', 'RN50']
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model, preprocess = load_from_name("ViT-B-16", device=device, download_root='./')
 model.eval()

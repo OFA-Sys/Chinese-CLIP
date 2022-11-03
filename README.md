@@ -16,6 +16,7 @@
 <br><br>
 
 ## 新闻
+* 2022.11.3 新增RN50, ViT-H-14模型
 * 2022.9.22 新增ViT-L-14, ViT-L-14-336模型
 * 2022.7.13 新增API功能，方便快速调用中文CLIP模型
 * 2022.7.8 Chinese CLIP项目正式开源
@@ -119,7 +120,8 @@ from PIL import Image
 
 import cn_clip.clip as clip
 from cn_clip.clip import load_from_name, available_models
-print("Available models:", available_models())  # Available models: ['ViT-B-16', 'ViT-L-14', 'ViT-L-14-336']
+print("Available models:", available_models())  
+# Available models: ['ViT-B-16', 'ViT-L-14', 'ViT-L-14-336', 'ViT-H-14', 'RN50']
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model, preprocess = load_from_name("ViT-B-16", device=device, download_root='./')
