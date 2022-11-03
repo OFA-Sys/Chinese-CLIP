@@ -72,7 +72,7 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 <br>
 
 **Flickr30K-CN Retrieval**:
-<table border="1" width="120%">
+<table border="1" width="150%">
 	<tr align="center">
         <th>Task</th><th colspan="6">Text-to-Image</th><th colspan="6">Image-to-Text</th>
     </tr>
@@ -95,7 +95,7 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 <br>
 
 **COCO-CN Retrieval**:
-<table border="1" width="100%">
+<table border="1" width="150%">
 	<tr align="center">
         <th>Task</th><th colspan="6">Text-to-Image</th><th colspan="6">Image-to-Text</th>
     </tr>
@@ -118,7 +118,7 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 <br>
 
 **Zero-shot Image Classification**:
-<table border="1" width="100%">
+<table border="1" width="150%">
 	<tr align="center">
         <th>Task</th><th>CIFAR10</th><th>CIFAR100</th><th>DTD</th><th>EuroSAT</th><th>FER</th><th>FGVC</th><th>KITTI</th><th>MNIST</th><th>PC</th><th>VOC</th>
     </tr>
