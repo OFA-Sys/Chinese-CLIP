@@ -286,8 +286,8 @@ The configuration for training includes:
   + `val-data`: directory of validation data.
   + `num-workers`: the number of workers for dataloader.
 + Training hyper-params
-  + `vision-model`: specified visual backbones. Select from `["ViT-B-32", "ViT-B-16", "ViT-L-14"]`.
-  + `text-model`: specified language backbones. Select from `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese"]`.
+  + `vision-model`: specified visual backbones. Select from `["ViT-B-16", "ViT-L-14", "ViT-L-14-336", "ViT-H-14", "RN50"]`.
+  + `text-model`: specified language backbones. Select from `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`.
   + `context-length`: sequence length for text inputs.
   + `warmup`: steps for warmup.
   + `batch-size`: batch size for a worker (make sure that the number of training samples larger than `batch-size * GPUs`).
@@ -298,6 +298,7 @@ The configuration for training includes:
   + `use-augment`: whether to use [AutoAugment](https://arxiv.org/abs/1805.09501) for data augmentation. 
   + `valid-batch-size`: validation batch size for a worker (make sure that the number of validation samples larger than `valid-batch-size * GPUs`).
   + `valid-step-interval` and `valid-epoch-interval`: validation step / epoch frequency, if set to -1 then validation will be disabled during finetuning.
+  + `grad-checkpointing`: use [gradient checkpointing]((https://pytorch.org/docs/stable/checkpoint.html)) which does not keep the activations during forward computation, this strategy trades more computation and iteration time for less GPU memory cost.（requires Pytorch>1.8.0）
 + Ouputs
   + `name`: specified output path. Hyperparameter logs, training logs, and checkpoints will be saved at `${DATAPATH}/experiments/${name}/`.
   + `save-step-frequency` and `save-epoch-frequency`: the intervals for saving checkpoints.
