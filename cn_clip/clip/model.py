@@ -286,7 +286,7 @@ class CLIP(nn.Module):
                  ):
         super().__init__()
 
-        if isinstance(vision_layers, tuple) or isinstance(vision_layers, list):
+        if isinstance(vision_layers, (tuple, list)):
             vision_heads = vision_width * 32 // vision_head_width
             self.visual = ModifiedResNet(
                 layers=vision_layers,
