@@ -16,8 +16,9 @@ This is the Chinese version of CLIP. We use a large-scale internal Chinese image
 <br><br>
 
 ## News
-* 2022.11.3 Released RN50, ViT-H-14.
-* 2022.9.22 Released ViT-L-14, ViT-L-14-336.
+* 2022.11.3 **Reopened**. Released RN50, ViT-H-14.
+* 2022.9.22 Finished ViT-L-14, ViT-L-14-336 pretraining.
+* 2022.7.15 **Temporarily closed opensource.**
 * 2022.7.13 Released API for Chinese-CLIP, which facitilates usage of our CLIP models.
 * 2022.7.8 Released the project Chinese-CLIP!
 <br><br>
