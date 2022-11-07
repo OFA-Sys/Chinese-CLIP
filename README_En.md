@@ -185,6 +185,9 @@ text = clip.tokenize(["杰尼龟", "妙蛙种子", "小火龙", "皮卡丘"]).to
 with torch.no_grad():
     image_features = model.encode_image(image)
     text_features = model.encode_text(text)
+    # Normalize the features. Please use the normalized features for downstream tasks.
+    image_features /= image_features.norm(dim=-1, keepdim=True) 
+    text_features /= text_features.norm(dim=-1, keepdim=True)      
 
     logits_per_image, logits_per_text = model.get_similarity(image, text)
     probs = logits_per_image.softmax(dim=-1).cpu().numpy()
