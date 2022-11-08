@@ -17,7 +17,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.data.distributed import DistributedSampler
 
-from torchvision.transforms import Compose, Resize, ToTensor, Normalize
+from torchvision.transforms import Compose, Resize, ToTensor, Normalize, InterpolationMode
 from timm.data import create_transform
 
 from cn_clip.clip import _tokenizer
@@ -83,7 +83,7 @@ class LMDBDataset(Dataset):
             transform = Compose(transform.transforms[:-3] + [_convert_to_rgb] + transform.transforms[-3:])
         else:
             transform = Compose([
-                Resize((resolution, resolution), interpolation=Image.BICUBIC),
+                Resize((resolution, resolution), interpolation=InterpolationMode.BICUBIC),
                 _convert_to_rgb,
                 ToTensor(),
                 Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)),
