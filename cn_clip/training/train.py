@@ -67,17 +67,20 @@ def get_loss(model, images, texts, loss_img, loss_txt, args):
 
     return total_loss, acc
 
-
-def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained_steps):
-    # os.environ["WDS_EPOCH"] = str(epoch)
-    
-    model.train()
+def freeze_vision_bn(args, model):
     # freeze bn running mean and variance
-    if args.freeze_vision and args.vision_model in ['RN50']:
+    if 'RN' in args.vision_model:
         RN_visual_modules = model.module.visual.modules() if isinstance(model, nn.parallel.DistributedDataParallel) else model.visual.modules()
         for m in RN_visual_modules:
             if isinstance(m, nn.BatchNorm2d):
                 m.eval()
+
+def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained_steps):
+    # os.environ["WDS_EPOCH"] = str(epoch)
+
+    model.train()
+    if args.freeze_vision:
+        freeze_vision_bn(args, model)
 
     dataloader, sampler = data['train'].dataloader,  data['train'].sampler
 
@@ -160,6 +163,8 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
             evaluate(model, data, epoch, args, step + 1)
             # set model back to train mode
             model.train()
+            if args.freeze_vision:
+                freeze_vision_bn(args, model)
 
         if args.should_save and args.save_step_frequency > 0 and ((step + 1) % args.save_step_frequency) == 0:
             save_path = os.path.join(args.checkpoint_path, f"epoch_{epoch + 1}_{step + 1}.pt")
