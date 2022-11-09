@@ -163,7 +163,7 @@ We provide a simple code snippet to show how to use the API for Chinese-CLIP. Fo
 pip install cn_clip
 
 # or install from source code
-cd Chinese-CLIP/
+cd Chinese-CLIP
 pip install -e .
 ```
 After installation, use Chinese CLIP as shown below:
