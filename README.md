@@ -164,7 +164,7 @@ pip install -r requirements.txt
 pip install cn_clip
 
 # 或者从源代码安装
-cd Chinese-CLIP/
+cd Chinese-CLIP
 pip install -e .
 ```
 安装成功后，即可通过如下方式轻松调用API：
