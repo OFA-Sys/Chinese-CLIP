@@ -23,8 +23,8 @@ export PYTHONPATH=${PYTHONPATH}:`pwd`/cn_clip/
 DATAPATH=${1}
 
 # data options
-train_data=${DATAPATH}/datasets/flickr30k-cn/lmdb/train
-val_data=${DATAPATH}/datasets/flickr30k-cn/lmdb/valid # if val_data is not specified, the validation will be automatically disabled
+train_data=${DATAPATH}/datasets/Flickr30k-CN/lmdb/train
+val_data=${DATAPATH}/datasets/Flickr30k-CN/lmdb/valid # if val_data is not specified, the validation will be automatically disabled
 
 # restore options
 resume=${DATAPATH}/pretrained_weights/clip_cn_vit-b-16.pt # or specify your customed ckpt path to resume
