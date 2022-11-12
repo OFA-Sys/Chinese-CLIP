@@ -298,7 +298,7 @@ For easier use, we have provided preprocessed MUGE ([download link](https://clip
 
 ### Finetuning
 
-We introduce the procedures of training for users to learn about the details of the model. We finetune with the pretrained Chinese CLIP. For MUGE and Flickr30K-CN, we provide scripts `run_scripts/muge_finetune_vit-b-16_rbt-base.sh` and `run_scripts/flickr30k_finetune_vit-b-16_rbt-base.sh`. The scripts support single-worker and distributed training. Before running, follow the instructions at the beggining of the scripts and fill in your configuration for distributed training. Then run the scripts to start your training. Logs and checkpoints will be saved at your specified paths. 
+We introduce the procedures of training for users to learn about the details of the model. We finetune with the pretrained Chinese CLIP. For MUGE and Flickr30K-CN, we provide scripts `run_scripts/muge_finetune_vit-b-16_rbt-base.sh` and `run_scripts/flickr30k_finetune_vit-b-16_rbt-base.sh`. <b>The scripts support single-worker and distributed training. Before running, follow the instructions at the beggining of the scripts and fill in your configuration for distributed training. Then run the scripts to start your training.</b> Logs and checkpoints will be saved at your specified paths. 
 
 ```bash
 cd Chinese-CLIP/
