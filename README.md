@@ -222,7 +222,7 @@ ${DATAPATH}
 ├── experiments/
 └── datasets/
     ├── MUGE/
-    ├── flickr30k-cn/
+    ├── Flickr30k-CN/
     └── .../          # 更多自定义数据集...
 ```
 
