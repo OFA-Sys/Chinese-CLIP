@@ -274,6 +274,7 @@ Texts and image-text pairing relations are stored in `${split}_texts.jsonl`, whe
 ```
 {"text_id": 8428, "text": "高级感托特包斜挎", "image_ids": [1076345, 517602]}
 ```
+For the test set where only the texts are given and the image-text pairing relations are unknown, just leave the `image_ids` field as an empty list, `"image_ids": []`.
 
 Finally, we need to serialize tsv and jsonl and transform them to LMDB files, which is easy for random access during training.
 ```
