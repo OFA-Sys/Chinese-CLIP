@@ -55,6 +55,7 @@ def setup_worker_logging(rank, log_queue, level):
     queue_handler.setLevel(level)
 
     root_logger = logging.getLogger()
-    root_logger.removeHandler(root_logger.handlers[0])
+    if len(root_logger.handlers) > 0:
+        root_logger.removeHandler(root_logger.handlers[0])
     root_logger.addHandler(queue_handler)
     root_logger.setLevel(level)
