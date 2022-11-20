@@ -42,7 +42,7 @@ report_training_batch_acc="--report-training-batch-acc"
 # report_training_batch_acc=""
 
 # training hyper-params
-context_length=24
+context_length=52
 warmup=100
 batch_size=128
 valid_batch_size=128
