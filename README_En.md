@@ -371,7 +371,7 @@ python -u src/eval/extract_features.py \
     --text-data="${DATAPATH}/datasets/${dataset_name}/${split}_texts.jsonl" \
     --img-batch-size=32 \
     --text-batch-size=32 \
-    --context-length=24 \
+    --context-length=52 \
     --resume=${resume} \
     --vision-model=ViT-B-16 \
     --text-model=RoBERTa-wwm-ext-base-chinese
