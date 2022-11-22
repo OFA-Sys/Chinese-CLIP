@@ -502,7 +502,10 @@ The label id is `[line number]-1`. For example, the label id for the first line 
 ### Prediction and Evaluation
 We provide a script for prediction and evaluation. Please check `run_scripts/zeroshot_eval.sh` for more details. An example command is shown below:
 ```bash
-bash run_scripts/zeroshot_eval.sh 0 ${DATAPATH} ${dataset_name} ${vision_model} ${text_model} ${ckpt_path}
+bash run_scripts/zeroshot_eval.sh 0 \
+   ${DATAPATH} ${dataset_name} \
+   ${vision_model} ${text_model} \
+   ${ckpt_path}
 ```
 where the first argument `0` refers to the GPU ID. `vision_model` refers to the type of vision encoder, including `["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`, and `text_model`includes `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`, and `ckpt_path` refers to the path to the checkpoint to load. 
 
