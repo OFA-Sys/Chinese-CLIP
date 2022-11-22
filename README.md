@@ -147,8 +147,8 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 开始本项目前，需先检查是否满足下列环境配置要求:
 
 * python >= 3.6.4
-* pytorch >= 1.7.1 (with torchvision)
-* CUDA Version >= 10.1
+* pytorch >= 1.8.0 (with torchvision >= 0.9.0)
+* CUDA Version >= 10.2
 
 运行下列命令即可安装本项目所需的三方库。
 
