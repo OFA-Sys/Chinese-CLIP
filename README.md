@@ -459,29 +459,55 @@ cat output.json
 <br>
 
 
-## 零样本分类
+## 零样本图像分类
+本部分介绍如何使用Chinese CLIP实现零样本图像分类，以零样本图像分类Benchamrk Image Classification in the Wild (ICinW) 中的数据集为例。更多关于该benchmark的详情请点击[链接](https://eval.ai/web/challenges/challenge-page/1832/overview)。
+<br>
+
 ### 准备工作
 首先将数据按照如下格式进行准备。由于零样本图像分类仅需测试，因此只需要准备好测试集：
 ```
 ${DATAPATH}
-└── ${dataset}/
-    └── test/
-        └── 001
-        └── 002
-        └── 003
-        └── ...
-    └── label_cn.txt
+└── datasets
+    └── ${dataset_name}
+        ├── label_cn.txt
+        └── test
+	    ├── 000 # label id，如label个数大于10，则将其向左补零到3位数保证字典序
+	    │   ├── image_0003.jpg # 图片样本，命名无特殊要求
+	    │   ├── image_0005.jpg
+	    │   ├── ...
+	    ├── 001
+	    │   ├── image_0001.jpg
+	    │   ├── image_0002.jpg
+	    │   ├── ...
+	    └── 002
+	        ├── image_0003.jpg
+	        ├── image_0005.jpg
+	        └── ...
+	    ...
+	
 ```
-测试集保证test文件夹内数据按照label对应的id进行划分，并保证id为字典序（10以上的多位数，需向左补零`label.zfill(3)`, 如001，002等）。
+测试集保证test文件夹内数据按照label对应的id进行划分，并保证id为字典序（10以上的多位数，需向左补零`label.zfill(3)`, 如001，002等）。`label_cn.txt`为数据标签，每行一个标签名，如下所示：
+```
+手风琴
+飞机
+锚
+...
+```
+每行的标签对应的label id为`行号-1`，如第1行的标签的id为0，第二行的标签的id为1。如果标签总数大于10，则统一向左补零到3位数，比如标签个数位100，标签id则为`000-099`。用户需为每个label id生成对应的文件夹，并将标注该label的样本放入其中。我们以Caltech-101为样例，请点击[链接](https://shuangqing-multimodal.oss-cn-zhangjiakou.aliyuncs.com/cvinw/classification_organized/caltech-101-example.zip)下载。
+<br>
 
 ### 预测和评估
 我们准备了预测脚本，请查看`run_scripts/zeroshot_eval.sh`。运行命令例子如下：
 ```bash
-bash run_scripts/zeroshot_eval.sh 0 ${DATAPATH} ${dataset} ${vision_model} ${text_model} ${ckpt_path}
+bash run_scripts/zeroshot_eval.sh 0 ${DATAPATH} ${dataset_name} ${vision_model} ${text_model} ${ckpt_path}
 ```
-其中`vision_model`为指定模型类型，选项包括`["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`，而`text_model`包括`["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`，`ckpt_path`即为模型ckpt的路径。
+其中第一个入参`0`为GPU id，`vision_model`为指定模型类型，选项包括`["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`，而`text_model`包括`["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`，`ckpt_path`即为模型ckpt的路径。
 
-返回结果会打印top-1的准确率，并且存下json文件。该json文件用于提交ICinW用。
+返回结果会打印top-1的准确率。同时，程序还会存下一个json文件用于提交ICinW用，json文件内容如下所示：
+```json
+{"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "caltech-101", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913 "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 101)]"}
+```
+其中包括模型名`model_name`、数据集名称`dataset_name`、总参数量`num_params`、视觉塔的参数量`num_visual_params`等模型的meta信息，以及模型输出结果，即模型的预测概率tensor，size为`[1, 样本数, 标签个数]`。
 <br><br><br>
 
 
