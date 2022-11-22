@@ -156,7 +156,6 @@ Run the following command to install required packages.
 ```bash
 pip install -r requirements.txt
 ```
-<br><br>
 
 ## API Use Case
 We provide a simple code snippet to show how to use the API for Chinese-CLIP. For starters, please install cn_clip:
@@ -465,7 +464,7 @@ The printed results are shown below:
 
 ## Zero-shot Image Classification
 This section introduces the use of Chinese CLIP for zero-shot image classification. We use the experiment on a dataset of the benchmark "Image Classification in the Wild (ICinW)" as an example. For more information, please click [this link](https://eval.ai/web/challenges/challenge-page/1832/overview)。
-<br>
+<br><br>
 
 ### Preparation
 Organize the datasets as shown below. We need to prepare only the test set. 
@@ -498,7 +497,7 @@ anchor
 ...
 ```
 The label id is `[line number]-1`. For example, the label id for the first line is 0, and the one for the second line is 1. If the number of labels is larger than 10, all labels are filled with 0 by the left to 3-digit numbers. For example, if the number of labels is 100, the ids are `000-099`. Users should create a directory for each label, and put the corresponding samples into the directories. We provide the processed dataset Caltech-101 as an example, and please click [this link](https://shuangqing-multimodal.oss-cn-zhangjiakou.aliyuncs.com/cvinw/classification_organized/caltech-101-example.zip) to download the dataset. 
-<br>
+<br><br>
 
 ### Prediction and Evaluation
 We provide a script for prediction and evaluation. Please check `run_scripts/zeroshot_eval.sh` for more details. An example command is shown below:
