@@ -498,7 +498,10 @@ ${DATAPATH}
 ### 预测和评估
 我们准备了预测脚本，请查看`run_scripts/zeroshot_eval.sh`。运行命令例子如下：
 ```bash
-bash run_scripts/zeroshot_eval.sh 0 ${DATAPATH} ${dataset_name} ${vision_model} ${text_model} ${ckpt_path}
+bash run_scripts/zeroshot_eval.sh 0 \
+    ${DATAPATH} ${dataset_name} \
+    ${vision_model} ${text_model} \
+    ${ckpt_path}
 ```
 其中第一个入参`0`为GPU id，`vision_model`为指定模型类型，选项包括`["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`，而`text_model`包括`["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`，`ckpt_path`即为模型ckpt的路径。
 
