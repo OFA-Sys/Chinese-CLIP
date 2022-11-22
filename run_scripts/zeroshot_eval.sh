@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Usage: example: bash run_scripts/zeroshot_eval.sh 0 ${path_to_dataset} ${dataset_name} ViT-B-16 ${ckpt_path}
+
 # only supports single-GPU inference
 export CUDA_VISIBLE_DEVICES=${1}
 export PYTHONPATH=${PYTHONPATH}:`pwd`/cn_clip
