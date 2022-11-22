@@ -15,7 +15,7 @@
 This is the Chinese version of CLIP. We use a large-scale internal Chinese image-text pair dataset (~200M) to train the model, and we hope that it can help users to achieve cross-modal retrieval and image representation generation for Chinese data. This repo is based on <b>[open_clip project](https://github.com/mlfoundations/open_clip)</b>. We have made some optimization for better performance on Chinese data, and we provide the details in the following. 
 <br><br>
 
-## News
+# News
 * 2022.11.3 **Reopened**. Released RN50, ViT-H-14. Released [technical report](https://arxiv.org/pdf/2211.01335.pdf).
 * 2022.9.22 Finished ViT-L-14, ViT-L-14-336 pretraining.
 * 2022.7.15 **Temporarily closed opensource.**
@@ -23,6 +23,7 @@ This is the Chinese version of CLIP. We use a large-scale internal Chinese image
 * 2022.7.8 Released the project Chinese-CLIP!
 <br><br>
 
+# Models and Results
 <span id="model_card"></span>
 ## Model Card
 Currently, we release 5 different sizes of Chinese-CLIP models. Detailed information and download link of each Chinese-CLIP model are provided below:
@@ -141,7 +142,7 @@ We conducted zero-shot inference and finetuning experiments on MUGE Retrieval, F
 </table>
 <br><br>
 
-
+# Getting Started
 ## Installation Requirements
 To start with this project, make sure that your environment meets the requirements below:
 
@@ -199,7 +200,8 @@ However, if you are not satisfied with only using the API, move on for more deta
 <br><br>
 
 
-## Getting Started
+# Tutorial
+## Cross-Modal Retrieval
 
 ### Code Organization
 
@@ -455,7 +457,33 @@ The printed results are shown below:
 ```json
 {"success": true, "score": 85.67, "scoreJson": {"score": 85.67, "mean_recall": 85.67, "r1": 71.2, "r5": 90.5, "r10": 95.3}}
 ```
-<br><br>
+<br>
+
+## Zero-shot Image Classification
+### Preparation
+Organize the data as follows first. As it is zero-shot classification, you only need to prepare a test set: 
+```
+${DATAPATH}
+└── ${dataset}/
+    └── test/
+        └── 001
+        └── 002
+        └── 003
+        └── ...
+    └── label_cn.txt
+```
+Make sure the samples are categorized to the directories of the label ids. The ids should be dictionary ordered (for numbers larger than 10, fill 0 by left with `label.zfill(3)`), like 001 and 002. 
+
+
+### Prediction
+We prepare the test script `run_scripts/zeroshot_eval.sh`. Run it as shown below:
+```bash
+bash run_scripts/zeroshot_eval.sh 0 ${DATAPATH} ${dataset} ${vision_model} ${text_model} ${ckpt_path}
+```
+where `vision_model` refers the type of vision encoders, including `["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`, and `text_model` includes `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`, and `ckpt_path` refers to the path of the checkpoint. 
+
+The returned result includes top-1 accuracy. A json file will be saved for ICinW submission. 
+<br><br><br>
 
 
 ## Citation
