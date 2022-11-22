@@ -16,7 +16,6 @@ from cn_clip.clip import tokenize
 from cn_clip.training.main import convert_models_to_fp32
 from cn_clip.clip.utils import image_transform
 from cn_clip.eval.data import get_zeroshot_dataset, _preprocess_text
-from cn_clip.eval.imagenet_zeroshot_templates import imagenet_classnames, openai_imagenet_template
 from cn_clip.eval.cvinw_zeroshot_templates import (
     openai_templates,
     flower_templates,
@@ -251,7 +250,7 @@ if __name__ == "__main__":
 
     # Make inference and evaluation
     print('Using classifier')
-    classifier = zero_shot_classifier(model, imagenet_classnames, openai_imagenet_template, args)
+    classifier = zero_shot_classifier(model, classnames, templates, args)
     results = {}
     top1, top5, logits = run(model, classifier, data[args.dataset].dataloader, args)
 

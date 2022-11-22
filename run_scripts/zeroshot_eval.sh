@@ -13,7 +13,7 @@ resume=${5}
 label_file=${path}/${dataset}/label_cn.txt
 index=${6:-}
 
-python -u src/eval/zeroshot_evaluation.py \
+python -u cn_clip/eval/zeroshot_evaluation.py \
     --datapath="${datapath}" \
     --label-file=${label_file} \
     --save-dir=${savedir} \
