@@ -144,7 +144,6 @@ def run(model, classifier, dataloader, args):
             # measure accuracy
             acc1, acc5 = accuracy(logits, target, topk=(1, 1))
             top1 += acc1
-            top5 += acc5
             n += images.size(0)
 
     outputs = torch.cat(total_logits, dim=0)
@@ -160,9 +159,8 @@ def run(model, classifier, dataloader, args):
         print(targets)
 
     top1 = top1 / n
-    top5 = top5 / n
 
-    return top1, top5, outputs
+    return top1, outputs
 
 
 if __name__ == "__main__":
@@ -252,7 +250,7 @@ if __name__ == "__main__":
     print('Using classifier')
     classifier = zero_shot_classifier(model, classnames, templates, args)
     results = {}
-    top1, top5, logits = run(model, classifier, data[args.dataset].dataloader, args)
+    top1, logits = run(model, classifier, data[args.dataset].dataloader, args)
 
     def json_prec_dump(data, prec=6):
         return json.dumps(
@@ -276,7 +274,6 @@ if __name__ == "__main__":
         w.write(json_string)
 
     results["zeroshot-top1"] = top1
-    results["zeroshot-top5"] = top5
 
     print('Result:')
     print(", ".join(["{}: {}".format(k, v) for k, v in results.items()]))
