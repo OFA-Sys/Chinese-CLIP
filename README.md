@@ -16,12 +16,12 @@
 <br><br>
 
 # 新闻
-* 2022.11.22 新增零样本图像分类代码，支持[Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832)
+* 2022.11.22 新增[零样本图像分类](#零样本分类)代码，支持[Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832)
 * 2022.11.3 **重新开源**，新增RN50，ViT-H-14模型，公开[技术报告](https://arxiv.org/pdf/2211.01335.pdf)
 * 2022.9.22 完成ViT-L-14, ViT-L-14-336模型训练和集成
 * 2022.7.15 **暂时下线**
 * 2022.7.13 新增API功能，方便快速调用中文CLIP模型
-* 2022.7.8 Chinese CLIP项目正式开源
+* 2022.7.8 Chinese CLIP项目正式开源，开源[图文检索](#跨模态检索)代码
 <br><br>
 
 # 模型及实验
@@ -203,7 +203,7 @@ print("Label probs:", probs)  # [[1.268734e-03 5.436878e-02 6.795761e-04 9.43682
 
 
 # 教程
-下文将包括跨模态检索教程（包含finetune和inference，及KNN计算等）以及零样本图像分类教程。
+下文将包括[跨模态检索教程](#跨模态检索)（包含finetune和inference，及KNN计算等）以及[零样本图像分类教程](#零样本分类)。
 
 ## 跨模态检索
 ### 代码组织
