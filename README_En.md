@@ -464,33 +464,58 @@ The printed results are shown below:
 <br>
 
 ## Zero-shot Image Classification
+This section introduces the use of Chinese CLIP for zero-shot image classification. We use the experiment on a dataset of the benchmark "Image Classification in the Wild (ICinW)" as an example. For more information, please click [this link](https://eval.ai/web/challenges/challenge-page/1832/overview)。
+<br>
+
 ### Preparation
-Organize the data as follows first. As it is zero-shot classification, you only need to prepare a test set: 
+Organize the datasets as shown below. We need to prepare only the test set. 
 ```
 ${DATAPATH}
-└── ${dataset}/
-    └── test/
-        └── 001
-        └── 002
-        └── 003
-        └── ...
-    └── label_cn.txt
+└── datasets
+    └── ${dataset_name}
+        ├── label_cn.txt
+        └── test
+	    ├── 000 # label id，fill 0 by the left to 3 digits so that the labels can be alphabetically ordered
+	    │   ├── image_0003.jpg # image sample, no specific requirements for the naming
+	    │   ├── image_0005.jpg
+	    │   ├── ...
+	    ├── 001
+	    │   ├── image_0001.jpg
+	    │   ├── image_0002.jpg
+	    │   ├── ...
+	    └── 002
+	        ├── image_0003.jpg
+	        ├── image_0005.jpg
+	        └── ...
+	    ...
+	
 ```
-Make sure the samples are categorized to the directories of the label ids. The ids should be dictionary ordered (for numbers larger than 10, fill 0 by left with `label.zfill(3)`), like 001 and 002. 
+Make sure the data are categorized by their label id, and make sure the ids are alphabetically orderd (for numbers larger than 10, use`label.zfill(3)` to fill 0 by the left to 3 digits, like 001，002, etc). `label_cn.txt` refers to the file of label names. Each line has a label name, as demonstrated below:
+```
+accordion
+airplane
+anchor
+...
+```
+The label id is `[line number]-1`. For example, the label id for the first line is 0, and the one for the second line is 1. If the number of labels is larger than 10, all labels are filled with 0 by the left to 3-digit numbers. For example, if the number of labels is 100, the ids are `000-099`. Users should create a directory for each label, and put the corresponding samples into the directories. We provide the processed dataset Caltech-101 as an example, and please click [this link](https://shuangqing-multimodal.oss-cn-zhangjiakou.aliyuncs.com/cvinw/classification_organized/caltech-101-example.zip) to download the dataset. 
+<br>
 
-
-### Prediction
-We prepare the test script `run_scripts/zeroshot_eval.sh`. Run it as shown below:
+### Prediction and Evaluation
+We provide a script for prediction and evaluation. Please check `run_scripts/zeroshot_eval.sh` for more details. An example command is shown below:
 ```bash
-bash run_scripts/zeroshot_eval.sh 0 ${DATAPATH} ${dataset} ${vision_model} ${text_model} ${ckpt_path}
+bash run_scripts/zeroshot_eval.sh 0 ${DATAPATH} ${dataset_name} ${vision_model} ${text_model} ${ckpt_path}
 ```
-where `vision_model` refers the type of vision encoders, including `["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`, and `text_model` includes `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`, and `ckpt_path` refers to the path of the checkpoint. 
+where the first argument `0` refers to the GPU ID. `vision_model` refers to the type of vision encoder, including `["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`, and `text_model`includes `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`, and `ckpt_path` refers to the path to the checkpoint to load. 
 
-The returned result includes top-1 accuracy. A json file will be saved for ICinW submission. 
+Top-1 accuracy will be printed. Also, a json file will be saved, which serves the submission of ICinW. An example of the json file is shown below：
+```json
+{"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "caltech-101", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913 "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 101)]"}
+```
+It includes meta data like the name of model `model_name`, the dataset name `dataset_name`, the number of parameters`num_params`, the number of parameters of vision encoder `num_visual_params`, and also the outputs of the model, namely the predicted probability tensor, whose size is `[1, num_samples, num_labels]`. 
 <br><br><br>
 
 
-## Citation
+# Citation
 If you find the project helpful, please star this project and cite the related articles. Thanks for your support!
 
 ```
