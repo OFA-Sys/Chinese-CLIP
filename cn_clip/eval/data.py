@@ -3,23 +3,18 @@ import logging
 import json
 from dataclasses import dataclass
 from pathlib import Path
-
 from PIL import Image
 import base64
 from io import BytesIO
-
-import lmdb
-
-from torchvision.transforms import Compose, Resize, ToTensor, Normalize, InterpolationMode
-
 import torch
+import lmdb
+from torchvision.transforms import Compose, Resize, ToTensor, Normalize, InterpolationMode
 from torch.utils.data import Dataset, DataLoader, SubsetRandomSampler
 from torch.utils.data.distributed import DistributedSampler
 from torch.utils.data.sampler import SequentialSampler
-
 import torchvision.datasets as datasets
-
 from cn_clip.clip import tokenize
+
 
 def _convert_to_rgb(image):
     return image.convert('RGB')
@@ -29,6 +24,7 @@ def _preprocess_text(text):
     # adapt the text to Chinese BERT vocab
     text = text.lower().replace("“", "\"").replace("”", "\"")
     return text
+
 
 class EvalTxtDataset(Dataset):
     def __init__(self, jsonl_filename, max_txt_length=24):
@@ -53,6 +49,7 @@ class EvalTxtDataset(Dataset):
         text_id, text = self.texts[idx]
         text = tokenize([_preprocess_text(str(text))], context_length=self.max_txt_length)[0]
         return text_id, text
+
 
 class EvalImgDataset(Dataset):
     def __init__(self, lmdb_imgs, resolution=224):
@@ -96,10 +93,12 @@ class EvalImgDataset(Dataset):
 
         return img_id, image
 
+
 @dataclass
 class DataInfo:
     dataloader: DataLoader
     sampler: DistributedSampler
+
 
 def get_eval_txt_dataset(args, max_txt_length=24):
     input_filename = args.text_data
@@ -122,12 +121,14 @@ def get_eval_txt_dataset(args, max_txt_length=24):
 
     return DataInfo(dataloader, sampler)
 
+
 def fetch_resolution(vision_model):
     # fetch the resolution from the vision model config
     vision_model_config_file = Path(__file__).parent.parent / f"clip/model_configs/{vision_model.replace('/', '-')}.json"
     with open(vision_model_config_file, 'r') as fv:
         model_info = json.load(fv)
     return model_info["image_resolution"]
+
 
 def get_eval_img_dataset(args):
     lmdb_imgs = args.image_data
@@ -149,13 +150,9 @@ def get_eval_img_dataset(args):
 
     return DataInfo(dataloader, sampler)
 
-def get_imagenet_dataset(args, preprocess_fn, split):
-    assert split in ["val"]
 
-    data_path = args.imagenet_val
-    assert data_path
-
-    dataset = datasets.ImageFolder(data_path, transform=preprocess_fn)
+def get_zeroshot_dataset(args, preprocess_fn):
+    dataset = datasets.ImageFolder(args.datapath, transform=preprocess_fn)
 
     dataloader = torch.utils.data.DataLoader(
         dataset,
