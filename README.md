@@ -158,7 +158,6 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 ```bash
 pip install -r requirements.txt
 ```
-<br><br>
 
 ## API快速上手
 下面提供一段简单的代码示例说明如何使用中文CLIP的API。开始使用前，请先安装cn_clip：
