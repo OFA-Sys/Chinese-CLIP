@@ -12,8 +12,8 @@ export PYTHONPATH=${PYTHONPATH}:`pwd`/cn_clip
 
 path=${2}
 dataset=${3}
-datapath=${path}/${dataset}/test
-savedir=${path}/save_predictions/
+datapath=${path}/datasets/${dataset}/test
+savedir=${path}/save_predictions
 vision_model=${4} # ViT-B-16
 text_model=${5}
 resume=${6}
