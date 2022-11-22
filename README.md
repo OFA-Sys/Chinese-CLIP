@@ -461,7 +461,7 @@ cat output.json
 
 ## 零样本图像分类
 本部分介绍如何使用Chinese CLIP实现零样本图像分类，以零样本图像分类Benchamrk Image Classification in the Wild (ICinW) 中的数据集为例。更多关于该benchmark的详情请点击[链接](https://eval.ai/web/challenges/challenge-page/1832/overview)。
-<br>
+<br><br>
 
 ### 准备工作
 首先将数据按照如下格式进行准备。由于零样本图像分类仅需测试，因此只需要准备好测试集：
@@ -494,7 +494,7 @@ ${DATAPATH}
 ...
 ```
 每行的标签对应的label id为`行号-1`，如第1行的标签的id为0，第二行的标签的id为1。如果标签总数大于10，则统一向左补零到3位数，比如标签个数位100，标签id则为`000-099`。用户需为每个label id生成对应的文件夹，并将标注该label的样本放入其中。我们以Caltech-101为样例，请点击[链接](https://shuangqing-multimodal.oss-cn-zhangjiakou.aliyuncs.com/cvinw/classification_organized/caltech-101-example.zip)下载。
-<br>
+<br><br>
 
 ### 预测和评估
 我们准备了预测脚本，请查看`run_scripts/zeroshot_eval.sh`。运行命令例子如下：
