@@ -15,7 +15,7 @@
 本项目为CLIP模型的**中文**版本，使用大规模中文数据进行训练（~2亿图文对），旨在帮助用户实现中文领域的跨模态检索、图像表示等。本项目代码基于<b>[open_clip project](https://github.com/mlfoundations/open_clip)</b>建设，并针对中文领域数据以及在中文数据上实现更好的效果做了优化。本项目提供了API、训练代码和测试代码，下文中将详细介绍细节。
 <br><br>
 
-## 新闻
+# 新闻
 * 2022.11.22 新增零样本图像分类代码，支持[Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832)
 * 2022.11.3 **重新开源**，新增RN50，ViT-H-14模型，公开[技术报告](https://arxiv.org/pdf/2211.01335.pdf)
 * 2022.9.22 完成ViT-L-14, ViT-L-14-336模型训练和集成
@@ -24,6 +24,7 @@
 * 2022.7.8 Chinese CLIP项目正式开源
 <br><br>
 
+# 模型及实验
 <span id="model_card"></span>
 ## 模型规模 & 下载链接
 Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下表：
@@ -144,6 +145,7 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 <br><br>
 
 
+# 开始用起来！
 ## 安装要求
 开始本项目前，需先检查是否满足下列环境配置要求:
 
@@ -200,10 +202,11 @@ print("Label probs:", probs)  # [[1.268734e-03 5.436878e-02 6.795761e-04 9.43682
 <br><br>
 
 
-## 开始用起来！
+# 教程
+下文将包括跨模态检索教程（包含finetune和inference，及KNN计算等）以及零样本图像分类教程。
 
+## 跨模态检索
 ### 代码组织
-
 下载本项目后, 请创建新的文件夹 ```${DATAPATH}``` 以存放数据集、预训练ckpt、以及finetune产生的模型日志&ckpt。推荐工作区目录结构如下：
 
 ```
@@ -453,11 +456,36 @@ cat output.json
 ```json
 {"success": true, "score": 85.67, "scoreJson": {"score": 85.67, "mean_recall": 85.67, "r1": 71.2, "r5": 90.5, "r10": 95.3}}
 ```
-<br><br>
+<br>
 
 
+## 零样本分类
+### 准备工作
+首先将数据按照如下格式进行准备。由于零样本图像分类仅需测试，因此只需要准备好测试集：
+```
+${DATAPATH}
+└── ${dataset}/
+    └── test/
+        └── 001
+        └── 002
+        └── 003
+        └── ...
+    └── label_cn.txt
+```
+测试集保证test文件夹内数据按照label对应的id进行划分，并保证id为字典序（10以上的多位数，需向左补零`label.zfill(3)`, 如001，002等）。
 
-## 引用
+### 预测和评估
+我们准备了预测脚本，请查看`run_scripts/zeroshot_eval.sh`。运行命令例子如下：
+```bash
+bash run_scripts/zeroshot_eval.sh 0 ${DATAPATH} ${dataset} ${vision_model} ${text_model} ${ckpt_path}
+```
+其中`vision_model`为指定模型类型，选项包括`["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`，而`text_model`包括`["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`，`ckpt_path`即为模型ckpt的路径。
+
+返回结果会打印top-1的准确率，并且存下json文件。该json文件用于提交ICinW用。
+<br><br><br>
+
+
+# 引用
 如果觉得本项目好用，希望能给我们提个star并分享给身边的用户，欢迎给相关工作citation，感谢支持！
 
 ```
