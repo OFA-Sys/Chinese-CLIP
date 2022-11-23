@@ -16,7 +16,7 @@
 <br><br>
 
 # 新闻
-* 2022.11.22 新增[零样本图像分类](#零样本分类)代码，可支持[Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832)评测任务
+* 2022.11.22 新增[零样本图像分类](#零样本图像分类)代码，可支持[Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832)评测任务
 * 2022.11.3 **重新开源**，新增RN50，ViT-H-14模型，公开[技术报告](https://arxiv.org/pdf/2211.01335.pdf)
 * 2022.9.22 完成ViT-L-14, ViT-L-14-336模型训练和集成
 * 2022.7.15 **暂时下线**
