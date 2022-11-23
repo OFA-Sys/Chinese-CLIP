@@ -496,7 +496,7 @@ airplane
 anchor
 ...
 ```
-The label id is `[line number]-1`. For example, the label id for the first line is 0, and the one for the second line is 1. If the number of labels is larger than 10, all labels are filled with 0 by the left to 3-digit numbers. For example, if the number of labels is 100, the ids are `000-099`. Users should create a directory for each label, and put the corresponding samples into the directories. We provide the processed dataset Caltech-101 as an example, and please click [this link](https://shuangqing-multimodal.oss-cn-zhangjiakou.aliyuncs.com/cvinw/classification_organized/caltech-101-example.zip) to download the dataset. 
+The label id is `[line number]-1`. For example, the label id for the first line is 0, and the one for the second line is 1. If the number of labels is larger than 10, all labels are filled with 0 by the left to 3-digit numbers. For example, if the number of labels is 100, the ids are `000-099`. Users should create a directory for each label, and put the corresponding samples into the directories. We provide the processed dataset FGVC-Aircraft as an example, and please click [this link](https://shuangqing-multimodal.oss-cn-zhangjiakou.aliyuncs.com/cvinw/classification_organized/fgvc-aircraft-2013b-variants102-example.zip) to download the dataset. 
 <br><br>
 
 ### Prediction and Evaluation
@@ -511,7 +511,7 @@ where the first argument `0` refers to the GPU ID. `vision_model` refers to the 
 
 Top-1 accuracy will be printed. Also, a json file will be saved, which serves the submission of ICinW. An example of the json file is shown below：
 ```json
-{"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "caltech-101", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913 "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 101)]"}
+{"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "fgvc-aircraft-2013b-variants102", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913 "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 101)]"}
 ```
 It includes meta data like the name of model `model_name`, the dataset name `dataset_name`, the number of parameters`num_params`, the number of parameters of vision encoder `num_visual_params`, and also the outputs of the model, namely the predicted probability tensor, whose size is `[1, num_samples, num_labels]`. 
 <br><br><br>
