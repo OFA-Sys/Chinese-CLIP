@@ -460,7 +460,7 @@ cat output.json
 
 ## 零样本图像分类
 本部分介绍如何使用Chinese CLIP实现零样本图像分类，以零样本图像分类Benchamrk Image Classification in the Wild (ICinW) 中的数据集为例。更多关于该benchmark的详情请点击[链接](https://eval.ai/web/challenges/challenge-page/1832/overview)。
-<br
+<br>
 
 ### 准备工作
 首先将数据按照如下格式进行准备。由于零样本图像分类仅需测试，因此只需要准备好测试集：
