@@ -507,7 +507,7 @@ bash run_scripts/zeroshot_eval.sh 0 \
 
 返回结果会打印top-1的准确率。同时，程序还会存下一个json文件用于提交ICinW用，json文件内容如下所示：
 ```json
-{"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "caltech-101", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913 "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 101)]"}
+{"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "fgvc-aircraft-2013b-variants102", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913 "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 101)]"}
 ```
 其中包括模型名`model_name`、数据集名称`dataset_name`、总参数量`num_params`、视觉塔的参数量`num_visual_params`等模型的meta信息，以及模型输出结果，即模型的预测概率tensor，size为`[1, 样本数, 标签个数]`。
 <br><br><br>
