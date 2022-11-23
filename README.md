@@ -169,7 +169,7 @@ pip install cn_clip
 cd Chinese-CLIP
 pip install -e .
 ```
-安装成功后，即可通过如下方式轻松调用API：
+安装成功后，即可通过如下方式轻松调用API，提取图文特征并计算相似度：
 ```python
 import torch 
 from PIL import Image
