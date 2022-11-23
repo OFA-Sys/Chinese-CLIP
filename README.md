@@ -431,24 +431,24 @@ python -u cn_clip/eval/make_topk_predictions_tr.py \
 ```bash
 split=valid # 指定计算valid或test集特征
 python cn_clip/eval/evaluation.py \
-        ${DATAPATH}/datasets/${dataset_name}/${split}_texts.jsonl \
-        ${DATAPATH}/datasets/${dataset_name}/${split}_predictions.jsonl \
-        output.json
+    ${DATAPATH}/datasets/${dataset_name}/${split}_texts.jsonl \
+    ${DATAPATH}/datasets/${dataset_name}/${split}_predictions.jsonl \
+    output.json
 cat output.json
 ```
 
 对于图到文检索，请先运行下面的命令，将图文对标注的jsonl文件由文到图的格式转为图到文：
 ```bash
 python cn_clip/eval/transform_ir_annotation_to_tr.py \
-        --input ${DATAPATH}/datasets/${dataset_name}/${split}_texts.jsonl
+    --input ${DATAPATH}/datasets/${dataset_name}/${split}_texts.jsonl
 ```
 完成后，请运行命令：
 ```bash
 split=valid # 指定计算valid或test集特征
 python cn_clip/eval/evaluation_tr.py \
-        ${DATAPATH}/datasets/${dataset_name}/${split}_texts.tr.jsonl \
-        ${DATAPATH}/datasets/${dataset_name}/${split}_tr_predictions.jsonl \
-        output.json
+    ${DATAPATH}/datasets/${dataset_name}/${split}_texts.tr.jsonl \
+    ${DATAPATH}/datasets/${dataset_name}/${split}_tr_predictions.jsonl \
+    output.json
 cat output.json
 ```
 打印出的结果格式将如下：
