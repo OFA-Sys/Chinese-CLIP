@@ -304,7 +304,7 @@ For easier use, we have provided preprocessed MUGE ([download link](https://clip
 
 ### Finetuning
 
-We introduce the procedures of training for users to learn about the details of the model. We finetune with the pretrained Chinese CLIP. For MUGE and Flickr30K-CN, we provide scripts `run_scripts/muge_finetune_vit-b-16_rbt-base.sh` and `run_scripts/flickr30k_finetune_vit-b-16_rbt-base.sh`. <b>The scripts support single-worker and distributed training. Before running, follow the instructions at the beggining of the scripts and fill in your configuration for distributed training. Then run the scripts to start your training.</b> Logs and checkpoints will be saved at your specified paths. 
+We introduce the procedures of training for users to learn about the details of the model. We finetune with the pretrained Chinese CLIP. For MUGE and Flickr30K-CN, we provide scripts `run_scripts/muge_finetune_vit-b-16_rbt-base.sh` and `run_scripts/flickr30k_finetune_vit-b-16_rbt-base.sh`. <b>The scripts support single-worker and distributed training. Before running, follow the instructions at the beggining of the scripts and fill in your configuration for distributed training. Then run the scripts to start your training. If the GPU memory is insufficient, you can consider to [activate the gradient checkpointing strategy](#checkpointing) in the configuration.</b> Logs and checkpoints will be saved at your specified paths. 
 
 ```bash
 cd Chinese-CLIP/
@@ -333,7 +333,7 @@ The configuration for training includes:
   + `use-augment`: whether to use [AutoAugment](https://arxiv.org/abs/1805.09501) for data augmentation. 
   + `valid-batch-size`: validation batch size for a worker (make sure that the number of validation samples larger than `valid-batch-size * GPUs`).
   + `valid-step-interval` and `valid-epoch-interval`: validation step / epoch frequency, if set to -1 then validation will be disabled during finetuning.
-  + `grad-checkpointing`: use [gradient checkpointing]((https://pytorch.org/docs/stable/checkpoint.html)) which does not keep the activations during forward computation, this strategy trades more computation and iteration time for less GPU memory cost.（`store_true` argument, just add `--grad-checkpointing` in the script to activate it, requires Pytorch>1.8.0）
+  + `grad-checkpointing`: <span id="checkpointing"></span>use [gradient checkpointing]((https://pytorch.org/docs/stable/checkpoint.html)) which does not keep the activations during forward computation, this strategy trades more computation and iteration time for less GPU memory cost.（`store_true` argument, just add `--grad-checkpointing` in the script to activate it, requires Pytorch>1.8.0）
 + Ouputs
   + `name`: specified output path. Hyperparameter logs, training logs, and checkpoints will be saved at `${DATAPATH}/experiments/${name}/`.
   + `save-step-frequency` and `save-epoch-frequency`: the intervals for saving checkpoints.
