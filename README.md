@@ -390,7 +390,7 @@ python -u cn_clip/eval/extract_features.py \
 
 #### KNN检索
 
-对于小规模的学术检索数据集，我们提供一个简单的KNN检索实现，便于计算文到图、图到文检索的top-k召回结果
+对于小规模的学术检索数据集，我们提供一个简单的KNN检索实现，便于计算文到图、图到文检索的top-k召回结果（tips：如想仿照我们在项目中搭建检索demo，建议基于中文CLIP模型产出图文特征后，结合开源工程框架[clip-retrieval](https://github.com/rom1504/clip-retrieval)搭建前后端服务。）
 
 对于文到图检索（文本召回相关图片），请运行以下命令：
 ```bash
