@@ -170,7 +170,7 @@ def main():
     if is_master(args):
         logging.info("Params:")
         params_file = os.path.join(args.logs, args.name, "params_{}.txt".format(time_suffix))
-        with open(params_file, "w") as f:
+        with open(params_file, "w", encoding="utf-8") as f:
             for name in sorted(vars(args)):
                 val = getattr(args, name)
                 f.write(f"{name}: {val}\n")

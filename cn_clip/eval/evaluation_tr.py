@@ -20,7 +20,7 @@ def read_submission(submit_path, reference, k=5):
     submission_dict = {}
     ref_image_ids = set(reference.keys())
 
-    with open(submit_path) as fin:
+    with open(submit_path, encoding="utf-8") as fin:
         for line in fin:
             line = line.strip()
             try:
@@ -59,7 +59,7 @@ def read_submission(submit_path, reference, k=5):
 
 
 def dump_2_json(info, path):
-    with open(path, 'w') as output_json_file:
+    with open(path, 'w', encoding="utf-8") as output_json_file:
         json.dump(info, output_json_file)
 
 
@@ -83,7 +83,7 @@ def report_score(r1, r5, r10, out_p):
 
 
 def read_reference(path):
-    fin = open(path)
+    fin = open(path, encoding="utf-8")
     reference = dict()
     for line in fin:
         line = line.strip()

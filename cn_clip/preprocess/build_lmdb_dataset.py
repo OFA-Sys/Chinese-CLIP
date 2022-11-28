@@ -55,7 +55,7 @@ if __name__ == "__main__":
 
         # write LMDB file storing (image_id, text_id, text) pairs
         pairs_annotation_path = os.path.join(args.data_dir, "{}_texts.jsonl".format(split))
-        with open(pairs_annotation_path, "r") as fin_pairs:
+        with open(pairs_annotation_path, "r", encoding="utf-8") as fin_pairs:
             write_idx = 0
             for line in tqdm(fin_pairs):
                 line = line.strip()
@@ -78,7 +78,7 @@ if __name__ == "__main__":
 
         # write LMDB file storing image base64 strings
         base64_path = os.path.join(args.data_dir, "{}_imgs.tsv".format(split))
-        with open(base64_path, "r") as fin_imgs:
+        with open(base64_path, "r", encoding="utf-8") as fin_imgs:
             write_idx = 0
             for line in tqdm(fin_imgs):
                 line = line.strip()

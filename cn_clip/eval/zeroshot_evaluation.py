@@ -151,7 +151,7 @@ def run(model, classifier, dataloader, args):
 
     if getattr(args, "index", ""):
         print("Use index to rearrange the logits...")
-        with open(args.index, "r") as f:
+        with open(args.index, "r", encoding="utf-8") as f:
             index = json.load(f)
             print(index)
         outputs = outputs[index]
@@ -270,7 +270,7 @@ if __name__ == "__main__":
         "predictions": [logits.cpu().data.numpy().tolist()],
     }
     json_string = json_prec_dump(output_dict)
-    with open(os.path.join(args.save_dir, f"{args.dataset}.json"), "w") as w:
+    with open(os.path.join(args.save_dir, f"{args.dataset}.json"), "w", encoding="utf-8") as w:
         w.write(json_string)
 
     results["zeroshot-top1"] = top1

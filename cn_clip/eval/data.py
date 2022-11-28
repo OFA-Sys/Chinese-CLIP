@@ -32,7 +32,7 @@ class EvalTxtDataset(Dataset):
 
         logging.debug(f'Loading jsonl data from {jsonl_filename}.')
         self.texts = []
-        with open(jsonl_filename, "r") as fin:
+        with open(jsonl_filename, "r", encoding="utf-8") as fin:
             for line in fin:
                 obj = json.loads(line.strip())
                 text_id = obj['text_id']
