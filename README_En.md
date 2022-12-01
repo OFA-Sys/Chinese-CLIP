@@ -18,9 +18,8 @@ This is the Chinese version of CLIP. We use a large-scale internal Chinese image
 # News
 * 2022.12.1 Chinese-CLIP model & representation generation API are officially merged into Huggingface transformers🤗 codebase.
 * 2022.11.22 Release [zero-shot image classification](#zero-shot-image-classification) code. Support [Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832) benchmark.
-* 2022.11.3 **Reopened**. Released RN50, ViT-H-14. Released [technical report](https://arxiv.org/pdf/2211.01335.pdf).
+* 2022.11.3 Released RN50, ViT-H-14. Released [technical report](https://arxiv.org/pdf/2211.01335.pdf).
 * 2022.9.22 Finished ViT-L-14, ViT-L-14-336 pretraining.
-* 2022.7.15 **Temporarily closed opensource.**
 * 2022.7.13 Released [fast image & text representation generation API](#api-use-case), which facitilates usage of our CLIP models quickly.
 * 2022.7.8 Released the project Chinese-CLIP! Release [image-text retrieval](#cross-modal-retrieval) code.
 <br><br>
