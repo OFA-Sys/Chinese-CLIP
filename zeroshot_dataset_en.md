@@ -1,3 +1,5 @@
+[**中文说明**](zeroshot_dataset.md) | [**English**](zeroshot_dataset_en.md)
+
 # Zero-shot Image Classification Datasets
 
 The collection of dataset is the Chinese version of the Image Classification in the Wild in the[ELEVATER Benchmark](https://eval.ai/web/challenges/challenge-page/1832). It consists of 20 datasets, including Caltech-101, CIFAR-10, CIFAR-100, MNIST, etc. We provide our organized datasets, which enable direct usage of our codes on the datasets. 
