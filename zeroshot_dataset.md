@@ -1,6 +1,8 @@
+[**中文说明**](zeroshot_dataset.md) | [**English**](zeroshot_dataset_en.md)
+
 # 零样本图像分类数据集
 
-本数据集来自[ELEVATER Benchmark](https://eval.ai/web/challenges/challenge-page/1832)的图像分类基准的**中文版**，共包括20个图像分类数据集，包括Caltech-101、CIFAR-10、CIFAR-100、MNIST等。我们提供整理好的数据集，可以直接接入Chinese CLIP的代码进行零样本分类。
+本数据集为[ELEVATER Benchmark](https://eval.ai/web/challenges/challenge-page/1832)的图像分类基准的**中文版**，共包括20个图像分类数据集，包括Caltech-101、CIFAR-10、CIFAR-100、MNIST等。我们提供整理好的数据集，可以直接接入Chinese CLIP的代码进行零样本分类。
 
 下载链接：[点击这里](https://junyang-public.oss-cn-zhangjiakou.aliyuncs.com/all_zip.zip)
 
@@ -22,7 +24,7 @@ ${DATAPATH}
 ```
 `${DATAPATH}`表示每个数据集的文件夹路径，里面包括`train`和`test`两个文件夹，每个文件夹包含了以id编号命名的文件夹，分别代表每一个类别。另外还包含3个文件，分别为中文标签名文件`label_cn.txt`和英文标签名文件`label.txt`。其中：
 
-* 类别数在10个及以下的情况下，类别的id分别为[0-9]
+* 类别数在10个及以下的情况下，如10，类别的id分别为[0-9]
 * 类别数在10个以上的情况下，如100，类别的id分别为[000-099]，即向左补零到3位数。这是为了保证我们的id是以字典序进行排序
 * 每个id对应的类别标签名为标签文件中的第${id}行（0-index），如`0`即对应标签文件中的第0行的类别名，`099`对应的是标签文件的第99行类别名。
 
