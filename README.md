@@ -511,8 +511,14 @@ bash run_scripts/zeroshot_eval.sh 0 \
 {"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "fgvc-aircraft-2013b-variants102", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913 "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 101)]"}
 ```
 其中包括模型名`model_name`、数据集名称`dataset_name`、总参数量`num_params`、视觉塔的参数量`num_visual_params`等模型的meta信息，以及模型输出结果，即模型的预测概率tensor，size为`[1, 样本数, 标签个数]`。
-<br><br><br>
 
+### 零样本分类在线Demo
+基于我们集成于Huggingface transformers的特征提取API，我们在Huggingface Model Hub🤗提供了在线简单尝试零样本图像分类的demo（Hosted inference API），各个模型规模的demo链接见下，欢迎尝试！
+- [OFA-Sys/chinese-clip-vit-base-patch16](https://huggingface.co/OFA-Sys/chinese-clip-vit-base-patch16)
+- [OFA-Sys/chinese-clip-vit-large-patch14](https://huggingface.co/OFA-Sys/chinese-clip-vit-large-patch14)
+- [OFA-Sys/chinese-clip-vit-large-patch14-336px](https://huggingface.co/OFA-Sys/chinese-clip-vit-large-patch14-336px)
+- [OFA-Sys/chinese-clip-vit-huge-patch14](https://huggingface.co/OFA-Sys/chinese-clip-vit-huge-patch14)
+<br><br><br>
 
 # 引用
 如果觉得本项目好用，希望能给我们提个star并分享给身边的用户，欢迎给相关工作citation，感谢支持！
