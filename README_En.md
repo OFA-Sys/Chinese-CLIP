@@ -516,7 +516,7 @@ Top-1 accuracy will be printed. Also, a json file will be saved, which serves th
 ```
 It includes meta data like the name of model `model_name`, the dataset name `dataset_name`, the number of parameters`num_params`, the number of parameters of vision encoder `num_visual_params`, and also the outputs of the model, namely the predicted probability tensor, whose size is `[1, num_samples, num_labels]`. 
 
-### Zero-Shot Classifition Online Demo
+### Zero-Shot Classification Online Demo
 Based on the representation generation API which we have integrated into Huggingface transformers, we are able to provide online demos of zero-shot classification task on Huggingface Model Hub🤗 for each scale of Chinese-CLIP model. The links are given below:
 - [OFA-Sys/chinese-clip-vit-base-patch16](https://huggingface.co/OFA-Sys/chinese-clip-vit-base-patch16)
 - [OFA-Sys/chinese-clip-vit-large-patch14](https://huggingface.co/OFA-Sys/chinese-clip-vit-large-patch14)
