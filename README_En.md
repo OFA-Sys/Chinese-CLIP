@@ -394,7 +394,7 @@ Text representations are stored at `${split}_texts.txt_feat.jsonl`，as shown be
 
 #### KNN Retrieval
 
-For small-scale retrieval datasets, we provide a simple implementation of KNN retrieval, to facilitate the retrieval of top-k results in cross-modal retrieval. (tips: If you want to build a [retrieval demo](https://www.modelscope.cn/studios/damo/chinese_clip_applications/summary) in your project like us, we suggest first to use Chinese-CLIP to compute image and text embeddings, and then employ an opensoure servering framework [clip-retrieval](https://github.com/rom1504/clip-retrieval) to deploy the front-end and back-end servering.)
+For small-scale retrieval datasets, we provide a simple implementation of KNN retrieval, to facilitate the retrieval of top-k results in cross-modal retrieval. (tips: If you want to build a [retrieval demo](https://www.modelscope.cn/studios/damo/chinese_clip_applications/summary) in your project like us, we suggest first to use Chinese-CLIP to compute image and text embeddings, and then employ an opensource servering framework [clip-retrieval](https://github.com/rom1504/clip-retrieval) to deploy the front-end and back-end servering.)
 
 For text-to-image retrieval, run the commands below:
 ```bash
