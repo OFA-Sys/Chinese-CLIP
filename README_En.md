@@ -18,7 +18,7 @@ This is the Chinese version of CLIP. We use a large-scale internal Chinese image
 # News
 * 2022.12.3 The datasets of the Chinese version of the [Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832) benchmark are publicly available. See [Notes for datasets](zeroshot_dataset_en.md) for more information. 
 * 2022.12.1 Chinese-CLIP model & representation generation API are officially merged into Huggingface transformers🤗 codebase.
-* 2022.11.22 Release [zero-shot image classification](#zero-shot-image-classification) code. Support [Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832) benchmark.
+* 2022.11.22 Release [zero-shot image classification](#zero-shot-image-classification) code. Support [ELEVATER benchmark](https://eval.ai/web/challenges/challenge-page/1832) zero-shot classification benchmark.
 * 2022.11.3 Release RN50, ViT-H-14 models. Release [technical report](https://arxiv.org/pdf/2211.01335.pdf).
 * 2022.9.22 Release ViT-L-14, ViT-L-14-336 models.
 * 2022.7.13 Release [fast image & text representation generation API](#api-use-case), which facitilates usage of our CLIP models quickly.
