@@ -4,7 +4,7 @@
 
 The collection of dataset is the Chinese version of the Image Classification in the Wild in the [ELEVATER Benchmark](https://eval.ai/web/challenges/challenge-page/1832). It consists of 20 datasets, including Caltech-101, CIFAR-10, CIFAR-100, MNIST, etc. We provide our organized datasets, which enable direct usage of our codes on the datasets. 
 
-Download link: [Click here](https://junyang-public.oss-cn-zhangjiakou.aliyuncs.com/all_zip.zip)
+Download link: [Click here](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ELEVATER_all.zip)
 
 ## Notes
 We have organized 20 datasets into 20 directories, and zipped and uploaded them. Users can click the link to download all the datasets. Each dataset contains:
