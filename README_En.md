@@ -497,7 +497,7 @@ airplane
 anchor
 ...
 ```
-The label id is `[line number]-1`. For example, the label id for the first line is 0, and the one for the second line is 1. If the number of labels is larger than 10, all labels are filled with 0 by the left to 3-digit numbers. For example, if the number of labels is 100, the ids are `000-099`. Users should create a directory for each label, and put the corresponding samples into the directories. We provide the processed dataset FGVC-Aircraft as an example, and please click [this link](https://shuangqing-multimodal.oss-cn-zhangjiakou.aliyuncs.com/cvinw/classification_organized/fgvc-aircraft-2013b-variants102-example.zip) to download the dataset. 
+The label id is `[line number]-1`. For example, the label id for the first line is 0, and the one for the second line is 1. If the number of labels is larger than 10, all labels are filled with 0 by the left to 3-digit numbers. For example, if the number of labels is 100, the ids are `000-099`. Users should create a directory for each label, and put the corresponding samples into the directories. We provide the processed dataset FGVC-Aircraft as an example, and please click [this link](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/fgvc-aircraft-2013b-variants102-example.zip) to download the dataset. 
 <br><br>
 
 ### Prediction and Evaluation
