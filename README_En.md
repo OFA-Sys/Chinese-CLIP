@@ -515,6 +515,13 @@ Top-1 accuracy will be printed. Also, a json file will be saved, which serves th
 {"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "fgvc-aircraft-2013b-variants102", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913 "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 101)]"}
 ```
 It includes meta data like the name of model `model_name`, the dataset name `dataset_name`, the number of parameters`num_params`, the number of parameters of vision encoder `num_visual_params`, and also the outputs of the model, namely the predicted probability tensor, whose size is `[1, num_samples, num_labels]`. 
+
+### Zero-Shot Classifition Online Demo
+Based on the representation generation API which we have integrated into Huggingface transformers, we are able to provide online demos of zero-shot classification task on Huggingface Model Hub🤗 for each scale of Chinese-CLIP model. The links are given below:
+- [OFA-Sys/chinese-clip-vit-base-patch16](https://huggingface.co/OFA-Sys/chinese-clip-vit-base-patch16)
+- [OFA-Sys/chinese-clip-vit-large-patch14](https://huggingface.co/OFA-Sys/chinese-clip-vit-large-patch14)
+- [OFA-Sys/chinese-clip-vit-large-patch14-336px](https://huggingface.co/OFA-Sys/chinese-clip-vit-large-patch14-336px)
+- [OFA-Sys/chinese-clip-vit-huge-patch14](https://huggingface.co/OFA-Sys/chinese-clip-vit-huge-patch14)
 <br><br><br>
 
 
