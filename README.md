@@ -16,7 +16,7 @@
 <br><br>
 
 # 新闻
-* 2022.12.3 公开[Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832)数据集中文版本，详见[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)
+* 2022.12.3 公开[ELEVATER](https://eval.ai/web/challenges/challenge-page/1832)图像分类数据集中文版本，详见[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)
 * 2022.12.1 Chinese-CLIP模型代码&特征提取API，同步合入Huggingface transformers🤗代码库
 * 2022.11.22 新增[零样本图像分类](#零样本图像分类)代码，可支持[Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832)评测任务
 * 2022.11.3 新增RN50，ViT-H-14模型，公开[技术报告](https://arxiv.org/pdf/2211.01335.pdf)
@@ -460,7 +460,7 @@ cat output.json
 
 
 ## 零样本图像分类
-本部分介绍如何使用Chinese CLIP实现零样本图像分类，以零样本图像分类Benchamrk Image Classification in the Wild (ICinW) 中的数据集为例。更多关于该benchmark的详情请点击[链接](https://eval.ai/web/challenges/challenge-page/1832/overview)。
+本部分介绍如何使用Chinese CLIP实现零样本图像分类，以零样本图像分类Benchmark ELEVATER中的数据集为例。更多关于该benchmark的详情请点击[链接](https://eval.ai/web/challenges/challenge-page/1832/overview)。
 <br>
 
 ### 准备工作
@@ -506,7 +506,7 @@ bash run_scripts/zeroshot_eval.sh 0 \
 ```
 其中第一个入参`0`为GPU id，`vision_model`为指定模型类型，选项包括`["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`，而`text_model`包括`["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`，`ckpt_path`即为模型ckpt的路径。
 
-返回结果会打印top-1的准确率。同时，程序还会存下一个json文件用于提交ICinW用，json文件内容如下所示：
+返回结果会打印top-1的准确率。同时，程序还会存下一个json文件用于提交ELEVATER用，json文件内容如下所示：
 ```json
 {"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "fgvc-aircraft-2013b-variants102", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913 "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 101)]"}
 ```
