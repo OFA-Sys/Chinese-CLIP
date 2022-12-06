@@ -16,7 +16,7 @@
 <br><br>
 
 # 新闻
-* 2022.12.3 公开[ELEVATER](https://eval.ai/web/challenges/challenge-page/1832)图像分类数据集中文版本，详见[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)
+* 2022.12.3 公开[ELEVATER](https://eval.ai/web/challenges/challenge-page/1832)图像分类数据集的中文版本，详见[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)
 * 2022.12.1 Chinese-CLIP模型代码&特征提取API，同步合入Huggingface transformers🤗代码库
 * 2022.11.22 新增[零样本图像分类](#零样本图像分类)代码，可支持[ELEVATER benchmark](https://eval.ai/web/challenges/challenge-page/1832)零样本分类评测任务
 * 2022.11.3 新增RN50，ViT-H-14模型，公开[技术报告](https://arxiv.org/pdf/2211.01335.pdf)
