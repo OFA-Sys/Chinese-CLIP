@@ -12,7 +12,7 @@
 </p>
 <br><br>
 
-This is the Chinese version of CLIP. We use a large-scale internal Chinese image-text pair dataset (~200M) to train the model, and we hope that it can help users to conveniently achieve [image representation generation](#api-use-case), [cross-modal retrieval](#cross-modal-retrieval) and [zero-shot image classification](#zero-shot-image-classification) for Chinese data. This repo is based on <b>[open_clip project](https://github.com/mlfoundations/open_clip)</b>. We have made some optimization for better performance on Chinese data, and we provide the details in the following. 
+This is the Chinese version of CLIP. We use a large-scale Chinese image-text pair dataset (~200M) to train the model, and we hope that it can help users to conveniently achieve [image representation generation](#api-use-case), [cross-modal retrieval](#cross-modal-retrieval) and [zero-shot image classification](#zero-shot-image-classification) for Chinese data. This repo is based on <b>[open_clip project](https://github.com/mlfoundations/open_clip)</b>. We have made some optimization for better performance on Chinese data, and we provide the details in the following. 
 <br><br>
 
 # News
