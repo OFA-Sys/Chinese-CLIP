@@ -219,7 +219,7 @@ class Transformer(nn.Module):
 
 
 class VisualTransformer(nn.Module):
-    def __init__(self, input_resolution: int, patch_size: int, width: int, layers: int, heads: int, output_dim: int):
+    def __init__(self, input_resolution: int, patch_size: int, width: int, layers: int, heads: int, output_dim: int, mask_ratio: float = 0.):
         super().__init__()
         self.input_resolution = input_resolution
         self.grid_size = (self.input_resolution // patch_size, self.input_resolution // patch_size)
@@ -236,9 +236,27 @@ class VisualTransformer(nn.Module):
         self.ln_post = LayerNorm(width)
         self.proj = nn.Parameter(scale * torch.randn(width, output_dim))
 
+        self.mask_ratio = mask_ratio
+
     @torch.jit.ignore
     def set_grad_checkpointing(self, enable=True):
         self.transformer.grad_checkpointing = enable
+
+    def random_masking(self, x, mask_ratio):
+        N, L, D = x.shape  # batch, length, dim
+        len_keep = int(L * (1 - mask_ratio))
+
+        noise = torch.rand(N, L - 1, device=x.device)
+        ids_shuffle = torch.argsort(noise, dim=1) + torch.ones(N, L - 1, device=x.device,
+                                                               dtype=int)
+        ids_keep = ids_shuffle[:, :len_keep]
+
+        x_masked = torch.gather(x, dim=1, index=ids_keep.unsqueeze(-1).repeat(1, 1, D))
+
+        x0 = x[:, 0, :]
+        x0 = x0.reshape(N, 1, D)
+        x_masked_add = torch.cat([x0, x_masked], axis=1)
+        return x_masked_add
 
     def forward(self, x: torch.Tensor):
         x = self.conv1(x)  # shape = [*, width, grid, grid]
@@ -246,6 +264,8 @@ class VisualTransformer(nn.Module):
         x = x.permute(0, 2, 1)  # shape = [*, grid ** 2, width]
         x = torch.cat([self.class_embedding.to(x.dtype) + torch.zeros(x.shape[0], 1, x.shape[-1], dtype=x.dtype, device=x.device), x], dim=1)  # shape = [*, grid ** 2 + 1, width]
         x = x + self.positional_embedding.to(x.dtype)
+        if self.mask_ratio != 0:
+            x = self.random_masking(x, self.mask_ratio)
         x = self.ln_pre(x)
 
         x = x.permute(1, 0, 2)  # NLD -> LND
