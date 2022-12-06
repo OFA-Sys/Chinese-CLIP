@@ -23,8 +23,8 @@ export PYTHONPATH=${PYTHONPATH}:`pwd`/cn_clip/
 DATAPATH=${1}
 
 # data options
-train_data=${DATAPATH}/datasets/MUGE/lmdb/train
-val_data=${DATAPATH}/datasets/MUGE/lmdb/valid # if val_data is not specified, the validation will be automatically disabled
+train_data=${DATAPATH}/datasets/Flickr30k-CN/lmdb/train
+val_data=${DATAPATH}/datasets/Flickr30k-CN/lmdb/valid # if val_data is not specified, the validation will be automatically disabled
 
 # restore options
 resume=${DATAPATH}/pretrained_weights/clip_cn_vit-b-16.pt # or specify your customed ckpt path to resume
@@ -34,7 +34,7 @@ reset_optimizer="--reset-optimizer"
 
 # output options
 output_base_dir=${DATAPATH}/experiments/
-name=muge_finetune_vit-b-16_roberta-base_bs128_8gpu
+name=flickr30k_finetune_vit-b-16_roberta-base_bs128_8gpu
 save_step_frequency=999999 # disable it
 save_epoch_frequency=1
 log_interval=1
@@ -53,6 +53,7 @@ valid_step_interval=150
 valid_epoch_interval=1
 vision_model=ViT-B-16
 text_model=RoBERTa-wwm-ext-base-chinese
+mask_ratio=0.5 # use flip: set mask ratio
 use_augment="--use-augment"
 # use_augment=""
 
@@ -79,5 +80,6 @@ python3 -m torch.distributed.launch --nproc_per_node=${GPUS_PER_NODE} --nnodes=$
           --wd=${wd} \
           --max-epochs=${max_epochs} \
           --vision-model=${vision_model} \
+          --mask_ratio=${mask_ratio} \
           ${use_augment} \
           --text-model=${text_model}
