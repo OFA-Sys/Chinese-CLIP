@@ -518,6 +518,7 @@ bash run_scripts/zeroshot_eval.sh 0 \
 - [OFA-Sys/chinese-clip-vit-large-patch14](https://huggingface.co/OFA-Sys/chinese-clip-vit-large-patch14)
 - [OFA-Sys/chinese-clip-vit-large-patch14-336px](https://huggingface.co/OFA-Sys/chinese-clip-vit-large-patch14-336px)
 - [OFA-Sys/chinese-clip-vit-huge-patch14](https://huggingface.co/OFA-Sys/chinese-clip-vit-huge-patch14)
+- **（12.10日更新🔥）**[**基于Huggingface Spaces部署的新版demo**](https://huggingface.co/spaces/OFA-Sys/chinese-clip-zero-shot-image-classification)：demo页面同时包含上述4个模型规模可选，支持输入自定义prompt模板，欢迎试用
 <br><br><br>
 
 # 引用
