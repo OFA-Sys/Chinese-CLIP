@@ -522,7 +522,7 @@ Based on the representation generation API which we have integrated into Hugging
 - [OFA-Sys/chinese-clip-vit-large-patch14](https://huggingface.co/OFA-Sys/chinese-clip-vit-large-patch14)
 - [OFA-Sys/chinese-clip-vit-large-patch14-336px](https://huggingface.co/OFA-Sys/chinese-clip-vit-large-patch14-336px)
 - [OFA-Sys/chinese-clip-vit-huge-patch14](https://huggingface.co/OFA-Sys/chinese-clip-vit-huge-patch14)
-- **（Update on 12.10🔥）**[**New version of demo deployed on Huggingface Spaces**](https://huggingface.co/spaces/OFA-Sys/chinese-clip-zero-shot-image-classification): the 4 model scales above are all gathered into the same demo page, supporting customed prompt template by user. Welcome to try!
+- **（Update on 12.10🔥）**[**New version of demo deployed on Huggingface Spaces**](https://huggingface.co/spaces/OFA-Sys/chinese-clip-zero-shot-image-classification): the 4 model scales above are all gathered into the same demo page, supporting customed prompt template by user. **Welcome to try!**
 <br><br><br>
 
 
