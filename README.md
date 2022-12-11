@@ -347,7 +347,7 @@ bash run_scripts/muge_finetune_vit-b-16_rbt-base.sh ${DATAPATH}
 ```
 验证log格式如下所示:
 ```
-2022-06-16,11:06:00 | INFO | Rank 0 | Validation Result (epoch 1 @ 150 steps) | Valid Loss: 0.503617 | Image2Text Acc: 84.76 | Text2Image Acc: 84.37 | logit_scale: 4.605 | Valid Batch Size: 128
+2022-12-11,20:42:47 | INFO | Rank 0 | Validation Result (epoch 1 @ 150 steps) | Valid Loss: 0.502810 | Image2Text Acc: 84.95 | Text2Image Acc: 84.26 | logit_scale: 4.605 | Valid Batch Size: 128
 ```
 
 **注意**: 对比学习的训练收敛和稳定性和总batch size相关。如您使用更小的batch size（相比默认配置128 per-GPU \* 8 GPU），建议使用更小的学习率。我们推荐使用更多的GPU和更大的batch size以取得更好的效果。
