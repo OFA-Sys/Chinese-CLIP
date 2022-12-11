@@ -159,8 +159,12 @@ def get_dataset(args, is_train, max_txt_length=64, epoch_id=0):
     pad_dataset(dataset, global_batch_size)
 
     num_samples = dataset.dataset_len
-    sampler = DistributedSampler(dataset, shuffle=is_train, seed=args.seed)
-    sampler.set_epoch(epoch_id)
+    # Update in 22.12.11: We have changed the **validation** dataset sampler during finetuning
+    # from sequential to shuffled (in a determistic order between experiments and epochs). 
+    # This is to avoid there being one text matching multiple images (or vice versa) in a local batch
+    # which will affect the correctness of computing the validation in-batch accuracy.
+    sampler = DistributedSampler(dataset, shuffle=True, seed=args.seed)
+    sampler.set_epoch(epoch_id if is_train else 0)
 
     dataloader = DataLoader(
         dataset,
