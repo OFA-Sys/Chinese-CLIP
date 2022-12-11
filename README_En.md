@@ -350,7 +350,7 @@ After training, the log will be saved at `${DATAPATH}/experiments/${name}/out_${
 ```
 The example of validation log is shown below:
 ```
-2022-06-16,11:06:00 | INFO | Rank 0 | Validation Result (epoch 1 @ 150 steps) | Valid Loss: 0.503617 | Image2Text Acc: 84.76 | Text2Image Acc: 84.37 | logit_scale: 4.605 | Valid Batch Size: 128
+2022-12-11,20:42:47 | INFO | Rank 0 | Validation Result (epoch 1 @ 150 steps) | Valid Loss: 0.502810 | Image2Text Acc: 84.95 | Text2Image Acc: 84.26 | logit_scale: 4.605 | Valid Batch Size: 128
 ```
 
 **Attention**: The convergence and stability of contrastive learning is highly relevant to the total batch size. If you use a smaller batch size, (in comparison with the default 128 per-GPU \* 8 GPU), we advise you to use a smaller learning rat. We recommend using more GPUs and larger batch size for better performance. 
