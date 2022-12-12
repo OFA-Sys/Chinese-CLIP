@@ -130,6 +130,12 @@ def parse_args():
         help="Name of the vision backbone to use.",
     )
     parser.add_argument(
+        "--mask_ratio",
+        default=0,
+        type=float,
+        help="mask ratio of patches.",
+    )
+    parser.add_argument(
         "--clip-weight-path",
         default=None,
         type=str,

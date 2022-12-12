@@ -16,7 +16,7 @@ def is_master(args):
     return args.rank == 0
 
 def get_loss(model, images, texts, loss_img, loss_txt, args):
-    image_features, text_features, logit_scale = model(images, texts)
+    image_features, text_features, logit_scale = model(images, texts, args.mask_ratio)
     logit_scale = logit_scale.mean()
     if args.aggregate:
         world_size = dist.get_world_size()

@@ -240,12 +240,30 @@ class VisualTransformer(nn.Module):
     def set_grad_checkpointing(self, enable=True):
         self.transformer.grad_checkpointing = enable
 
-    def forward(self, x: torch.Tensor):
+    def random_masking(self, x, mask_ratio):
+        N, L, D = x.shape  # batch, length, dim
+        len_keep = int((L - 1) * (1 - mask_ratio))
+
+        noise = torch.rand(N, L - 1, device=x.device)
+        ids_shuffle = torch.argsort(noise, dim=1) + torch.ones(N, L - 1, device=x.device,
+                                                               dtype=int)
+        ids_keep = ids_shuffle[:, :len_keep]
+
+        x_masked = torch.gather(x, dim=1, index=ids_keep.unsqueeze(-1).repeat(1, 1, D))
+
+        x0 = x[:, 0, :]
+        x0 = x0.reshape(N, 1, D)
+        x_masked_add = torch.cat([x0, x_masked], axis=1)
+        return x_masked_add
+
+    def forward(self, x: torch.Tensor, mask_ratio: float = 0.0):
         x = self.conv1(x)  # shape = [*, width, grid, grid]
         x = x.reshape(x.shape[0], x.shape[1], -1)  # shape = [*, width, grid ** 2]
         x = x.permute(0, 2, 1)  # shape = [*, grid ** 2, width]
         x = torch.cat([self.class_embedding.to(x.dtype) + torch.zeros(x.shape[0], 1, x.shape[-1], dtype=x.dtype, device=x.device), x], dim=1)  # shape = [*, grid ** 2 + 1, width]
         x = x + self.positional_embedding.to(x.dtype)
+        if mask_ratio != 0:
+            x = self.random_masking(x, mask_ratio)
         x = self.ln_pre(x)
 
         x = x.permute(1, 0, 2)  # NLD -> LND
@@ -282,7 +300,7 @@ class CLIP(nn.Module):
                  text_type_vocab_size: int,
                  tokenizer = _tokenizer,
                  # vision head width, added this param for ViT-H
-                 vision_head_width: int = 64,                 
+                 vision_head_width: int = 64,
                  ):
         super().__init__()
 
@@ -357,8 +375,8 @@ class CLIP(nn.Module):
     def dtype(self):
         return self.visual.conv1.weight.dtype
 
-    def encode_image(self, image):
-        return self.visual(image.type(self.dtype))
+    def encode_image(self, image, mask_ratio=0):
+        return self.visual(image.type(self.dtype), mask_ratio)
 
     def encode_text(self, text):
         pad_index = self.tokenizer.vocab['[PAD]']
@@ -366,14 +384,14 @@ class CLIP(nn.Module):
         x = self.bert(text, attention_mask=attn_mask)[0].type(self.dtype) # [batch_size, seq_length, hidden_size]
         return x[:, 0, :] @ self.text_projection
 
-    def forward(self, image, text):
+    def forward(self, image, text, mask_ratio=0):
         assert image is not None or text is not None, "text and image cannot both be None!"
 
         if image is None:
             return self.encode_text(text)
         elif text is None:
             return self.encode_image(image)
-        image_features = self.encode_image(image)
+        image_features = self.encode_image(image, mask_ratio)
         text_features = self.encode_text(text)
 
         image_features = image_features / image_features.norm(dim=-1, keepdim=True)
