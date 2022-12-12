@@ -16,6 +16,7 @@ This is the Chinese version of CLIP. We use a large-scale Chinese image-text pai
 <br><br>
 
 # News
+* 2022.12.12 Implement [FLIP](https://arxiv.org/abs/2212.00794) strategy, which can be [activated](#FLIP) during finetuning (Thanks [@zwkkk](https://github.com/zwkkk) for [the PR](https://github.com/OFA-Sys/Chinese-CLIP/pull/26) ❤️）
 * 2022.12.3 The datasets of the Chinese version of the [Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832) benchmark are publicly available. See [Notes for datasets](zeroshot_dataset_en.md) for more information. 
 * 2022.12.1 Chinese-CLIP model & representation generation API are officially merged into Huggingface transformers🤗 codebase.
 * 2022.11.22 Release [zero-shot image classification](#zero-shot-image-classification) code. Support [ELEVATER](https://eval.ai/web/challenges/challenge-page/1832) zero-shot classification benchmark.
@@ -334,7 +335,8 @@ The configuration for training includes:
   + `use-augment`: whether to use [AutoAugment](https://arxiv.org/abs/1805.09501) for data augmentation. 
   + `valid-batch-size`: validation batch size for a worker (make sure that the number of validation samples larger than `valid-batch-size * GPUs`).
   + `valid-step-interval` and `valid-epoch-interval`: validation step / epoch frequency, if set to -1 then validation will be disabled during finetuning.
-  + `grad-checkpointing`: <span id="checkpointing"></span>use [gradient checkpointing]((https://pytorch.org/docs/stable/checkpoint.html)) which does not keep the activations during forward computation, this strategy trades more computation and iteration time for less GPU memory cost.（`store_true` argument, just add `--grad-checkpointing` in the script to activate it, requires Pytorch>1.8.0）
+  + `grad-checkpointing`: <span id="checkpointing"></span>use [gradient checkpointing]((https://pytorch.org/docs/stable/checkpoint.html)) which does not keep the activations during forward computation, this strategy trades more computation and iteration time for less GPU memory cost. (`store_true` argument, just add `--grad-checkpointing` in the script to activate it, requires Pytorch>1.8.0)
+  + `mask-ratio`: <span id="FLIP"></span>use [FLIP](https://arxiv.org/abs/2212.00794) strategy which masks a ratio of image patches to save GPU memory and speed up training. Default to 0.0, which disables the strategy.
 + Ouputs
   + `name`: specified output path. Hyperparameter logs, training logs, and checkpoints will be saved at `${DATAPATH}/experiments/${name}/`.
   + `save-step-frequency` and `save-epoch-frequency`: the intervals for saving checkpoints.
