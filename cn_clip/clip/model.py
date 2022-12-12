@@ -242,10 +242,10 @@ class VisualTransformer(nn.Module):
 
     def random_masking(self, x, mask_ratio):
         N, L, D = x.shape  # batch, length, dim
-        len_keep = int((L-1) * (1 - mask_ratio))
+        len_keep = int((L - 1) * (1 - mask_ratio))
 
-        noise = torch.rand(N, L-1, device=x.device)
-        ids_shuffle = torch.argsort(noise, dim=1) + torch.ones(N, L-1, device=x.device,
+        noise = torch.rand(N, L - 1, device=x.device)
+        ids_shuffle = torch.argsort(noise, dim=1) + torch.ones(N, L - 1, device=x.device,
                                                                dtype=int)
         ids_keep = ids_shuffle[:, :len_keep]
 
@@ -256,7 +256,7 @@ class VisualTransformer(nn.Module):
         x_masked_add = torch.cat([x0, x_masked], axis=1)
         return x_masked_add
 
-    def forward(self, x: torch.Tensor, mask_ratio: float=0.):
+    def forward(self, x: torch.Tensor, mask_ratio: float = 0.0):
         x = self.conv1(x)  # shape = [*, width, grid, grid]
         x = x.reshape(x.shape[0], x.shape[1], -1)  # shape = [*, width, grid ** 2]
         x = x.permute(0, 2, 1)  # shape = [*, grid ** 2, width]
