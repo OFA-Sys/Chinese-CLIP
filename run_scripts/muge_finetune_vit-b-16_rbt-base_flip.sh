@@ -80,6 +80,6 @@ python3 -m torch.distributed.launch --nproc_per_node=${GPUS_PER_NODE} --nnodes=$
           --wd=${wd} \
           --max-epochs=${max_epochs} \
           --vision-model=${vision_model} \
-          --mask_ratio=${mask_ratio} \
+          --mask-ratio=${mask_ratio} \
           ${use_augment} \
           --text-model=${text_model}
