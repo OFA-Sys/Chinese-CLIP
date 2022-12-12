@@ -133,7 +133,7 @@ def parse_args():
         "--mask-ratio",
         default=0,
         type=float,
-        help="Mask ratio of patches.",
+        help="Random mask ratio of patches during finetuning. Default to zero which does not mask any patches.",
     )
     parser.add_argument(
         "--clip-weight-path",
