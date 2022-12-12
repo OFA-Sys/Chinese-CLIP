@@ -16,6 +16,7 @@
 <br><br>
 
 # 新闻
+* 2022.12.12 新增实现[FLIP](https://arxiv.org/abs/2212.00794)训练策略，在finetune训练时可[激活使用](#FLIP)（感谢[@zwkkk](https://github.com/zwkkk)同学[贡献代码](https://github.com/OFA-Sys/Chinese-CLIP/pull/26)❤️）
 * 2022.12.3 公开[ELEVATER](https://eval.ai/web/challenges/challenge-page/1832)图像分类数据集的中文版本，详见[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)
 * 2022.12.1 Chinese-CLIP模型代码&特征提取API，同步合入Huggingface transformers🤗代码库
 * 2022.11.22 新增[零样本图像分类](#零样本图像分类)代码，可支持[ELEVATER benchmark](https://eval.ai/web/challenges/challenge-page/1832)零样本分类评测任务
@@ -332,6 +333,7 @@ bash run_scripts/muge_finetune_vit-b-16_rbt-base.sh ${DATAPATH}
   + `valid-batch-size`: 验证时单机batch-size。（请保证`验证集样本总数 > batch-size * GPU数`，至少满足1个验证batch）
   + `valid-step-interval`和`valid-epoch-interval`: 验证step/epoch频率，指定为-1时则在训练中不进行验证。
   + `grad-checkpointing`: <span id="checkpointing"></span>使用[重计算策略](https://pytorch.org/docs/stable/checkpoint.html)，在前向过程中不保存中间结果，以训练时间换取更小的显存开销，适用于显存不足的情况。（`store_true`参数，直接在脚本中加上`--grad-checkpointing`即可，目前要求Pytorch>1.8.0）
+  + `mask-ratio`: <span id="FLIP"></span>参照[FLIP](https://arxiv.org/abs/2212.00794)的策略，在finetune时可指定mask一定比例的图像patch，以降低显存开销、加快训练速度。默认为0.0，即不激活这一策略
 + 输出选项
   + `name`: 指定输出路径。超参日志, 训练日志以及产出ckpt均会存放至 `${DATAPATH}/experiments/${name}/`。
   + `save-step-frequency`及`save-epoch-frequency`: 存ckpt的步数或轮数间隔。
