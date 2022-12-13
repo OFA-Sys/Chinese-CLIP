@@ -54,7 +54,7 @@ Currently, we release 5 different sizes of Chinese-CLIP models. Detailed informa
 <br></br>
 
 ## Results
-We conducted zero-shot inference and finetuning experiments on [MUGE Retrieval](https://tianchi.aliyun.com/muge), [Flickr30K-CN](https://github.com/li-xirong/cross-lingual-cap) and [COCO-CN](https://github.com/li-xirong/coco-cn) for the evaluation of cross-modal retrieval, and conducted experiments on 10 image classification datasets of the [ELEVATER](https://eval.ai/web/challenges/challenge-page/1832) benchmark for the evaluation of zero-shot image classification. Results are shown below. Due to space limitation, here we only list the performance of the largest Chinese-CLIP and baseline models. For detailed performance of each Chinese-CLIP model size, please refer to [Results.md](Results.md).
+We conducted zero-shot inference and finetuning experiments on [MUGE Retrieval](https://tianchi.aliyun.com/muge), [Flickr30K-CN](https://github.com/li-xirong/cross-lingual-cap) and [COCO-CN](https://github.com/li-xirong/coco-cn) for the evaluation of cross-modal retrieval, and conducted experiments on 10 image classification datasets of the [ELEVATER](https://eval.ai/web/challenges/challenge-page/1832) benchmark for the evaluation of zero-shot image classification. Results are shown below. Due to space limitation, here we only list the performance of the best performing Chinese-CLIP and baseline models. For detailed performance of each Chinese-CLIP model size, please refer to [Results.md](Results.md).
 
 **MUGE Text-to-Image Retrieval**:
 <table border="1" width="100%">
