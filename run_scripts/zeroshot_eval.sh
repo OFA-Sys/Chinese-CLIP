@@ -17,8 +17,10 @@ savedir=${path}/save_predictions
 vision_model=${4} # ViT-B-16
 text_model=${5}
 resume=${6}
-label_file=${path}/${dataset}/label_cn.txt
+label_file=${path}/datasets/${dataset}/label_cn.txt
 index=${7:-}
+
+mkdir -p ${savedir}
 
 python -u cn_clip/eval/zeroshot_evaluation.py \
     --datapath="${datapath}" \
