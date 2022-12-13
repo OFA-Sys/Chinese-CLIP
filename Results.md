@@ -80,4 +80,27 @@
         <td width="120%">CN-CLIP<sub>ViT-H/14</sub></td><td><b>69.2</b></td><td><b>89.9</b></td><td><b>96.1</b></td><td><b>81.5</b></td><td><b>96.9</b></td><td>99.1</td><td>63.0</td><td>86.6</td><td>92.9</td><td><b>83.5</b></td><td><b>97.3</b></td><td><b>99.2</b></td>
     </tr>  
 </table>
+<br>
+
+**Zero-shot Image Classification**:
+<table border="1" width="150%">
+	<tr align="center">
+        <th>Task</th><th>CIFAR10</th><th>CIFAR100</th><th>DTD</th><th>EuroSAT</th><th>FER</th><th>FGVC</th><th>KITTI</th><th>MNIST</th><th>PC</th><th>VOC</th>
+    </tr>
+	<tr align="center">
+        <td width="150%">CN-CLIP<sub>RN50</sub></td><td>72.7</td><td>40.6</td><td>36.9</td><td>27.0</td><td>21.9</td><td>5.4</td><td>30.2</td><td>50.2 </td><td>47.7</td><td>82.1</td>
+    </tr>
+    	<tr align="center">
+        <td width="150%">CN-CLIP<sub>ViT-B/16</sub></td><td>92.0</td><td>64.4</td><td>43.6</td><td>46.9</td><td>47.2</td><td>12.8</td><td>33.5</td><td>67.6 </td><td>54.0</td><td>83.3</td>
+    </tr>
+	<tr align="center">
+        <td width="150%">CN-CLIP<sub>ViT-L/14</sub></td><td>94.9</td><td>75.1</td><td>44.2</td><td>56.9</td><td>54.6</td><td>16.0</td><td>49.9</td><td>69.8 </td><td>63.5</td><td>84.5</td>
+    </tr>
+    	<tr align="center">
+        <td width="150%">CN-CLIP<sub>ViT-L/14@336px</sub></td><td>94.1</td><td>73.5</td><td>43.8</td><td>50.7</td><td>55.1</td><td>17.1</td><td>49.8</td><td>65.0</td><td>62.9</td><td>84.9</td>
+    </tr>
+    	<tr align="center">
+        <td width="150%">CN-CLIP<sub>ViT-H/14</sub></td><td>96.0</td><td>79.7</td><td>51.2</td><td>52.0</td><td>49.2</td><td>26.2</td><td>39.1</td><td>79.4</td><td>52.4</td><td>84.9</td>
+    </tr>
+</table>
 <br><br>
