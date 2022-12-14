@@ -7,22 +7,22 @@ The collection of dataset is the Chinese version of the Image Classification in 
 Download link: [Click here](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ELEVATER_all.zip)
 
 ## Notes
-We have organized 20 datasets into 20 directories, and zipped and uploaded them. Users can click the link to download all the datasets. Each dataset contains:
+We have organized 20 datasets into 20 directories, and zipped and uploaded them. Users can click the link above to download all the datasets. After unzipping the `ELEVATER_all.zip`, you will get the zipped files of each dataset in ELEVATER. Once again after unzipping the dataset zipfile, you will get the dataset which contains the following folder structure:
 ```
-${DATAPATH}
+${dataset_name}
 ├── index.json  # Some datasets contain this file，which only serves for the submission to the ELEVATER benchmark
 ├── label_cn.txt  # File of Chinese labels，where the text in each line refers to the label name
 ├── label.txt  # File of English labels，where the text in each line refers to the label name
-├── test
-│   ├── 000
-│   ├── 001
-│   └── 002
-└── train
-    ├── 000
-    ├── 001
-    └── 002
+├── test/
+│   ├── 000/
+│   ├── 001/
+│   └── 002/
+└── train/
+    ├── 000/
+    ├── 001/
+    └── 002/
 ```
-`${DATAPATH}` refers to the directory of each dataset, where there are two directories named `train` and `test`. Each directory contains sub-directories named with id, which refers to a category. Additionally, there are 2 files, namely the Chinese label file`label_cn.txt`, the English label file `label.txt`. Note that:
+`${dataset_name}` refers to the directory of each dataset, where there are two directories named `train` and `test`. Each directory contains sub-directories named with id, which refers to a category. Additionally, there are 2 files, namely the Chinese label file`label_cn.txt`, the English label file `label.txt`. Note that:
 
 * When the number of labels is no larger than 10, e,g., 10, the ids are [0-9]
 * When the number of labels is larger than 10, e.g., 100, the ids are [000-099]，which are left padded with 0 to 3-digit numbers. This serves for alphabetic order. 
