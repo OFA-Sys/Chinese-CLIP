@@ -506,7 +506,7 @@ airplane
 anchor
 ...
 ```
-The label id is `[line number]-1`. For example, the label id for the first line is 0, and the one for the second line is 1. If the number of labels is larger than 10, all labels are filled with 0 by the left to 3-digit numbers. For example, if the number of labels is 100, the ids are `000-099`. Users should create a directory for each label, and put the corresponding samples into the directories. We provide the processed dataset CIFAR-100 as an example, and please click [this link](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/cifar-100.zip) to download the dataset. To evaluate other datasets of ELEVATER, please refer to [Notes for datasets](zeroshot_dataset_en.md) for download.
+The label id is `[line number]-1`. For example, the label id for the first line is 0, and the one for the second line is 1. If the number of labels is larger than 10, all labels are filled with 0 by the left to 3-digit numbers. For example, if the number of labels is 100, the ids are `000-099`. Users should create a directory for each label, and put the corresponding samples into the directories. We provide the processed dataset CIFAR-100 as an example, and please click [this link](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/cifar-100.zip) to download the prepared dataset. To evaluate other datasets of ELEVATER, please refer to [Notes for datasets](zeroshot_dataset_en.md) for download.
 <br><br>
 
 ### Prediction and Evaluation
