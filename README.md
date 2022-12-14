@@ -91,8 +91,11 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
         <td width="120%">Wukong</td><td>51.7</td><td>78.9</td><td>86.3</td><td>77.4</td><td>94.5</td><td>97.0</td><td>76.1</td><td>94.8</td><td>97.5</td><td>92.7</td><td>99.1</td><td>99.6</td>
     </tr>
 	<tr align="center">
+        <td width="120%">Taiyi</td><td>60.8</td><td>85.0</td><td>91.0</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+    </tr>	
+	<tr align="center">
         <td width="120%">R2D2</td><td>60.9</td><td>86.8</td><td>92.7</td><td>84.4</td><td>96.7</td><td>98.4</td><td>77.6</td><td>96.7</td><td>98.9</td><td>95.6</td><td>99.8</td><td>100.0</td>
-    </tr>
+    </tr>	
 	<tr align="center">
         <td width="120%">CN-CLIP</td><td>71.2</td><td>91.4</td><td>95.5</td><td>83.8</td><td>96.9</td><td>98.6</td><td>81.6</td><td>97.5</td><td>98.8</td><td>95.3</td><td>99.7</td><td>100.0</td>
     </tr>
@@ -113,6 +116,9 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 	<tr align="center">
         <td width="150%">Wukong</td><td>53.4</td><td>80.2</td><td>90.1</td><td>74.0</td><td>94.4</td><td>98.1</td><td>55.2</td><td>81.0</td><td>90.6</td><td>73.3</td><td>94.0</td><td>98.0</td>
     </tr>
+	<tr align="center">
+        <td width="150%">Taiyi</td><td>60.0</td><td>84.0</td><td>93.3</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+    </tr>	
 	<tr align="center">
         <td width="150%">R2D2</td><td>56.4</td><td>85.0</td><td>93.1</td><td>79.1</td><td>96.5</td><td>98.9</td><td>63.3</td><td>89.3</td><td>95.7</td><td>79.3</td><td>97.1</td><td>98.7</td>
     </tr>
