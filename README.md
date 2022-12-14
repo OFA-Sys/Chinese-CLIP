@@ -495,7 +495,7 @@ ${DATAPATH}
 锚
 ...
 ```
-每行的标签对应的label id为`行号-1`，如第1行的标签的id为0，第二行的标签的id为1。如果标签总数大于10，则统一向左补零到3位数，比如标签个数为100，标签id则为`000-099`。用户需为每个label id生成对应的文件夹，并将标注该label的样本放入其中。我们以FGVC为样例，请点击[链接](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/fgvc-aircraft-2013b-variants102.zip)下载。
+每行的标签对应的label id为`行号-1`，如第1行的标签的id为0，第二行的标签的id为1。如果标签总数大于10，则统一向左补零到3位数，比如标签个数为100，标签id则为`000-099`。用户需为每个label id生成对应的文件夹，并将标注该label的样本放入其中。我们以CIFAR-100为样例，请点击[链接](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/cifar-100.zip)下载。
 <br>
 
 ### 预测和评估
