@@ -117,7 +117,7 @@ def load(model, device: Union[str, torch.device] = "cuda" if torch.cuda.is_avail
     return model
 
 
-def tokenize(texts: Union[str, List[str]], context_length: int = 64) -> torch.LongTensor:
+def tokenize(texts: Union[str, List[str]], context_length: int = 52) -> torch.LongTensor:
     """
     Returns the tokenized representation of given input string(s)
     Parameters
@@ -125,7 +125,7 @@ def tokenize(texts: Union[str, List[str]], context_length: int = 64) -> torch.Lo
     texts : Union[str, List[str]]
         An input string or a list of input strings to tokenize
     context_length : int
-        The context length to use; all baseline models use 24 as the context length
+        The context length to use; all baseline models use 52 as the context length
     Returns
     -------
     A two-dimensional tensor containing the resulting tokens, shape = [number of input strings, context_length]
