@@ -7,7 +7,7 @@ The collection of dataset is the Chinese version of the Image Classification in 
 Download link: [Click here](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ELEVATER_all.zip)
 
 ## Notes
-We have organized 20 datasets into 20 directories, and zipped and uploaded them. Users can click the link above to download all the datasets. After unzipping the `ELEVATER_all.zip`, you will get the zipped files of each dataset in ELEVATER. Once again after unzipping the dataset zipfile, you will get the dataset folder which contains the following structure:
+We have organized 20 datasets into 20 directories, and zipped and uploaded them. Users can click the link above to download all the datasets. After unzipping the `ELEVATER_all.zip`, you will get the zipped files of each dataset in ELEVATER. Once again after unzipping the dataset zipfile, you will get the dataset directory with the following folder structure:
 ```
 ${dataset_name}
 ├── index.json  # Some datasets contain this file，which only serves for the submission to the ELEVATER benchmark
