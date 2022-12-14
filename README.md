@@ -505,7 +505,7 @@ ${DATAPATH}
 bash run_scripts/zeroshot_eval.sh 0 \
     ${DATAPATH} ${dataset_name} \
     ${vision_model} ${text_model} \
-    ${ckpt_path}
+    ${ckpt_path} ${index_file}
 ```
 其中各参数意义为：
 + 第一个入参`0`为GPU id
@@ -514,6 +514,7 @@ bash run_scripts/zeroshot_eval.sh 0 \
 + `vision_model`为指定模型类型，选项包括`["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`
 + `text_model`包括`["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`
 + `ckpt_path`为模型预训练ckpt的完整路径
++ `index_file`（可选，仅提交ELEVATER官网评测需要指定），请参见[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)
 
 例如，用ViT-B/16规模预训练模型进行评测CIFAR-100，则运行（`${DATAPATH}`需根据实际情况替换）：
 ```bash
