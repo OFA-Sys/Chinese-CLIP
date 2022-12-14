@@ -523,7 +523,7 @@ where the arguments stand for:
 + `dataset_name` refers to the directory name of the dataset, e.g. cifar-100, as mentioned in Preparation part above
 + `vision_model` refers to the type of vision encoder, including `["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`
 + `text_model` refers to the type of text encoder, including `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`
-+ `ckpt_path` refers to the complete path of the Chinese-CLIP checkpoint
++ `ckpt_path` refers to the complete path of the pretrained Chinese-CLIP checkpoint
 + `index_file` is optional and only needed when you would like to submit to ELEVATER official website. Please refer to [Notes for datasets](zeroshot_dataset_en.md) for more details
 
 For example, to evaluate ViT-B/16 on CIFAR-100, please run (the `${DATAPATH}` should be replaced with your real path):
