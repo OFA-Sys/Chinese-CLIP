@@ -82,7 +82,7 @@
 </table>
 <br>
 
-**Zero-shot Image Classification**:
+**Zero-shot Image Classification**:<span id="zeroshot_results"></span>
 <table border="1" width="150%">
 	<tr align="center">
         <th>Task</th><th>CIFAR10</th><th>CIFAR100</th><th>DTD</th><th>EuroSAT</th><th>FER</th><th>FGVC</th><th>KITTI</th><th>MNIST</th><th>PC</th><th>VOC</th>
