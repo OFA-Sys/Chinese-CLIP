@@ -17,7 +17,7 @@ This is the Chinese version of CLIP. We use a large-scale Chinese image-text pai
 
 # News
 * 2022.12.12 Implement [FLIP](https://arxiv.org/abs/2212.00794) strategy, which can be [activated](#FLIP) during finetuning (Thanks [@zwkkk](https://github.com/zwkkk) for [the PR](https://github.com/OFA-Sys/Chinese-CLIP/pull/26) ❤️）
-* 2022.12.3 The datasets of the Chinese version of the [Image Classification in the Wild](https://eval.ai/web/challenges/challenge-page/1832) benchmark are publicly available. See [Notes for datasets](zeroshot_dataset_en.md) for more information. 
+* 2022.12.3 The datasets of the Chinese version of the [ELEVATER](https://eval.ai/web/challenges/challenge-page/1832) benchmark are publicly available. See [Notes for datasets](zeroshot_dataset_en.md) for more information. 
 * 2022.12.1 Chinese-CLIP model & representation generation API are officially merged into Huggingface transformers🤗 codebase.
 * 2022.11.22 Release [zero-shot image classification](#zero-shot-image-classification) code. Support [ELEVATER](https://eval.ai/web/challenges/challenge-page/1832) zero-shot classification benchmark.
 * 2022.11.3 Release RN50, ViT-H-14 models. Release [technical report](https://arxiv.org/pdf/2211.01335.pdf).
@@ -472,26 +472,27 @@ The printed results are shown below:
 <br>
 
 ## Zero-shot Image Classification
-This section introduces the use of Chinese CLIP for zero-shot image classification. We use the experiment on a dataset of the benchmark "Image Classification in the Wild (ICinW)" as an example. For more information, please click [this link](https://eval.ai/web/challenges/challenge-page/1832/overview)。
+This section introduces the use of Chinese-CLIP for zero-shot image classification. We use the experiment on a dataset of the benchmark ELEVATER as an example. ELEVATER is a benchmark consist of several widely used classification datasets and evaluates the zero-shot performance on these datasets, including CIFAR-10, CIFAR-100, MNIST, etc. In our experiments, we have perpared Chinese prompts and label names with the original images for each ELEVATER dataset (refer to [Notes for datasets](zeroshot_dataset_en.md) for download) to evaluate Chinese-CLIP. For more information about ELEVATER, please click [this link](https://eval.ai/web/challenges/challenge-page/1832/overview). Users can also follow the procedure below to prepare and evaluate their own classification datasets.
 <br><br>
 
 ### Preparation
-Organize the datasets as shown below. We need to prepare only the test set. 
+We need to prepare only the test set and the pretrained Chinese-CLIP checkpoint. It's recommended to prepare these directories under a user defined `${DATAPATH}` and organize them as follows:
 ```
 ${DATAPATH}
-└── datasets
-    └── ${dataset_name}
+├── pretrained_weights/
+└── datasets/
+    └── ${dataset_name}/
         ├── label_cn.txt
-        └── test
-	    ├── 000 # label id，fill 0 by the left to 3 digits so that the labels can be alphabetically ordered
+        └── test/
+	    ├── 000/ # label id，fill 0 by the left to 3 digits so that the labels can be alphabetically ordered
 	    │   ├── image_0003.jpg # image sample, no specific requirements for the naming
 	    │   ├── image_0005.jpg
-	    │   ├── ...
-	    ├── 001
+	    │   └── ...
+	    ├── 001/
 	    │   ├── image_0001.jpg
 	    │   ├── image_0002.jpg
-	    │   ├── ...
-	    └── 002
+	    │   └── ...
+	    └── 002/
 	        ├── image_0003.jpg
 	        ├── image_0005.jpg
 	        └── ...
@@ -505,7 +506,7 @@ airplane
 anchor
 ...
 ```
-The label id is `[line number]-1`. For example, the label id for the first line is 0, and the one for the second line is 1. If the number of labels is larger than 10, all labels are filled with 0 by the left to 3-digit numbers. For example, if the number of labels is 100, the ids are `000-099`. Users should create a directory for each label, and put the corresponding samples into the directories. We provide the processed dataset CIFAR-100 as an example, and please click [this link](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/cifar-100.zip) to download the dataset. 
+The label id is `[line number]-1`. For example, the label id for the first line is 0, and the one for the second line is 1. If the number of labels is larger than 10, all labels are filled with 0 by the left to 3-digit numbers. For example, if the number of labels is 100, the ids are `000-099`. Users should create a directory for each label, and put the corresponding samples into the directories. We provide the processed dataset CIFAR-100 as an example, and please click [this link](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/cifar-100.zip) to download the dataset. To evaluate other datasets of ELEVATER, please refer to [Notes for datasets](zeroshot_dataset_en.md) for download.
 <br><br>
 
 ### Prediction and Evaluation
@@ -514,13 +515,35 @@ We provide a script for prediction and evaluation. Please check `run_scripts/zer
 bash run_scripts/zeroshot_eval.sh 0 \
    ${DATAPATH} ${dataset_name} \
    ${vision_model} ${text_model} \
-   ${ckpt_path}
+   ${ckpt_path} ${index_file}
 ```
-where the first argument `0` refers to the GPU ID. `vision_model` refers to the type of vision encoder, including `["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`, and `text_model`includes `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`, and `ckpt_path` refers to the path to the checkpoint to load. 
+where the arguments stand for:
++ the first argument `0` refers to the GPU ID
++ `DATAPATH` refers to the root directory storing the checkpoint and dataset, as mentioned in Preparation part above
++ `dataset_name` refers to the directory name of the dataset, e.g. cifar-100, as mentioned in Preparation part above
++ `vision_model` refers to the type of vision encoder, including `["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`
++ `text_model` refers to the type of text encoder, including `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`
++ `ckpt_path` refers to the complete path of the Chinese-CLIP checkpoint
++ `index_file` is optional and only needed when you would like to submit to ELEVATER official website. Please refer to [Notes for datasets](zeroshot_dataset_en.md) for more details
 
-Top-1 accuracy will be printed. Also, a json file will be saved, which serves the submission of ICinW. An example of the json file is shown below：
+For example, to evaluate ViT-B/16 on CIFAR-100, please run (the `${DATAPATH}` should be replaced with your real path):
+```bash
+bash run_scripts/zeroshot_eval.sh 0 \
+    ${DATAPATH} cifar-100 \
+    ViT-B-16 RoBERTa-wwm-ext-base-chinese \
+    ${DATAPATH}/pretrained_weights/clip_cn_vit-b-16.pt
+```
+
+Top-1 accuracy will be printed. 
+```
+Result:
+zeroshot-top1: 0.6444
+```
+On CIFAR-100, the ViT-B/16 model of Chinese-CLIP will achieve the accuracy of 64.4%. For the zero-shot evaluation results of other model scales and other datasets, please refer to [Results.md](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/Results.md#zeroshot_results).
+
+Also, a json file will be saved, which serves the submission of ELEVATER. An example of the json file is shown below：
 ```json
-{"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "fgvc-aircraft-2013b-variants102", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913 "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 101)]"}
+{"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "cifar-100", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913, "n_shot": 0, "rnd_seeds": [123], "predictions": "prediction probability tensor [size: (1, 10000, 100)]"}
 ```
 It includes meta data like the name of model `model_name`, the dataset name `dataset_name`, the number of parameters`num_params`, the number of parameters of vision encoder `num_visual_params`, and also the outputs of the model, namely the predicted probability tensor, whose size is `[1, num_samples, num_labels]`. 
 
