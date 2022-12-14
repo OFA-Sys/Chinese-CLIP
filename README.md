@@ -462,26 +462,27 @@ cat output.json
 
 
 ## 零样本图像分类
-本部分介绍如何使用Chinese CLIP实现零样本图像分类，以零样本图像分类Benchmark ELEVATER中的数据集为例。更多关于该benchmark的详情请点击[链接](https://eval.ai/web/challenges/challenge-page/1832/overview)。
+本部分介绍如何使用Chinese-CLIP实现零样本图像分类，以零样本图像分类Benchmark ELEVATER中的数据集为例。ELEVATER是由多个知名的分类数据集（包括CIFAR-10、CIFAR-100、MNIST等）组成的评测集合，评测模型在这些数据集上的零样本效果。我们在实验中，给其中每个数据集准备了中文版本的prompt、类别标签连同原始图片，详见[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)，用于测试Chinese-CLIP模型。更多关于该benchmark的详情请点击[链接](https://eval.ai/web/challenges/challenge-page/1832/overview)。大家也可以参考我们提供的流程，仿照在自己的中文分类数据集准备数据并进行测试。
 <br>
 
 ### 准备工作
-首先将数据按照如下格式进行准备。由于零样本图像分类仅需测试，因此只需要准备好测试集：
+首先将数据按照如下格式进行准备。由于零样本图像分类仅需测试，因此只需要准备好测试集和预训练模型参数：
 ```
 ${DATAPATH}
-└── datasets
-    └── ${dataset_name}
+├── pretrained_weights/
+└── datasets/
+    └── ${dataset_name}/
         ├── label_cn.txt
-        └── test
-	    ├── 000 # label id，如label个数大于10，则将其向左补零到3位数保证字典序
+        └── test/
+	    ├── 000/ # label id，如label个数大于10，则将其向左补零到3位数保证字典序
 	    │   ├── image_0003.jpg # 图片样本，命名无特殊要求
 	    │   ├── image_0005.jpg
-	    │   ├── ...
-	    ├── 001
+	    │   └── ...
+	    ├── 001/
 	    │   ├── image_0001.jpg
 	    │   ├── image_0002.jpg
-	    │   ├── ...
-	    └── 002
+	    │   └── ...
+	    └── 002/
 	        ├── image_0003.jpg
 	        ├── image_0005.jpg
 	        └── ...
@@ -495,7 +496,7 @@ ${DATAPATH}
 锚
 ...
 ```
-每行的标签对应的label id为`行号-1`，如第1行的标签的id为0，第二行的标签的id为1。如果标签总数大于10，则统一向左补零到3位数，比如标签个数为100，标签id则为`000-099`。用户需为每个label id生成对应的文件夹，并将标注该label的样本放入其中。我们以CIFAR-100为样例，请点击[链接](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/cifar-100.zip)下载。
+每行的标签对应的label id为`行号-1`，如第1行的标签的id为0，第二行的标签的id为1。如果标签总数大于10，则统一向左补零到3位数，比如标签个数为100，标签id则为`000-099`。用户需为每个label id生成对应的文件夹，并将标注该label的样本放入其中。我们以ELEVATER中的**CIFAR-100数据集**为样例，请点击[链接](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/cifar-100.zip)下载处理好的数据。如果想尝试在其他ELEVATER包含的数据集上测试Chinese-CLIP，请参见我们的[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)。
 <br>
 
 ### 预测和评估
@@ -506,11 +507,32 @@ bash run_scripts/zeroshot_eval.sh 0 \
     ${vision_model} ${text_model} \
     ${ckpt_path}
 ```
-其中第一个入参`0`为GPU id，`vision_model`为指定模型类型，选项包括`["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`，而`text_model`包括`["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`，`ckpt_path`即为模型ckpt的路径。
+其中各参数意义为：
++ 第一个入参`0`为GPU id
++ `DATAPATH`参见上面的准备工作部分，根据实际位置输入对应路径
++ `dataset_name`参见上面的准备工作部分，输入评测的数据集目录名，如`cifar-100`
++ `vision_model`为指定模型类型，选项包括`["ViT-B-32", "ViT-B-16", "ViT-L-14", "ViT-L-14-336", "RN50", "ViT-H-14"]`
++ `text_model`包括`["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`
++ `ckpt_path`为模型预训练ckpt的完整路径
 
-返回结果会打印top-1的准确率。同时，程序还会存下一个json文件用于提交ELEVATER用，json文件内容如下所示：
+例如，用ViT-B/16规模预训练模型进行评测CIFAR-100，则运行（`${DATAPATH}`需根据实际情况替换）：
+```bash
+bash run_scripts/zeroshot_eval.sh 0 \
+    ${DATAPATH} cifar-100 \
+    ViT-B-16 RoBERTa-wwm-ext-base-chinese \
+    ${DATAPATH}/pretrained_weights/clip_cn_vit-b-16.pt
+```
+
+返回结果会打印top-1的准确率。
+```
+Result:
+zeroshot-top1: 0.6444
+```
+在CIFAR-100上，ViT-B/16规模的Chinese-CLIP预期应该达到64.4%。我们在ELEVATER上其他规模、其他数据集的零样本分类结果，请详见[Results.md](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/Results.md#zeroshot_results)。
+
+同时，程序还会存下一个json文件用于提交ELEVATER官方用，json文件内容如下所示：
 ```json
-{"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "fgvc-aircraft-2013b-variants102", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913 "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 101)]"}
+{"model_name": "CN-CLIP-ViT-B-16", "dataset_name": "cifar-100", "num_trainable_params": 0, "num_params": 188262913, "num_visual_params": 86192640, "num_backbone_params": 188262913, "n_shot": 0, "rnd_seeds": [123], "predictions": "prediction probability tensor [size: (1, 10000, 100)]"}
 ```
 其中包括模型名`model_name`、数据集名称`dataset_name`、总参数量`num_params`、视觉塔的参数量`num_visual_params`等模型的meta信息，以及模型输出结果，即模型的预测概率tensor，size为`[1, 样本数, 标签个数]`。
 
