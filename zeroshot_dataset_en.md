@@ -41,4 +41,4 @@ There are two label files for Chinese and English. We only use `label_cn.txt` in
 
 `index.json` only serves for the submission of the ELEVATER benchmark, and not every dataset contains this file. The existence of this file is due to the specified order of test data. To make your submission available, you need to add ` index.json` in your command. 
 
-Similarly, if you prepare the ImageNet data, please put the label files mentioned above in the directory `${dataset}`, and create directories like `train` and `test`, and file the images according to their categories into directories, which should be ordered by the alphabetic order, like `000-999`. The organization should be consistent with the abovementioned example. 
+Similarly, if you prepare the ImageNet data, please put the label files mentioned above in the directory `${dataset_name}`, and create directories like `train` and `test`, and file the images according to their categories into directories, which should be ordered by the alphabetic order, like `000-999`. The organization should be consistent with the abovementioned example. 
