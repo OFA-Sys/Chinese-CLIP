@@ -6,6 +6,8 @@ The collection of dataset is the Chinese version of the Image Classification in 
 
 Download link: [Click here](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ELEVATER_all.zip)
 
+For the ImageNet data, please visit the official website ([link](http://image-net.org)). This project only provides the label names in [Chinese](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label_cn.txt) and [English](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label.txt).
+
 ## Notes
 We have organized 20 datasets into 20 directories, and zipped and uploaded them. Users can click the link above to download all the datasets. After unzipping the `ELEVATER_all.zip`, you will get the zipped files of each dataset in ELEVATER. Once again after unzipping the dataset zipfile, you will get the dataset directory with the following folder structure:
 ```
@@ -38,3 +40,5 @@ There are two label files for Chinese and English. We only use `label_cn.txt` in
 ```
 
 `index.json` only serves for the submission of the ELEVATER benchmark, and not every dataset contains this file. The existence of this file is due to the specified order of test data. To make your submission available, you need to add ` index.json` in your command. 
+
+Similarly, if you prepare the ImageNet data, please put the label files mentioned above in the directory `${dataset}`, and create directories like `train` and `test`, and file the images according to their categories into directories, which should be ordered by the alphabetic order, like `000-999`. The organization should be consistent with the abovementioned example. 
