@@ -6,6 +6,9 @@
 
 下载链接：[点击这里](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ELEVATER_all.zip)
 
+ImageNet的数据请自行到官网下载，本项目仅提供[中文标签](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label_cn.txt)和[英文标签](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label.txt)。
+
+
 ## 数据集说明
 我们将20个数据集分别置于20个文件夹中，统一打包上传，用户通过点击上述链接即可下载全部数据。`ELEVATER_all.zip`解压后，将得到每个数据集的zip压缩包。选择对应的压缩包再次解压后，每个文件夹的内容如下所示：
 ```
@@ -38,3 +41,5 @@ ${dataset_name}
 ```
 
 `index.json`仅用于提交ELEVATER benchmark使用，且并非每个数据集都包含此文件。该文件的原因是ELEVATER官方评测部分数据集的测试集样本顺序经过调整，如需保证提交结果正常需要调整样本顺序。如遇到数据集包含此文件，则可在测试运行命令中加上` index.json`即可。
+
+类似地，如您自行准备ImageNet数据，请将上述中文和英文标签文件放入`${dataset}`，并在其中创建相应文件夹，如`train`和`test`，将图片按照类别归档并放入对应文件夹，并保证其按字典序排序，如`000-999`，实现的文件结构和上述示例保持一致，即可实现零样本分类的数据准备。
