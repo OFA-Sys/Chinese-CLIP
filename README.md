@@ -54,9 +54,9 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 <br></br>
 
 ## 实验结果
-针对图文检索任务，我们在[MUGE Retrieval](https://tianchi.aliyun.com/muge)、[Flickr30K-CN](https://github.com/li-xirong/cross-lingual-cap)和[COCO-CN](https://github.com/li-xirong/coco-cn)上进行了zero-shot和finetune的实验。为便于和其他工作的公开结果对比，我们汇报和比较MUGE在官方验证集，以及Flickr30K-CN和COCO-CN在官方测试集的结果。针对图像零样本分类，我们在[ELEVATER](https://eval.ai/web/challenges/challenge-page/1832)的10个数据集上进行了实验。实验结果如下表所示。篇幅所限，我们这里给出baseline模型和Chinese-CLIP的最优规模模型结果，关于Chinese-CLIP各规模的详细结果指标，请详见[Results.md](Results.md)。
+针对图文检索任务，我们在[MUGE Retrieval](https://tianchi.aliyun.com/muge)、[Flickr30K-CN](https://github.com/li-xirong/cross-lingual-cap)和[COCO-CN](https://github.com/li-xirong/coco-cn)上进行了zero-shot和finetune的实验。为便于和其他工作公开结果对比，我们汇报和比较MUGE官方验证集，以及Flickr30K-CN和COCO-CN官方测试集结果。针对图像零样本分类，我们在[ELEVATER](https://eval.ai/web/challenges/challenge-page/1832)的10个数据集上进行了实验。实验结果如下表所示。篇幅所限，我们这里给出baseline模型和Chinese-CLIP的最优规模模型结果，关于Chinese-CLIP各规模的详细结果指标，请详见[Results.md](Results.md)。
 
-**MUGE Text-to-Image Retrieval**:
+**MUGE Text-to-Image Retrieval (Official Validation Set)**:
 <table border="1" width="100%">
     <tr align="center">
         <th>Setup</th><th colspan="4">Zero-shot</th><th colspan="4">Finetune</th>
@@ -76,7 +76,7 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 </table>
 <br>
 
-**Flickr30K-CN Retrieval**:
+**Flickr30K-CN Retrieval (Official Test Set)**:
 <table border="1" width="150%">
 	<tr align="center">
         <th>Task</th><th colspan="6">Text-to-Image</th><th colspan="6">Image-to-Text</th>
@@ -102,7 +102,7 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 </table>
 <br>
 
-**COCO-CN Retrieval**:
+**COCO-CN Retrieval (Official Test Set)**:
 <table border="1" width="150%">
 	<tr align="center">
         <th>Task</th><th colspan="6">Text-to-Image</th><th colspan="6">Image-to-Text</th>
