@@ -6,7 +6,7 @@
 
 下载链接：[点击这里](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ELEVATER_all.zip)
 
-ImageNet的数据请自行到官网下载，本项目仅提供[中文标签](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label_cn.txt)和[英文标签](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label.txt)。
+ImageNet的原始数据请自行到官网下载（可参考[此文档](https://gist.github.com/antoinebrl/7d00d5cb6c95ef194c737392ef7e476a)下载并将验证集转为ImageFolder格式），本项目仅提供[中文标签](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label_cn.txt)和[英文标签](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label.txt)。
 
 
 ## 数据集说明
