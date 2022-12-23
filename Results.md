@@ -1,4 +1,4 @@
-**MUGE Text-to-Image Retrieval**:
+**MUGE Text-to-Image Retrieval (Official Validation Set)**:
 <table border="1" width="100%">
     <tr align="center">
         <th>Setup</th><th colspan="4">Zero-shot</th><th colspan="4">Finetune</th>
@@ -24,7 +24,7 @@
 </table>
 <br>
 
-**Flickr30K-CN Retrieval**:
+**Flickr30K-CN Retrieval (Official Test Set)**:
 <table border="1" width="120%">
 	<tr align="center">
         <th>Task</th><th colspan="6">Text-to-Image</th><th colspan="6">Image-to-Text</th>
@@ -53,7 +53,7 @@
 </table>
 <br>
 
-**COCO-CN Retrieval**:
+**COCO-CN Retrieval (Official Test Set)**:
 <table border="1" width="120%">
 	<tr align="center">
         <th>Task</th><th colspan="6">Text-to-Image</th><th colspan="6">Image-to-Text</th>
