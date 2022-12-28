@@ -175,7 +175,7 @@ pip install cn_clip
 cd Chinese-CLIP
 pip install -e .
 ```
-After installation, use Chinese CLIP to compute the image & text embeddings and similarities as shown below:
+After installation, use Chinese CLIP to compute the image ([example](examples/pokemon.jpeg)) & text embeddings and similarities as shown below:
 ```python
 import torch 
 from PIL import Image
