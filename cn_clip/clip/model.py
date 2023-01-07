@@ -377,9 +377,7 @@ class CLIP(nn.Module):
 
     def encode_image(self, image, mask_ratio=0):
         if isinstance(self.visual, ModifiedResNet):
-            if mask_ratio > 0:
-                logging.info("Note: mask_ratio > 0 (FLIP strategy) is currently only implemented for VisualTransformer. " + \
-                    "It will not function for ResNet backbone.")
+            # mask_ratio > 0 (FLIP strategy) is currently only implemented for VisualTransformer.
             return self.visual(image.type(self.dtype))
         return self.visual(image.type(self.dtype), mask_ratio)
 
