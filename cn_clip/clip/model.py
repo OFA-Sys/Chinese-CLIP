@@ -376,6 +376,11 @@ class CLIP(nn.Module):
         return self.visual.conv1.weight.dtype
 
     def encode_image(self, image, mask_ratio=0):
+        if isinstance(self.visual, ModifiedResNet):
+            if mask_ratio > 0:
+                raise NotImplementedError("Error: mask_ratio > 0 is currently only implemented for VisualTransformer." + \
+                    "If using ResNet, please set --mask-ratio to 0.0")
+            return self.visual(image.type(self.dtype))
         return self.visual(image.type(self.dtype), mask_ratio)
 
     def encode_text(self, text):
