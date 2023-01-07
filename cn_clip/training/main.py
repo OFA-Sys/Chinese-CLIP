@@ -183,8 +183,8 @@ def main():
 
     # Note for mask_ratio
     if args.mask_ratio > 0 and args.vision_model in ['RN50']:
-	logging.info("Note: mask_ratio > 0 (FLIP strategy) is currently only implemented for VisualTransformer. " + \
-	    "It will not function for ResNet backbone.")    
+        logging.info("Note: mask_ratio > 0 (FLIP strategy) is currently only implemented for VisualTransformer. " + \
+            "It will not function for ResNet backbone.")    
 
     # Optionally resume from a checkpoint
     start_epoch = 0
