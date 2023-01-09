@@ -309,7 +309,7 @@ ${DATAPATH}
 
 ### 模型finetune
 
-在此我们介绍训练的步骤，方便其他用户了解模型细节，使用我们提供的中文CLIP预训练模型进行finetune。基于MUGE和Flickr30K-CN两个下游检索数据集，我们提供了训练样例脚本`run_scripts/muge_finetune_vit-b-16_rbt-base.sh`和`run_scripts/flickr30k_finetune_vit-b-16_rbt-base.sh`。<b>运行脚本同时支持单机和多机分布式训练，请在运行前，先根据脚本开头的指引注释，填写好分布式相关配置，之后运行如下命令即可开始训练（多机训练请在各机器上都运行命令）。对于显存不足的情况，可以考虑激活配置项中的[重计算策略](#checkpointing)。</b>训练产生的log和模型ckpt文件，会自动保存在用户指定的目录下：
+在此我们介绍训练的步骤，方便其他用户了解模型细节，使用我们提供的中文CLIP预训练模型进行finetune。基于MUGE和Flickr30K-CN两个下游检索数据集，我们提供了训练样例脚本`run_scripts/muge_finetune_vit-b-16_rbt-base.sh`和`run_scripts/flickr30k_finetune_vit-b-16_rbt-base.sh`。<b>运行脚本同时支持单机（单卡或多卡）和多机分布式训练，请在运行前，先根据脚本开头的指引注释，填写好分布式相关配置，之后运行如下命令即可开始训练（多机训练请在各机器上都运行命令）。对于显存不足的情况，可以考虑激活配置项中的[重计算策略](#checkpointing)。</b>训练产生的log和模型ckpt文件，会自动保存在用户指定的目录下：
 
 ```bash
 cd Chinese-CLIP/
