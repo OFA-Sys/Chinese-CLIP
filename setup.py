@@ -9,7 +9,7 @@ with open('README_En.md', 'r', encoding='utf-8') as fp:
 setup(
     name="cn_clip",
     py_modules=["cn_clip"],
-    version="1.4",
+    version="1.5",
     author="OFA-Sys",
     author_email="",
     long_description=long_description,
