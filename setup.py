@@ -9,7 +9,7 @@ with open('README_En.md', 'r', encoding='utf-8') as fp:
 setup(
     name="cn_clip",
     py_modules=["cn_clip"],
-    version="1.5",
+    version="1.5.1",
     author="OFA-Sys",
     author_email="",
     long_description=long_description,
@@ -35,6 +35,6 @@ setup(
                 ('clip/', ['cn_clip/clip/vocab.txt'])
                 ],
     include_package_data=True,
-    url='https://github.com/OFA-Sys',
+    url='https://github.com/OFA-Sys/Chinese-CLIP',
     description='the Chinese version of CLIP.'
 )
