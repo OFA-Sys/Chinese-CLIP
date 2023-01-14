@@ -326,8 +326,9 @@ The configuration for training includes:
   + `GPUS_PER_NODE`: the number of GPUS on each machine.
 + Data for training/validation
   + `train-data`: directory of training data. Follow the procedures above the create LMDB files.
-  + `val-data`: directory of validation data.
-  + `num-workers`: the number of workers for dataloader.
+  + `val-data`: directory of validation data. If set to None, validation during finetuning will be disabled.
+  + `num-workers`: the number of workers for training set dataloader, default to 4.
+  + `valid-num-workers`: the number of workers for validation set dataloader, default to 1.
 + Training hyper-params
   + `vision-model`: specified visual backbones. Select from `["ViT-B-16", "ViT-L-14", "ViT-L-14-336", "ViT-H-14", "RN50"]`.
   + `text-model`: specified language backbones. Select from `["RoBERTa-wwm-ext-base-chinese", "RoBERTa-wwm-ext-large-chinese", "RBT3-chinese"]`.
