@@ -67,7 +67,7 @@ def parse_args():
         "--valid-epoch-interval", type=int, default=1, help="The epoch interval for validation (default to 1, set None to disable validation between epochs)."
     )
     parser.add_argument(
-        "--context-length", type=int, default=64, help="The maximum length of input text (include [CLS] & [SEP] tokens)."
+        "--context-length", type=int, default=52, help="The maximum length of input text (include [CLS] & [SEP] tokens). Default to 52."
     )
     parser.add_argument("--lr", type=float, default=None, help="Learning rate.")
     parser.add_argument("--beta1", type=float, default=None, help="Adam beta 1.")
@@ -121,7 +121,7 @@ def parse_args():
         "--precision",
         choices=["amp", "fp16", "fp32"],
         default="amp",
-        help="Floating point precition."
+        help="Floating point precision."
     )
     parser.add_argument(
         "--vision-model",
