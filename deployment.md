@@ -2,7 +2,7 @@
 
 # Chinese-CLIP模型部署：ONNX & TensorRT格式转换
 
-最新的Chinese-CLIP代码，已经支持将各规模的Pytorch模型，转换为[ONNX](https://onnx.ai/)或[TensorRT](https://developer.nvidia.com/tensorrt)格式，从而相比原始Pytorch模型**提升特征计算的推理速度**，同时不影响特征提取的下游任务效果。下面我们给出在GPU上，准备ONNX和TensorRT格式的FP16 Chinese-CLIP部署模型的整个流程，同时给出模型效果和推理速度的对比，方便大家上手利用ONNX和TensorRT库在推理性能上的优势。
+最新的Chinese-CLIP代码，已经支持将各规模的Pytorch模型，转换为[ONNX](https://onnx.ai/)或[TensorRT](https://developer.nvidia.com/tensorrt)格式，从而相比原始Pytorch模型 **[提升特征计算的推理速度](#速度对比结果)**，同时不影响特征提取的下游任务效果。下面我们给出在GPU上，准备ONNX和TensorRT格式的FP16 Chinese-CLIP部署模型的整个流程，同时给出模型效果和推理速度的对比，方便大家上手利用ONNX和TensorRT库在推理性能上的优势。
 
 ## 环境准备
 
@@ -136,7 +136,7 @@ logits_per_image = 100 * image_features @ text_features.t()
 print(logits_per_image.softmax(dim=-1)) # 图文相似概率: [[1.2252e-03, 5.2874e-02, 6.7116e-04, 9.4523e-01]]
 ```
 
-可以看到，给出的图文相似概率，和[Readme中快速使用部分](https://github.com/OFA-Sys/Chinese-CLIP#api快速上手)，基于Pytorch同一个模型计算的结果基本一致，证明了ONNX模型特征计算的正确性，而**ONNX模型的特征计算速度相比Pytorch更有优势**（详见下文）。
+可以看到，给出的图文相似概率，和[Readme中快速使用部分](https://github.com/OFA-Sys/Chinese-CLIP#api快速上手)，基于Pytorch同一个模型计算的结果基本一致，证明了ONNX模型特征计算的正确性，而**ONNX模型的特征计算速度相比Pytorch更有优势**（详见[下文](#速度对比结果)）。
 
 ## 转换和运行TensorRT模型
 
@@ -244,4 +244,63 @@ logits_per_image = 100 * image_features @ text_features.t()
 print(logits_per_image.softmax(dim=-1)) # 图文相似概率: [[1.2475e-03, 5.3037e-02, 6.7583e-04, 9.4504e-01]]
 ```
 
-可以看到，TensorRT模型给出的图文相似概率，和[Readme中快速使用部分](https://github.com/OFA-Sys/Chinese-CLIP#api快速上手)基于Pytorch的同一份模型、以及上文ONNX模型计算的结果都基本一致，证明了TensorRT模型特征计算的正确性，而TensorRT模型的特征计算速度，**相比前两者都更胜一筹**（详见下文）。
+可以看到，TensorRT模型给出的图文相似概率，和[Readme中快速使用部分](https://github.com/OFA-Sys/Chinese-CLIP#api快速上手)基于Pytorch的同一份模型、以及上文ONNX模型计算的结果都基本一致，证明了TensorRT模型特征计算的正确性，而TensorRT模型的特征计算速度，**相比前两者都更胜一筹**（详见[下文](#速度对比结果)）。
+
+## 推理速度对比
+
+### 对比实验设置
+
+我们的速度对比实验，在一台单卡T4 GPU（16GB显存）机器进行，配备16个Intel Xeon(Skylake) Platinum 8163 (2.5GHz) CPU cores，64GB内存。进行速度测试时，我们采用上面的示例图片和其中一个候选文本，对Pytorch、ONNX和TensorRT模型均执行100次图文特征提取，取耗时平均值(ms)。以ViT-B-16规模测速为例，在`Chinese-CLIP/`下执行的代码如下：
+```bash
+export CUDA_VISIBLE_DEVICES=0
+export PYTHONPATH=${PYTHONPATH}:`pwd`/cn_clip
+
+# 替换${DATAPATH}为实际的路径
+python3 cn_clip/deploy/speed_benchmark.py \
+        --model-arch ViT-B-16 \
+        --pytorch-ckpt ${DATAPATH}/pretrained_weights/clip_cn_vit-b-16.pt \
+        --pytorch-precision fp16 \
+        --onnx-image-model ${DATAPATH}/deploy/vit-b-16.img.fp16.onnx \
+        --onnx-text-model ${DATAPATH}/deploy/vit-b-16.txt.fp16.onnx \
+        --tensorrt-image-model ${DATAPATH}/deploy/vit-b-16.img.fp16.trt \
+        --tensorrt-text-model ${DATAPATH}/deploy/vit-b-16.txt.fp16.trt
+```
+
+在log输出中将先后打印以下几行，即为测速结果：
+```
+[Pytorch image inference speed (batch-size: 1):] mean=11.12ms, sd=0.05ms, min=11.00ms, max=11.32ms, median=11.11ms, 95p=11.20ms, 99p=11.30ms
+[ONNX image inference speed (batch-size: 1):] mean=4.92ms, sd=0.04ms, min=4.82ms, max=5.01ms, median=4.92ms, 95p=4.98ms, 99p=5.00ms
+[TensorRT image inference speed (batch-size: 1):] mean=3.58ms, sd=0.08ms, min=3.30ms, max=3.72ms, median=3.58ms, 95p=3.70ms, 99p=3.72ms
+
+[Pytorch text inference speed (batch-size: 1):] mean=12.47ms, sd=0.07ms, min=12.32ms, max=12.64ms, median=12.48ms, 95p=12.57ms, 99p=12.61ms
+[ONNX text inference speed (batch-size: 1):] mean=3.42ms, sd=0.44ms, min=2.96ms, max=3.89ms, median=3.45ms, 95p=3.87ms, 99p=3.88ms
+[TensorRT text inference speed (batch-size: 1):] mean=1.54ms, sd=0.01ms, min=1.51ms, max=1.57ms, median=1.54ms, 95p=1.56ms, 99p=1.56ms
+```
+
+### 速度对比结果
+
+我们列出推理batch size为1的情况下，每个规模Pytorch、ONNX和TensorRT模型的FP16精度推理耗时对比，可以看到TensorRT对于小规模模型的推理速度提升尤其明显
+<table border="1" width="120%">
+    <tr align="center">
+        <th>单位: ms/样本</th><th colspan="3">图像特征提取</th><th colspan="3">文本特征提取</th>
+    </tr>
+    <tr align="center">
+        <td>模型</td><td>Pytorch</td><td>ONNX</td><td>TensorRT</td><td>Pytorch</td><td>ONNX</td><td>TensorRT</td>
+    </tr>
+	<tr align="center">
+        <td width="120%">CN-CLIP<sub>RN50</sub></td><td>12.93</td><td>5.04</td><td><b>1.36</b></td><td>3.64</td><td>0.95</td><td><b>0.58</b></td>
+    </tr>  
+	<tr align="center">
+        <td width="120%">CN-CLIP<sub>ViT-B/16</sub></td><td>11.12</td><td>4.92</td><td><b>3.58</b></td><td>12.47</td><td>3.42</td><td><b>1.54</b></td>
+    </tr>  
+	<tr align="center">
+        <td width="120%">CN-CLIP<sub>ViT-L/14</sub></td><td>21.19</td><td>17.10</td><td><b>13.08</b></td><td>12.45</td><td>3.48</td><td><b>1.52</b></td>
+    </tr>
+	<tr align="center">
+        <td width="120%">CN-CLIP<sub>ViT-L/14@336px</sub></td><td>47.11</td><td>48.40</td><td><b>31.59</b></td><td>12.24</td><td>3.25</td><td><b>1.54</b></td>
+    </tr>
+	<tr align="center">
+        <td width="120%">CN-CLIP<sub>ViT-H/14</sub></td><td>35.10</td><td>34.00</td><td><b>26.98</b></td><td>23.98</td><td>6.01</td><td><b>3.89</b></td>
+    </tr>  
+</table>
+<br>
