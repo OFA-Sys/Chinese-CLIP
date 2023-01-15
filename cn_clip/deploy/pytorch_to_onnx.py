@@ -82,6 +82,12 @@ def packing_small_onnx_files(onnx_path):
 if __name__ == '__main__':
     args = parse_args()
 
+    # Log params.
+    print("Params:")
+    for name in sorted(vars(args)):
+        val = getattr(args, name)
+        print(f"  {name}: {val}")
+
     # prepare the PyTorch model weights
     if os.path.isfile(args.pytorch_ckpt_path):
         input_ckpt_path = args.pytorch_ckpt_path

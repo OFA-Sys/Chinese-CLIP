@@ -63,6 +63,13 @@ def parse_args():
 
 if __name__ == '__main__':
     args = parse_args()
+
+    # Log params.
+    print("Params:")
+    for name in sorted(vars(args)):
+        val = getattr(args, name)
+        print(f"  {name}: {val}")
+
     trt_logger: Logger = trt.Logger(trt.Logger.INFO)
     runtime: Runtime = trt.Runtime(trt_logger)
 
