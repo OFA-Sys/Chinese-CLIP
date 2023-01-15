@@ -28,8 +28,11 @@ def parse_args():
         help="Path to the LMDB directory with validation data split, default to None which disables validation",
     )
     parser.add_argument(
-        "--num-workers", type=int, default=4, help="The number of workers for dataloader."
-    )        
+        "--num-workers", type=int, default=4, help="The number of workers for training dataloader."
+    )
+    parser.add_argument(
+        "--valid-num-workers", type=int, default=1, help="The number of workers for validation dataloader (if making validation)."
+    )
     parser.add_argument(
         "--logs",
         type=str,

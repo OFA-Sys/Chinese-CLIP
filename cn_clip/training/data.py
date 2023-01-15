@@ -170,7 +170,7 @@ def get_dataset(args, is_train, max_txt_length=64, epoch_id=0):
         dataset,
         batch_size=batch_size,
         pin_memory=False,
-        num_workers=args.num_workers if is_train else 1,
+        num_workers=args.num_workers if is_train else args.valid_num_workers,
         sampler=sampler,
     )
 
