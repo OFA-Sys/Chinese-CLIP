@@ -16,7 +16,7 @@
 <br><br>
 
 # 新闻
-* 2023.1.15 新增部署ONNX和TensorRT模型支持（并提供预训练TensorRT模型），提升特征推理速度，满足部署需求，详见[deployment.md](deployment.md)
+* 2023.1.15 新增部署[ONNX](https://onnx.ai/)和[TensorRT](https://developer.nvidia.com/tensorrt)模型支持（并提供预训练TensorRT模型），提升特征推理速度，满足部署需求，详见[deployment.md](deployment.md)
 * 2022.12.12 新增实现[FLIP](https://arxiv.org/abs/2212.00794)训练策略，在finetune训练时可[激活使用](#FLIP)（感谢[@zwkkk](https://github.com/zwkkk)同学[贡献代码](https://github.com/OFA-Sys/Chinese-CLIP/pull/26)❤️）
 * 2022.12.3 公开[ELEVATER](https://eval.ai/web/challenges/challenge-page/1832)图像分类数据集的中文版本，详见[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)
 * 2022.12.1 Chinese-CLIP模型代码&特征提取API，同步合入Huggingface transformers🤗代码库
