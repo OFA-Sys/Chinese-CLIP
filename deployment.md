@@ -304,3 +304,28 @@ python3 cn_clip/deploy/speed_benchmark.py \
     </tr>  
 </table>
 <br>
+
+## 下游效果对比
+
+我们使用Chinese-CLIP实验中，所涉及的MUGE图文检索任务对比下游效果，观察Pytorch、ONNX和TensorRT FP16模型zero-shot的表现。如[Readme预测及评估部分](https://github.com/OFA-Sys/Chinese-CLIP#预测及评估)部分所述，MUGE图文检索评测结果分为图文特征提取、KNN检索和Recall计算3步。ONNX和TensorRT模型的图文特征提取脚本，请分别参见`cn_clip/eval/extract_features_onnx.py`和`cn_clip/eval/extract_features_tensorrt.py`，相比于原生Pytorch特征提取使用的`extract_features.py`仅做了微小的改动。后续的KNN和Recall计算使用的脚本和流程完全不变。
+
+我们选取ViT-B-16和ViT-H-14两个规模，结果对比如下：
+<table border="1" width="100%">
+    <tr align="center">
+        <th>Setup</th><th colspan="4">ViT-B-16 Zero-shot</th><th colspan="4">ViT-H-14 Zero-shot</th>
+    </tr>
+    <tr align="center">
+        <td>Metric</td><td>R@1</td><td>R@5</td><td>R@10</td><td>MR</td><td>R@1</td><td>R@5</td><td>R@10</td><td>MR</td>
+    </tr>
+	<tr align="center">
+        <td width="120%">Pytorch FP16</sub></td><td>52.1</td><td>76.7</td><td>84.4</td><td>71.1</td><td>63.0</td><td>84.1</td><td>89.2</td><td>78.8</td>
+    </tr>  
+	<tr align="center">
+        <td width="120%">ONNX FP16</sub></td><td>52.0</td><td>76.8</td><td>84.3</td><td>71.1</td><td>63.1</td><td>84.1</td><td>89.0</td><td>78.8</td>
+    </tr>
+	<tr align="center">
+        <td width="120%">TensorRT FP16</sub></td><td>52.0</td><td>76.8</td><td>84.2</td><td>71.0</td><td>63.1</td><td>84.2</td><td>89.1</td><td>78.8</td>
+    </tr>
+</table>
+<br>
+结果指标基本是一致的，相差±0.2在可以接受的范围内（换一台机器即可能造成的误差量级），证明了ONNX和TensorRT模型的转换正确性。
