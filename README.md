@@ -231,6 +231,7 @@ Chinese-CLIP/
 ${DATAPATH}
 ├── pretrained_weights/
 ├── experiments/
+├── deploy/	      # 用于存放ONNX & TensorRT部署模型
 └── datasets/
     ├── MUGE/
     ├── Flickr30k-CN/
