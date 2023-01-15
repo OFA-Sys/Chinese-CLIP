@@ -316,19 +316,19 @@ python3 cn_clip/deploy/speed_benchmark.py \
         <td>模型</td><td>Pytorch</td><td>ONNX</td><td>TensorRT</td><td>Pytorch</td><td>ONNX</td><td>TensorRT</td>
     </tr>
 	<tr align="center">
-        <td width="120%">CN-CLIP<sub>RN50</sub></td><td>12.93</td><td>5.04</td><td><b>1.36</b></td><td>3.64</td><td>0.95</td><td><b>0.58</b></td>
+        <td>CN-CLIP<sub>RN50</sub></td><td>12.93</td><td>5.04</td><td><b>1.36</b></td><td>3.64</td><td>0.95</td><td><b>0.58</b></td>
     </tr>  
 	<tr align="center">
-        <td width="120%">CN-CLIP<sub>ViT-B/16</sub></td><td>11.12</td><td>4.92</td><td><b>3.58</b></td><td>12.47</td><td>3.42</td><td><b>1.54</b></td>
+        <td>CN-CLIP<sub>ViT-B/16</sub></td><td>11.12</td><td>4.92</td><td><b>3.58</b></td><td>12.47</td><td>3.42</td><td><b>1.54</b></td>
     </tr>  
 	<tr align="center">
-        <td width="120%">CN-CLIP<sub>ViT-L/14</sub></td><td>21.19</td><td>17.10</td><td><b>13.08</b></td><td>12.45</td><td>3.48</td><td><b>1.52</b></td>
+        <td>CN-CLIP<sub>ViT-L/14</sub></td><td>21.19</td><td>17.10</td><td><b>13.08</b></td><td>12.45</td><td>3.48</td><td><b>1.52</b></td>
     </tr>
 	<tr align="center">
-        <td width="120%">CN-CLIP<sub>ViT-L/14@336px</sub></td><td>47.11</td><td>48.40</td><td><b>31.59</b></td><td>12.24</td><td>3.25</td><td><b>1.54</b></td>
+        <td>CN-CLIP<sub>ViT-L/14@336px</sub></td><td>47.11</td><td>48.40</td><td><b>31.59</b></td><td>12.24</td><td>3.25</td><td><b>1.54</b></td>
     </tr>
 	<tr align="center">
-        <td width="120%">CN-CLIP<sub>ViT-H/14</sub></td><td>35.10</td><td>34.00</td><td><b>26.98</b></td><td>23.98</td><td>6.01</td><td><b>3.89</b></td>
+        <td>CN-CLIP<sub>ViT-H/14</sub></td><td>35.10</td><td>34.00</td><td><b>26.98</b></td><td>23.98</td><td>6.01</td><td><b>3.89</b></td>
     </tr>  
 </table>
 <br>
