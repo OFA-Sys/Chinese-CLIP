@@ -180,7 +180,7 @@ Finished ONNX to TensorRT conversion...
 
 <table border="1" width="120%">
     <tr align="center">
-        <td><b>模型规模</b></td><td><b>图像侧模型</b></td><td><b>文本侧模型</b></td>
+        <td><b>模型规模</b></td><td><b>TensorRT图像侧模型</b></td><td><b>TensorRT文本侧模型</b></td>
     </tr>
 	<tr align="center">
         <td>CN-CLIP<sub>RN50</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/rn50.img.fp16.trt">Download</a></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/rn50.img.fp16.trt">Download</a></td>
