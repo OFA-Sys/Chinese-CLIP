@@ -16,6 +16,7 @@
 <br><br>
 
 # 新闻
+* 2022.1.15 新增部署ONNX和TensorRT模型支持（并提供预训练TensorRT模型），提升特征推理速度，满足部署需求，详见[deployment.md](deployment.md)
 * 2022.12.12 新增实现[FLIP](https://arxiv.org/abs/2212.00794)训练策略，在finetune训练时可[激活使用](#FLIP)（感谢[@zwkkk](https://github.com/zwkkk)同学[贡献代码](https://github.com/OFA-Sys/Chinese-CLIP/pull/26)❤️）
 * 2022.12.3 公开[ELEVATER](https://eval.ai/web/challenges/challenge-page/1832)图像分类数据集的中文版本，详见[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)
 * 2022.12.1 Chinese-CLIP模型代码&特征提取API，同步合入Huggingface transformers🤗代码库
@@ -205,6 +206,8 @@ with torch.no_grad():
 
 print("Label probs:", probs)  # [[1.268734e-03 5.436878e-02 6.795761e-04 9.436829e-01]]
 ```
+我们也准备了部署ONNX和TensorRT模型的相关支持，流程详见[deployment.md](deployment.md)。
+
 如果你不满足于仅仅使用API，欢迎继续阅读本文档，了解如何使用我们的项目进行CLIP模型的训练和测试。
 <br><br>
 
@@ -368,7 +371,7 @@ bash run_scripts/muge_finetune_vit-b-16_rbt-base.sh ${DATAPATH}
 
 #### 图文特征提取
 
-目前本代码支持使用GPU单卡进行图文特征提取，请参考使用以下命令
+目前本代码支持使用GPU单卡进行图文特征提取，请参考使用以下命令。我们也提供了部署ONNX和TensorRT模型，加速特征推理的支持，详见[deployment.md](deployment.md)。
 ```bash
 cd Chinese-CLIP/
 export CUDA_VISIBLE_DEVICES=0
