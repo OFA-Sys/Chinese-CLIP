@@ -2,7 +2,7 @@
 
 # Chinese-CLIP模型部署：ONNX & TensorRT格式转换
 
-最新的Chinese-CLIP代码，已经支持将各规模的Pytorch模型，转换为[ONNX](https://onnx.ai/)或[TensorRT](https://developer.nvidia.com/tensorrt)格式，从而相比原始Pytorch模型 **[提升特征计算的推理速度](#速度对比结果)**，同时不影响特征提取的下游任务效果。下面我们给出在GPU上，准备ONNX和TensorRT格式的FP16 Chinese-CLIP部署模型的整个流程，同时给出模型效果和推理速度的对比，方便大家上手利用ONNX和TensorRT库在推理性能上的优势。
+最新的Chinese-CLIP代码，已支持将各规模的Pytorch模型，转换为[ONNX](https://onnx.ai/)或[TensorRT](https://developer.nvidia.com/tensorrt)格式，从而相比原始Pytorch模型 **[提升特征计算的推理速度](#速度对比结果)**，同时不影响特征提取的下游任务效果。下面我们给出在GPU上，准备ONNX和TensorRT格式的FP16 Chinese-CLIP部署模型的整个流程（同时给出了Chinese-CLIP预训练TensorRT模型的[下载方式](#tensorrt_download)），并附上模型效果和推理速度的对比，方便大家上手利用ONNX和TensorRT库在推理性能上的优势。
 
 ## 环境准备
 
@@ -142,9 +142,9 @@ print(logits_per_image.softmax(dim=-1)) # 图文相似概率: [[1.2252e-03, 5.28
 
 ## 转换和运行TensorRT模型
 
-### 转换模型（请先阅读ONNX模型转换部分）
+### 转换模型
 
-相比ONNX模型，TensorRT模型具有更快的推理速度。如前文所说，我们准备Chinese-CLIP的TensorRT格式模型，是用刚刚得到的ONNX格式模型进一步转化而来。将ONNX转换为TensorRT格式的代码，请参见`cn_clip/deploy/onnx_to_tensorrt.py`。仍然以ViT-B-16规模为例，利用刚刚得到的ONNX模型`vit-b-16.txt.fp16.onnx`和`vit-b-16.img.fp16.onnx`，在`Chinese-CLIP/`下运行如下代码：
+相比ONNX模型，TensorRT模型具有更快的推理速度，我们提供了转换好的Chinese-CLIP预训练TensorRT图像侧和文本侧模型（[下载方式](#tensorrt_download)）。如前文所说，我们准备TensorRT格式模型，是用刚刚得到的ONNX格式模型进一步转化而来。将ONNX转换为TensorRT格式的代码，请参见`cn_clip/deploy/onnx_to_tensorrt.py`。仍然以ViT-B-16规模为例，利用刚刚得到的ONNX模型`vit-b-16.txt.fp16.onnx`和`vit-b-16.img.fp16.onnx`，在`Chinese-CLIP/`下运行如下代码：
 
 ```bash
 export PYTHONPATH=${PYTHONPATH}:`pwd`/cn_clip
@@ -176,11 +176,35 @@ Finished ONNX to TensorRT conversion...
 
 上面示例代码执行结束后，我们使用ONNX模型，得到了ViT-B-16规模，Chinese-CLIP文本侧和图像侧的TensorRT格式模型，可以用于提取图文特征。输出TensorRT模型的路径以运行脚本时的`save-tensorrt-path`为前缀，后面依次拼上`.img`/`.txt`、`.fp16`、`.trt`。我们使用两个输出文件`vit-b-16.txt.fp16.trt`和`vit-b-16.img.fp16.trt`。
 
+**对于各规模Chinese-CLIP预训练模型，我们提供转换好的TensorRT图像侧和文本侧模型（基于TensorRT 8.5.2.2版本）**，下载方式如下<span id="tensorrt_download"></span>：
 
+<table border="1" width="120%">
+    <tr align="center">
+        <td><b>模型规模</b></td><td><b>图像侧模型</b></td><td><b>文本侧模型</b></td>
+    </tr>
+	<tr align="center">
+        <td width="120%">CN-CLIP<sub>RN50</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/rn50.img.fp16.trt">Download</a></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/rn50.img.fp16.trt">Download</a></td>
+    </tr>  
+	<tr align="center">
+        <td width="120%">CN-CLIP<sub>ViT-B/16</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-b-16.img.fp16.trt">Download</a></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-b-16.txt.fp16.trt">Download</a></td>
+    </tr>  
+	<tr align="center">
+        <td width="120%">CN-CLIP<sub>ViT-L/14</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-l-14.img.fp16.trt">Download</a></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-l-14.txt.fp16.trt">Download</a></td>
+    </tr>
+	<tr align="center">
+        <td width="120%">CN-CLIP<sub>ViT-L/14@336px</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-l-14-336.img.fp16.trt">Download</a></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-l-14-336.txt.fp16.trt">Download</a></td>
+    </tr>
+	<tr align="center">
+        <td width="120%">CN-CLIP<sub>ViT-H/14</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-h-14.img.fp16.trt">Download</a></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-h-14.txt.fp16.trt">Download</a></td>
+    </tr>  
+</table>
+<br>
+
+下载后直接置于`${DATAPATH}/deploy/`下即可
 
 ### 运行模型
 
-在运行TensorRT模型时，如果转换和运行不是在同一个环境下，请注意运行模型的环境TensorRT库版本与转换保持一致，避免报错。
+在运行TensorRT模型时，如果转换和运行不是在同一个环境下，请注意运行模型的环境TensorRT库版本与转换保持一致，避免报错
 
 #### 提取图像侧特征
 
