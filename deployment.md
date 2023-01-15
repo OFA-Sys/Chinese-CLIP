@@ -19,14 +19,14 @@
 
 ### 转换模型
 
-将Pytorch模型checkpoint转换为ONNX格式的代码，请参见`cn_clip/deploy/pytorch_to_onnx.py`。我们以转换ViT-B-16规模的Chinese-CLIP预训练模型为例，具体的代码运行方式如下（请参考Readme[代码组织部分](https://github.com/OFA-Sys/Chinese-CLIP#代码组织)建好`${DATAPATH}`并替换下面的脚本内容）：
+将Pytorch模型checkpoint转换为ONNX格式的代码，请参见`cn_clip/deploy/pytorch_to_onnx.py`。我们以转换ViT-B-16规模的Chinese-CLIP预训练模型为例，具体的代码运行方式如下（请参考Readme[代码组织部分](https://github.com/OFA-Sys/Chinese-CLIP#代码组织)建好`${DATAPATH}`并替换下面的脚本内容，尽量使用相对路径）：
 
 ```bash
 cd Chinese-CLIP/
 export CUDA_VISIBLE_DEVICES=0
 export PYTHONPATH=${PYTHONPATH}:`pwd`/cn_clip
 
-# ${DATAPATH}的指定，请参考Readme"代码组织"部分创建好目录：https://github.com/OFA-Sys/Chinese-CLIP#代码组织
+# ${DATAPATH}的指定，请参考Readme"代码组织"部分创建好目录，尽量使用相对路径：https://github.com/OFA-Sys/Chinese-CLIP#代码组织
 checkpoint_path=${DATAPATH}/pretrained_weights/clip_cn_vit-b-16.pt # 指定要转换的ckpt完整路径
 mkdir -p ${DATAPATH}/deploy/ # 创建ONNX模型的输出文件夹
 
@@ -54,7 +54,9 @@ Finished PyTorch to ONNX conversion...
 >>> The vision FP16 ONNX model is saved at ${DATAPATH}/deploy/vit-b-16.img.fp16.onnx with extra file ${DATAPATH}/deploy/vit-b-16.img.fp16.onnx.extra_file
 ```
 
-上面示例代码执行结束后，我们得到了ViT-B-16规模，Chinese-CLIP文本侧和图像侧的ONNX模型，可以分别用于提取图文特征。输出ONNX模型的路径均以运行脚本时的`save-onnx-path`为前缀，后面依次拼上`.img`/`.txt`、`.fp16`/`.fp32`、`.onnx`。我们后续将主要使用FP16格式的ONNX模型`vit-b-16.txt.fp16.onnx`和`vit-b-16.img.fp16.onnx`。注意到部分ONNX模型文件还附带有一个extra_file，其也是对应ONNX模型的一部分。在使用这些ONNX模型时，请保留extra_file与ONNX文件放在一起，才能保证正常的推理。
+上面示例代码执行结束后，我们得到了ViT-B-16规模，Chinese-CLIP文本侧和图像侧的ONNX模型，可以分别用于提取图文特征。输出ONNX模型的路径均以运行脚本时的`save-onnx-path`为前缀，后面依次拼上`.img`/`.txt`、`.fp16`/`.fp32`、`.onnx`。我们后续将主要使用FP16格式的ONNX模型`vit-b-16.txt.fp16.onnx`和`vit-b-16.img.fp16.onnx`
+
+注意到部分ONNX模型文件还附带有一个extra_file，其也是对应ONNX模型的一部分。在使用这些ONNX模型时，由于`.onnx`文件存储了extra_file的路径（如`${DATAPATH}/deploy/vit-b-16.txt.fp16.onnx.extra_file`）并会根据此路径载入extra_file，所以使用ONNX模型请不要改动存放的路径名，转换时`${DATAPATH}`也尽量用相对路径（如`../datapath`），避免运行时按路径找不到extra_file报错
 
 ### 运行模型
 
@@ -173,6 +175,8 @@ Finished ONNX to TensorRT conversion...
 ```
 
 上面示例代码执行结束后，我们使用ONNX模型，得到了ViT-B-16规模，Chinese-CLIP文本侧和图像侧的TensorRT格式模型，可以用于提取图文特征。输出TensorRT模型的路径以运行脚本时的`save-tensorrt-path`为前缀，后面依次拼上`.img`/`.txt`、`.fp16`、`.trt`。我们使用两个输出文件`vit-b-16.txt.fp16.trt`和`vit-b-16.img.fp16.trt`。
+
+
 
 ### 运行模型
 
