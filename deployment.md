@@ -1,4 +1,4 @@
-[**中文说明**](deployment.md) | **English**
+[**中文说明**](deployment.md) | [**English**](deployment_En.md)
 
 # Chinese-CLIP模型部署：ONNX & TensorRT格式转换
 
@@ -239,7 +239,7 @@ print(image_features.shape) # Torch Tensor shape: [1, 特征向量维度]
 
 #### 提取文本侧特征
 
-与图像侧类似，我们用如下代码完成文本侧TensorRT模型的载入与特征计算，与图像侧相同，文本侧ONNX部署模型只接受batch大小为1的输入，即一次调用只处理一条输入文本。TensorRT接受的文本序列长度和用于转换的ONNX模型一致，请参见ONNX转换时的context-length参数。我们为4条候选文本依次计算ViT-B-16规模模型的文本特征。import相关代码与上文相同，这里省略：
+与图像侧类似，我们用如下代码完成文本侧TensorRT模型的载入与特征计算，与图像侧相同，文本侧TensorRT部署模型只接受batch大小为1的输入，即一次调用只处理一条输入文本。TensorRT接受的文本序列长度和用于转换的ONNX模型一致，请参见ONNX转换时的context-length参数。我们为4条候选文本依次计算ViT-B-16规模模型的文本特征。import相关代码与上文相同，这里省略：
 
 ```python
 # 载入TensorRT文本侧模型（**请替换${DATAPATH}为实际的路径**）
