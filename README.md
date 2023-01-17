@@ -470,7 +470,7 @@ cat output.json
 {"success": true, "score": 85.67, "scoreJson": {"score": 85.67, "mean_recall": 85.67, "r1": 71.2, "r5": 90.5, "r10": 95.3}}
 ```
 
-关于整套跨模态检索的训练和测试流程，我们以MUGE检索数据集（[多模态电商图文挑战赛](https://tianchi.aliyun.com/competition/entrance/532031/introduction)）为例，也提供了一个包含上述全部流程并可运行的notebook（[下载链接](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/others/Chinese-CLIP-on-MUGE-Retrieval.ipynb)），欢迎大家上手实践。
+关于整套跨模态检索的训练和测试流程，我们以MUGE检索数据集（[多模态电商图文挑战赛](https://tianchi.aliyun.com/competition/entrance/532031/introduction)）为例，也提供了一个包含上述全部流程并可运行的jupyter notebook（[下载链接](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/others/Chinese-CLIP-on-MUGE-Retrieval.ipynb)），欢迎大家上手实践。
 
 <br>
 
