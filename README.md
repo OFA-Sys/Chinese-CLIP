@@ -469,8 +469,10 @@ cat output.json
 ```json
 {"success": true, "score": 85.67, "scoreJson": {"score": 85.67, "mean_recall": 85.67, "r1": 71.2, "r5": 90.5, "r10": 95.3}}
 ```
-<br>
 
+关于整套跨模态检索的训练和测试流程，我们以MUGE检索数据集（[多模态电商图文挑战赛](https://tianchi.aliyun.com/competition/entrance/532031/introduction)）为例，也提供了一个包含上述全部流程并可运行的notebook（[下载链接](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/others/Chinese-CLIP-on-MUGE-Retrieval.ipynb)），欢迎大家上手实践。
+
+<br>
 
 ## 零样本图像分类
 本部分介绍如何使用Chinese-CLIP实现零样本图像分类，以零样本图像分类Benchmark ELEVATER中的数据集为例。ELEVATER是由多个知名的分类数据集（包括CIFAR-10、CIFAR-100、MNIST等）组成的评测集合，评测模型在这些数据集上的零样本效果。我们在实验中，给其中每个数据集准备了中文版本的prompt、类别标签连同原始图片，详见[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)，用于测试Chinese-CLIP模型。更多关于该benchmark的详情请点击[链接](https://eval.ai/web/challenges/challenge-page/1832/overview)。大家也可以参考我们提供的流程，仿照在自己的中文分类数据集准备数据并进行测试。
