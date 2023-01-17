@@ -138,7 +138,7 @@ logits_per_image = 100 * image_features @ text_features.t()
 print(logits_per_image.softmax(dim=-1)) # Image & text similarity probabilities: [[1.2252e-03, 5.2874e-02, 6.7116e-04, 9.4523e-01]]
 ```
 
-We can see that the output similarities given by the ONNX model are largely consistent with the results calculated in [API Use Case section of Readme](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/README_En.md#api-use-case) based on the same model in Pytorch, proving the correctness of the feature calculation of the ONNX model. However, **the feature calculation speed of ONNX model is more advantageous than that of Pytorch** (see [below](#Speed Comparison Results) for details).
+We can see that the output similarities given by the ONNX model are largely consistent with the results calculated in [API Use Case](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/README_En.md#api-use-case) section of Readme based on the same model in Pytorch, proving the correctness of the feature calculation of the ONNX model. However, **the feature calculation speed of ONNX model is more advantageous than that of Pytorch** (see [below](#Speed Comparison Results) for details).
 
 ## Converting and Running TensorRT Models
 
@@ -275,7 +275,7 @@ logits_per_image = 100 * image_features @ text_features.t()
 print(logits_per_image.softmax(dim=-1)) # Image & text similarity probabilities: [[1.2475e-03, 5.3037e-02, 6.7583e-04, 9.4504e-01]]
 ```
 
-We can see that the output similarities given by the TensorRT model are largely consistent with the results calculated in [API Use Case section of Readme](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/README_En.md#api-use-case) based on the same model in Pytorch and the results calculated by ONNX models above, proving the correctness of the feature calculation of the TensorRT model. However, the feature calculation speed of TensorRT model is **superior to both of the previous two** (see [below](#Speed Comparison Results) for details).
+We can see that the output similarities given by the TensorRT model are largely consistent with the results calculated in [API Use Case](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/README_En.md#api-use-case) section of Readme based on the same model in Pytorch and the results calculated by ONNX models above, proving the correctness of the feature calculation of the TensorRT model. However, the feature calculation speed of TensorRT model is **superior to both of the previous two** (see [below](#Speed Comparison Results) for details).
 
 ## Comparison of Inference Speed
 
@@ -341,7 +341,7 @@ We present a comparison of the FP16 precision inference time for each size of Py
 
 ## Comparison of Downstream Tasks
 
-We observe the zero-shot performance of the Pytorch, ONNX, and TensorRT FP16 models in the MUGE text-to-image retrieval task involved in the Chinese-CLIP experiments. As described in [Inference and Evaluation section of Readme](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/README_En.md#inference-and-evaluation), the results of MUGE image & text retrieval evaluation are divided into 3 steps: image & text feature extraction, KNN retrieval, and Recall calculation. The image & text feature extraction scripts for ONNX and TensorRT models, please see `cn_clip/eval/extract_features_onnx.py` and `cn_clip/eval/extract_features_tensorrt.py` respectively, compared with `extract_features.py` used for original Pytorch feature extraction, only minor changes have been made. The scripts and processes used for the subsequent KNN and Recall calculations remain exactly the same.
+We observe the zero-shot performance of the Pytorch, ONNX, and TensorRT FP16 models in the MUGE text-to-image retrieval task involved in the Chinese-CLIP experiments. As described in [Inference and Evaluation](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/README_En.md#inference-and-evaluation) section of Readme, the results of MUGE image & text retrieval evaluation are divided into 3 steps: image & text feature extraction, KNN retrieval, and Recall calculation. The image & text feature extraction scripts for ONNX and TensorRT models, please see `cn_clip/eval/extract_features_onnx.py` and `cn_clip/eval/extract_features_tensorrt.py` respectively, compared with `extract_features.py` used for original Pytorch feature extraction, only minor changes have been made. The scripts and processes used for the subsequent KNN and Recall calculations remain exactly the same.
 
 We selected two sizes, ViT-B-16 and ViT-H-14, and the results are compared as follows:
 <table border="1" width="100%">
