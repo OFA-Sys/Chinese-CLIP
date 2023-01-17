@@ -457,7 +457,7 @@ For image-to-text retrieval, run the commands first to transform text-to-image j
 python src/eval/transform_ir_annotation_to_tr.py \
         --input ${DATAPATH}/datasets/${dataset_name}/${split}_texts.jsonl
 ```
-After that，run the following commands
+After that, run the following commands
 ```bash
 split=valid # validation / test splits
 python src/eval/evaluation_tr.py \
