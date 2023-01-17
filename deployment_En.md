@@ -281,7 +281,7 @@ We can see that the output similarities given by the TensorRT model are largely 
 
 ### Comparative Experimental Setup
 
-Our experiments were conducted on a single T4 GPU (16GB memory) machine with 16 Intel Xeon (Skylake) Platinum 8163 (2.5GHz) CPU cores and 64GB memory. We use the above sample image and one of the candidate texts and perform 100 times of image and text feature extraction for both Pytorch, ONNX, and TensorRT models, taking the average time (ms). Taking the speed measurement of ViT-B-16 size model as an example, the code executed under `Chinese-CLIP/` is as follows:
+Our experiments are conducted on a single T4 GPU (16GB memory) machine with 16 Intel Xeon (Skylake) Platinum 8163 (2.5GHz) CPU cores and 64GB memory. We use the above sample image and one of the candidate texts and perform 100 times of image and text feature extraction for both Pytorch, ONNX, and TensorRT models, taking the average time (ms). Taking the speed measurement of ViT-B-16 size model as an example, the code executed under `Chinese-CLIP/` is as follows:
 
 ```bash
 export CUDA_VISIBLE_DEVICES=0
@@ -343,7 +343,7 @@ We present a comparison of the FP16 precision inference time for each size of Py
 
 We observe the zero-shot performance of the Pytorch, ONNX, and TensorRT FP16 models in the MUGE text-to-image retrieval task involved in the Chinese-CLIP experiments. As described in [Inference and Evaluation](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/README_En.md#inference-and-evaluation) section of Readme, the results of MUGE image & text retrieval evaluation are divided into 3 steps: image & text feature extraction, KNN retrieval, and Recall calculation. The image & text feature extraction scripts for ONNX and TensorRT models, please see `cn_clip/eval/extract_features_onnx.py` and `cn_clip/eval/extract_features_tensorrt.py` respectively, compared with `extract_features.py` used for original Pytorch feature extraction, only minor changes have been made. The scripts and processes used for the subsequent KNN and Recall calculations remain exactly the same.
 
-We selected two sizes, ViT-B-16 and ViT-H-14, and the results are compared as follows:
+The results of ViT-B-16 and ViT-H-14 scales of Chinese-CLIP are compared as follows:
 <table border="1" width="100%">
     <tr align="center">
         <th>Setup</th><th colspan="4">ViT-B-16 Zero-shot</th><th colspan="4">ViT-H-14 Zero-shot</th>
