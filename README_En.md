@@ -471,6 +471,9 @@ The printed results are shown below:
 ```json
 {"success": true, "score": 85.67, "scoreJson": {"score": 85.67, "mean_recall": 85.67, "r1": 71.2, "r5": 90.5, "r10": 95.3}}
 ```
+
+For better understanding of cross-modal retrieval by Chinese-CLIP, we also provide a runnable notebook ([download link](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/others/Chinese-CLIP-on-MUGE-Retrieval.ipynb)), which works with the MUGE retrieval dataset (corresponding leaderboard is hosted on [Tianchi](https://tianchi.aliyun.com/competition/entrance/532031/introduction)) and includes the finetuning and inference process mentioned above. Welcome to try!
+
 <br>
 
 ## Zero-shot Image Classification
