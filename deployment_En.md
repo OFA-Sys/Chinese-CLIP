@@ -316,10 +316,10 @@ We present a comparison of the FP16 precision inference time for each size of Py
 
 <table border="1" width="120%">
     <tr align="center">
-        <th>单位: ms/样本</th><th colspan="3">图像特征提取</th><th colspan="3">文本特征提取</th>
+        <th>Unit: ms/sample</th><th colspan="3">Image Feature Extraction</th><th colspan="3">Text Feature Extraction</th>
     </tr>
     <tr align="center">
-        <td>模型</td><td>Pytorch</td><td>ONNX</td><td>TensorRT</td><td>Pytorch</td><td>ONNX</td><td>TensorRT</td>
+        <td>Models</td><td>Pytorch</td><td>ONNX</td><td>TensorRT</td><td>Pytorch</td><td>ONNX</td><td>TensorRT</td>
     </tr>
 	<tr align="center">
         <td width="120%">CN-CLIP<sub>RN50</sub></td><td>12.93</td><td>5.04</td><td><b>1.36</b></td><td>3.64</td><td>0.95</td><td><b>0.58</b></td>
