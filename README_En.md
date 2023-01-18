@@ -372,6 +372,7 @@ We provide procedures for representation generation and cross-modal retrieval, a
 #### Image/Text Representation Generation
 
 By now the code supports representation generation with a single worker, please use the following commands. Besides, we provide support for deploying ONNX and TensorRT models to accelerate feature inference, see [deployment_En.md](deployment.md) for details.
+```bash
 cd Chinese-CLIP/
 export CUDA_VISIBLE_DEVICES=0
 export PYTHONPATH=${PYTHONPATH}:`pwd`/src
