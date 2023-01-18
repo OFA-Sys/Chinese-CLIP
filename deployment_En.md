@@ -2,7 +2,7 @@
 
 # Chinese-CLIP Model Deployment: ONNX & TensorRT Format Conversion
 
-Our latest Chinese-CLIP code supports the conversion of Pytorch models of all scales into [ONNX](https://onnx.ai/) or [TensorRT](https://developer.nvidia.com/tensorrt) formats, thereby **[improving the inference speed of feature calculation](#Speed Comparison Results)** compared with the original Pytorch models without affecting the downstream task effect of feature extraction. Below we give the whole process of preparing the FP16 Chinese-CLIP models in ONNX and TensorRT formats on GPU (and also give the [download links](#tensorrt_download) of Chinese-CLIP pretraining TensorRT models), and attach the comparison of model effect and inference speed, so that you can take advantage of the advantages of ONNX and TensorRT library in inference performance.
+Our latest Chinese-CLIP code supports the conversion of Pytorch models of all scales into [ONNX](https://onnx.ai/) or [TensorRT](https://developer.nvidia.com/tensorrt) formats, thereby **[improving the inference speed of feature calculation](#speed-comparison-results)** compared with the original Pytorch models without affecting the downstream task effect of feature extraction. Below we give the whole process of preparing the FP16 Chinese-CLIP models in ONNX and TensorRT formats on GPU (and also give the [download links](#tensorrt_download) of Chinese-CLIP pretraining TensorRT models), and attach the comparison of model effect and inference speed, so that you can take advantage of the advantages of ONNX and TensorRT library in inference performance.
 
 ## Environmental Preparation
 
