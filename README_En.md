@@ -216,7 +216,7 @@ Currently, we provide the tutorial of [cross-modal retrieval](#cross-modal-retri
 
 ### Code Organization
 
-After cloning this project, please create a new directory ```${DATAPATH}``` for datasets, checkpoints and logs。A recommended workspace structure is demonstrated below：
+After cloning this project, please create a new directory ```${DATAPATH}``` for datasets, checkpoints and logs. A recommended workspace structure is demonstrated below：
 
 ```
 Chinese-CLIP/
@@ -352,7 +352,7 @@ The configuration for training includes:
 + Checkpoints
   + `resume`: the checkpoint path for weights to restore. In the provided example script, the path refers to the pretrained checkpoint path. Users can change to your own checkpoint path.
   + `reset-data-offset`: whether to restore training at the data breakpoint.
-  + `reset-optimizer`: whether to restore the optimizer state。
+  + `reset-optimizer`: whether to restore the optimizer state.
 
 After training, the log will be saved at `${DATAPATH}/experiments/${name}/out_${timestamp}.log`. Example of log is shown below:
 ```
@@ -371,7 +371,7 @@ We provide procedures for representation generation and cross-modal retrieval, a
 
 #### Image/Text Representation Generation
 
-By now the code supports representation generation with a single worker. Follow the commands below:
+By now the code supports representation generation with a single worker, please use the following commands. Besides, we provide support for deploying ONNX and TensorRT models to accelerate feature inference, see [deployment_En.md](deployment_En.md) for details.
 ```bash
 cd Chinese-CLIP/
 export CUDA_VISIBLE_DEVICES=0
