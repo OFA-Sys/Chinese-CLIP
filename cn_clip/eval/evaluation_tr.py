@@ -46,7 +46,7 @@ def read_submission(submit_path, reference, k=5):
                     raise Exception('Image_id {} has an invalid predicted text_id {} at rank {}, it should be an integer (not string), please check your schema'.format(image_id, text_id, rank + 1))
             # check whether there are duplicate predicted products for a single text
             if len(set(text_ids)) != k:
-                raise Exception('Image_id {} has duplicate products in your prediction. Pleace check again!'.format(image_id))
+                raise Exception('Image_id {} has duplicate topk texts in your prediction. Pleace check again!'.format(image_id))
             submission_dict[image_id] = text_ids # here we save the list of product ids
     
     # check if any text is missing in the submission
