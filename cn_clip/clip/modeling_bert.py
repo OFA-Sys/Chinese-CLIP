@@ -27,6 +27,7 @@ from io import open
 import torch
 from torch import nn
 from torch.utils.checkpoint import checkpoint
+from flash_attn.flash_attention import FlashMHA
 
 from .configuration_bert import BertConfig
 
@@ -165,15 +166,24 @@ class BertSelfOutput(nn.Module):
 class BertAttention(nn.Module):
     def __init__(self, config):
         super(BertAttention, self).__init__()
-        self.self = BertSelfAttention(config)
-        self.output = BertSelfOutput(config)
+        self.self = BertSelfAttention(config) if not config.use_flash_attention else FlashMHA(config.hidden_size, config.num_attention_heads)
+        self.output = BertSelfOutput(config) if not config.use_flash_attention else BertSelfOutputForFlashAttention(config)
         self.pruned_heads = set()
+        self.config = config
 
     def forward(self, input_tensor, attention_mask=None, head_mask=None):
-        self_outputs = self.self(input_tensor, attention_mask, head_mask)
+        if not self.config.use_flash_attention:
+            self_outputs = self.self(input_tensor, attention_mask, head_mask)
+        else:
+            key_padding_mask = self.get_key_padding_mask(attention_mask)
+            self_outputs = self.self(input_tensor, key_padding_mask=key_padding_mask)
         attention_output = self.output(self_outputs[0], input_tensor)
         outputs = (attention_output,) + self_outputs[1:]  # add attentions if we output them
         return outputs
+
+    def get_key_padding_mask(self, attention_mask):
+        # key_padding_mask: bool tensor of shape (batch, seqlen)
+        return attention_mask.squeeze(1).squeeze(1) == 0
 
 
 class BertIntermediate(nn.Module):
@@ -200,6 +210,18 @@ class BertOutput(nn.Module):
 
     def forward(self, hidden_states, input_tensor):
         hidden_states = self.dense(hidden_states)
+        hidden_states = self.dropout(hidden_states)
+        hidden_states = self.LayerNorm(hidden_states + input_tensor)
+        return hidden_states
+
+
+class BertSelfOutputForFlashAttention(nn.Module):  # remove linear layer
+    def __init__(self, config):
+        super(BertSelfOutputForFlashAttention, self).__init__()
+        self.LayerNorm = BertLayerNorm(config.hidden_size, eps=config.layer_norm_eps)
+        self.dropout = nn.Dropout(config.hidden_dropout_prob)
+
+    def forward(self, hidden_states, input_tensor):
         hidden_states = self.dropout(hidden_states)
         hidden_states = self.LayerNorm(hidden_states + input_tensor)
         return hidden_states

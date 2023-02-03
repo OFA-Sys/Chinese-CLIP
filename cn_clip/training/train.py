@@ -160,7 +160,12 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
 
         if args.val_data is not None and args.valid_step_interval is not None and ((step + 1) % args.valid_step_interval) == 0:
             assert "val" in data, "Error: Valid dataset has not been built."
-            evaluate(model, data, epoch, args, step + 1)
+            if not args.use_flash_attention:
+                evaluate(model, data, epoch, args, step + 1)
+            else:
+                # fp16 is needed in flash attention
+                with autocast():
+                    evaluate(model, data, epoch, args, step + 1)
             # set model back to train mode
             model.train()
             if args.freeze_vision:
