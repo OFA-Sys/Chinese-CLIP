@@ -13,7 +13,7 @@ import torch.backends.cudnn as cudnn
 from torch.cuda.amp import GradScaler
 
 from cn_clip.clip import load
-from cn_clip.clip.model import convert_weights, resize_pos_embed, CLIP, convert_state_dict
+from cn_clip.clip.model import convert_weights, convert_state_dict, resize_pos_embed, CLIP
 from cn_clip.training.train import train, evaluate
 from cn_clip.training.data import get_data
 from cn_clip.training.params import parse_args

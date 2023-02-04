@@ -174,12 +174,6 @@ def parse_args():
         action="store_true",
         help="Enable flash attention."
     )
-    parser.add_argument(
-        "--use-flash-attention-bert",
-        default=False,
-        action="store_true",
-        help="Enable flash attention in Bert."
-    )
     # arguments for distributed training
     parser.add_argument(
         "--local_rank", 
