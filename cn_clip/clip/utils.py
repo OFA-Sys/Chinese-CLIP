@@ -103,14 +103,14 @@ def load_from_name(name: str, device: Union[str, torch.device] = "cuda" if torch
 
 
 def load(model, device: Union[str, torch.device] = "cuda" if torch.cuda.is_available() else "cpu", clip_path=None,
-         bert_path=None, use_flash_attention=False, use_flash_attention_bert=False):
+         bert_path=None, use_flash_attention=False):
     """Load CLIP and BERT model weights
     """
 
     bert_state_dict = torch.load(bert_path, map_location="cpu") if bert_path else None
     clip_state_dict = torch.load(clip_path, map_location="cpu") if clip_path else None
 
-    restore_model(model, clip_state_dict, bert_state_dict, use_flash_attention, use_flash_attention_bert).to(device)
+    restore_model(model, clip_state_dict, bert_state_dict, use_flash_attention).to(device)
 
     if str(device) == "cpu":
         model.float()

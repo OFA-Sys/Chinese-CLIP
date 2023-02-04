@@ -308,7 +308,6 @@ class CLIP(nn.Module):
                  # vision head width, added this param for ViT-H
                  vision_head_width: int = 64,
                  use_flash_attention: bool = False,
-                 use_flash_attention_bert: bool = False,
                  ):
         super().__init__()
 
@@ -346,7 +345,7 @@ class CLIP(nn.Module):
             type_vocab_size=text_type_vocab_size,
             initializer_range=text_initializer_range,
             layer_norm_eps=1e-12,
-            use_flash_attention=use_flash_attention_bert  # TODO: unify param
+            use_flash_attention=use_flash_attention
         )
         self.bert = BertModel(self.bert_config)
 
@@ -463,7 +462,7 @@ def convert_weights(model: nn.Module):
     model.apply(_convert_weights_to_fp16)
 
 
-def restore_model(model, clip_state_dict: dict, bert_state_dict: dict, use_flash_attention: bool, use_flash_attention_bert: bool):
+def restore_model(model, clip_state_dict: dict, bert_state_dict: dict, use_flash_attention: bool):
     merged_state_dict = {}
 
     # use clip_state_dict to initialize the image encoder & logit scale
@@ -479,7 +478,8 @@ def restore_model(model, clip_state_dict: dict, bert_state_dict: dict, use_flash
                 merged_state_dict[k] = v
 
     # adapt flash attention
-    merged_state_dict = adapt_state_dict_flash_attention(merged_state_dict, use_flash_attention, use_flash_attention_bert)
+    if use_flash_attention:
+        merged_state_dict = convert_state_dict(merged_state_dict)
 
     convert_weights(model)
     resize_pos_embed(merged_state_dict, model)
@@ -487,30 +487,59 @@ def restore_model(model, clip_state_dict: dict, bert_state_dict: dict, use_flash
     return model.eval()
 
 
-def adapt_state_dict_flash_attention(state_dict, use_flash_attention, use_flash_attention_bert):
-    if use_flash_attention:
-        for k in state_dict.keys():
+def convert_state_dict(state_dict):
+    """Adapt to Flash Attention"""
+    if not state_dict:
+        return state_dict
+
+    prefix = 'module.' if list(state_dict.keys())[0].startswith('module') else ''
+
+    if f'{prefix}visual.transformer.resblocks.0.attn.in_proj_weight' in state_dict:
+        for k in list(state_dict.keys()):
             if 'attn.in_proj_weight' in k:
                 state_dict[k.replace('attn.in_proj_weight', 'attn.Wqkv.weight')] = state_dict.pop(k)
             elif 'attn.in_proj_bias' in k:
                 state_dict[k.replace('attn.in_proj_bias', 'attn.Wqkv.bias')] = state_dict.pop(k)
-    if use_flash_attention_bert:
+    elif f'{prefix}visual.transformer.resblocks.0.attn.Wqkv.weight' in state_dict:
+        for k in list(state_dict.keys()):
+            if 'attn.Wqkv.weight' in k:
+                state_dict[k.replace('attn.Wqkv.weight', 'attn.in_proj_weight')] = state_dict.pop(k)
+            elif 'attn.Wqkv.bias' in k:
+                state_dict[k.replace('attn.Wqkv.bias', 'attn.in_proj_bias')] = state_dict.pop(k)
+
+    if f'{prefix}bert.encoder.layer.0.attention.self.query.weight' in state_dict:
         i = 0
-        while f'module.bert.encoder.layer.{i}.attention.self.query.weight' in state_dict:
-            state_dict[f'module.bert.encoder.layer.{i}.attention.self.Wqkv.weight'] = torch.cat(
-                (state_dict.pop(f'module.bert.encoder.layer.{i}.attention.self.query.weight'),
-                 state_dict.pop(f'module.bert.encoder.layer.{i}.attention.self.key.weight'),
-                 state_dict.pop(f'module.bert.encoder.layer.{i}.attention.self.value.weight'))
+        while f'{prefix}bert.encoder.layer.{i}.attention.self.query.weight' in state_dict:
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.Wqkv.weight'] = torch.cat(
+                (state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.query.weight'),
+                 state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.key.weight'),
+                 state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.value.weight'))
             )
-            state_dict[f'module.bert.encoder.layer.{i}.attention.self.Wqkv.bias'] = torch.cat(
-                (state_dict.pop(f'module.bert.encoder.layer.{i}.attention.self.query.bias'),
-                 state_dict.pop(f'module.bert.encoder.layer.{i}.attention.self.key.bias'),
-                 state_dict.pop(f'module.bert.encoder.layer.{i}.attention.self.value.bias'))
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.Wqkv.bias'] = torch.cat(
+                (state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.query.bias'),
+                 state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.key.bias'),
+                 state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.value.bias'))
             )
-            state_dict[f'module.bert.encoder.layer.{i}.attention.self.out_proj.weight'] = \
-                state_dict.pop(f'module.bert.encoder.layer.{i}.attention.output.dense.weight')
-            state_dict[f'module.bert.encoder.layer.{i}.attention.self.out_proj.bias'] = \
-                state_dict.pop(f'module.bert.encoder.layer.{i}.attention.output.dense.bias')
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.out_proj.weight'] = \
+                state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.output.dense.weight')
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.out_proj.bias'] = \
+                state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.output.dense.bias')
+            i += 1
+    elif f'{prefix}bert.encoder.layer.0.attention.self.Wqkv.weight' in state_dict:
+        i = 0
+        while f'{prefix}bert.encoder.layer.{i}.attention.self.Wqkv.weight' in state_dict:
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.query.weight'], \
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.key.weight'], \
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.value.weight'] = \
+            torch.chunk(state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.Wqkv.weight'), chunks=3)
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.query.bias'], \
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.key.bias'], \
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.value.bias'] = \
+            torch.chunk(state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.Wqkv.bias'), chunks=3)
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.output.dense.weight'] = \
+                state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.out_proj.weight')
+            state_dict[f'{prefix}bert.encoder.layer.{i}.attention.output.dense.bias'] = \
+                state_dict.pop(f'module.bert.encoder.layer.{i}.attention.self.out_proj.bias')
             i += 1
 
     return state_dict
