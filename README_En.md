@@ -16,6 +16,8 @@ This is the Chinese version of CLIP. We use a large-scale Chinese image-text pai
 <br><br>
 
 # News
+* 2023.2.16 Support [FlashAttention](https://github.com/HazyResearch/flash-attention) to improve training speed and reduce memory usage. See [flash_attention_En.md](flash_attention_En.md) for more information.
+* 2023.1.15 Support the conversion of Pytorch models into [ONNX](https://onnx.ai/) or [TensorRT](https://developer.nvidia.com/tensorrt) formats (and provide pretrained TensorRT models) to improve inference speed and meet deployment requirements. See [deployment_En.md](deployment_En.md) for more information.
 * 2022.12.12 Implement [FLIP](https://arxiv.org/abs/2212.00794) strategy, which can be [activated](#FLIP) during finetuning (Thanks [@zwkkk](https://github.com/zwkkk) for [the PR](https://github.com/OFA-Sys/Chinese-CLIP/pull/26) ❤️）
 * 2022.12.3 The datasets of the Chinese version of the [ELEVATER](https://eval.ai/web/challenges/challenge-page/1832) benchmark are publicly available. See [Notes for datasets](zeroshot_dataset_en.md) for more information. 
 * 2022.12.1 Chinese-CLIP model & representation generation API are officially merged into Huggingface transformers🤗 codebase.
