@@ -311,7 +311,7 @@ ${DATAPATH}
             └── test
 ```
 
-For easier use, we have provided preprocessed MUGE ([download link](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/MUGE.zip)) and Flickr30K-CN ([download link](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/Flickr30k-CN.zip)) datasets in zip format. To use them, just download and unzip it under `${DATAPATH}/datasets/`.
+For easier use, we have provided preprocessed MUGE ([download link](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/MUGE.zip)) and Flickr30K-CN ([download link](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/Flickr30k-CN.zip)) datasets in zip format. To use them, just download and unzip it under `${DATAPATH}/datasets/`. If you need [COCO-CN](https://github.com/li-xirong/coco-cn) dataset, please contact us by email when you have finished applying for permission from the original author.
 
 ### Finetuning
 
