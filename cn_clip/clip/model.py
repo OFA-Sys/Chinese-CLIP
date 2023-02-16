@@ -531,11 +531,11 @@ def convert_state_dict(state_dict):
             state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.query.weight'], \
             state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.key.weight'], \
             state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.value.weight'] = \
-            torch.chunk(state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.Wqkv.weight'), chunks=3)
+                torch.chunk(state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.Wqkv.weight'), chunks=3)
             state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.query.bias'], \
             state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.key.bias'], \
             state_dict[f'{prefix}bert.encoder.layer.{i}.attention.self.value.bias'] = \
-            torch.chunk(state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.Wqkv.bias'), chunks=3)
+                torch.chunk(state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.Wqkv.bias'), chunks=3)
             state_dict[f'{prefix}bert.encoder.layer.{i}.attention.output.dense.weight'] = \
                 state_dict.pop(f'{prefix}bert.encoder.layer.{i}.attention.self.out_proj.weight')
             state_dict[f'{prefix}bert.encoder.layer.{i}.attention.output.dense.bias'] = \
