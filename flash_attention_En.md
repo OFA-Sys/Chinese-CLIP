@@ -7,7 +7,7 @@ Chinese-CLIP now supports the acceleration of training process through [FlashAtt
 ## Environmental Preparation
 
 + Nvidia GPUs **with Volta or Ampere architecture** (such as A100, RTX 3090, T4, and RTX 2080). Please refer to [this document](https://en.wikipedia.org/wiki/CUDA#GPUs_supported) for the corresponding GPUs of each Nvidia architecture.
-+ CUDA 11，NVCC
++ CUDA 11, NVCC
 + **FlashAttention**：Install FlashAttention by executing `pip install flash-attn`. Please refer to the [FlashAttention project repository](https://github.com/HazyResearch/flash-attention).
 
 ## Use it in Chinese-CLIP!
