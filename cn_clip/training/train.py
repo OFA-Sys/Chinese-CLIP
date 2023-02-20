@@ -1,16 +1,17 @@
 import os
 import time
 import json
+import logging
 import numpy as np
+from tqdm import tqdm
 
 import torch
 import torch.nn as nn
-from tqdm import tqdm
-
 from torch.cuda.amp import autocast
 import torch.distributed as dist
 
-import logging
+from cn_clip.clip.model import convert_state_dict
+
 
 def is_master(args):
     return args.rank == 0
@@ -160,7 +161,12 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
 
         if args.val_data is not None and args.valid_step_interval is not None and ((step + 1) % args.valid_step_interval) == 0:
             assert "val" in data, "Error: Valid dataset has not been built."
-            evaluate(model, data, epoch, args, step + 1)
+            if not args.use_flash_attention:
+                evaluate(model, data, epoch, args, step + 1)
+            else:
+                # fp16 is needed in flash attention
+                with autocast():
+                    evaluate(model, data, epoch, args, step + 1)
             # set model back to train mode
             model.train()
             if args.freeze_vision:
@@ -174,7 +180,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
                     "epoch": epoch + 1,
                     "step": step + 1,
                     "name": args.name,
-                    "state_dict": model.state_dict(),
+                    "state_dict": model.state_dict() if not args.use_flash_attention else convert_state_dict(model.state_dict()),
                     "optimizer": optimizer.state_dict(),
                 },
                 save_path,
@@ -189,7 +195,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
                     "epoch": epoch + 1,
                     "step": step + 1,
                     "name": args.name,
-                    "state_dict": model.state_dict(),
+                    "state_dict": model.state_dict() if not args.use_flash_attention else convert_state_dict(model.state_dict()),
                     "optimizer": optimizer.state_dict(),
                 },
                 save_path,

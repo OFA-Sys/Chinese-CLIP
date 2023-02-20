@@ -16,15 +16,15 @@ export MASTER_ADDR=XX.XX.XX.XX
 # The port for communication
 export MASTER_PORT=8514
 # The rank of this worker, should be in {0, ..., WORKER_CNT-1}, for single-worker training, please set to 0
-export RANK=0 
+export RANK=0
 
 export PYTHONPATH=${PYTHONPATH}:`pwd`/cn_clip/
 
 DATAPATH=${1}
 
 # data options
-train_data=${DATAPATH}/datasets/MUGE/lmdb/train
-val_data=${DATAPATH}/datasets/MUGE/lmdb/valid # if val_data is not specified, the validation will be automatically disabled
+train_data=${DATAPATH}/datasets/COCO-CN/lmdb/train
+val_data=${DATAPATH}/datasets/COCO-CN/lmdb/valid # if val_data is not specif  ied, the validation will be automatically disabled
 
 # restore options
 resume=${DATAPATH}/pretrained_weights/clip_cn_vit-b-16.pt # or specify your customed ckpt path to resume
@@ -34,7 +34,7 @@ reset_optimizer="--reset-optimizer"
 
 # output options
 output_base_dir=${DATAPATH}/experiments/
-name=muge_finetune_vit-b-16_roberta-base_bs128_8gpu
+name=coco-cn_finetune_vit-b-16_roberta-base_bs1024_8gpu
 save_step_frequency=999999 # disable it
 save_epoch_frequency=1
 log_interval=1
@@ -43,17 +43,16 @@ report_training_batch_acc="--report-training-batch-acc"
 
 # training hyper-params
 context_length=52
-warmup=100
-batch_size=128
+warmup=6
+batch_size=1024
 valid_batch_size=128
-lr=5e-5
+lr=3e-5
 wd=0.001
-max_epochs=3 # or you can alternatively specify --max-steps
-valid_step_interval=150
+max_epochs=20
+valid_step_interval=999999
 valid_epoch_interval=1
 vision_model=ViT-B-16
 text_model=RoBERTa-wwm-ext-base-chinese
-mask_ratio=0.5 # use flip: set mask ratio
 use_augment="--use-augment"
 # use_augment=""
 
@@ -80,6 +79,6 @@ python3 -m torch.distributed.launch --nproc_per_node=${GPUS_PER_NODE} --nnodes=$
           --wd=${wd} \
           --max-epochs=${max_epochs} \
           --vision-model=${vision_model} \
-          --mask-ratio=${mask_ratio} \
           ${use_augment} \
-          --text-model=${text_model}
+          --text-model=${text_model} \
+          --grad-checkpointing

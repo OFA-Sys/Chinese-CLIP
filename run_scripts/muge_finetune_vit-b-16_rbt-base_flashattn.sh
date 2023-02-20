@@ -53,7 +53,6 @@ valid_step_interval=150
 valid_epoch_interval=1
 vision_model=ViT-B-16
 text_model=RoBERTa-wwm-ext-base-chinese
-mask_ratio=0.5 # use flip: set mask ratio
 use_augment="--use-augment"
 # use_augment=""
 
@@ -80,6 +79,6 @@ python3 -m torch.distributed.launch --nproc_per_node=${GPUS_PER_NODE} --nnodes=$
           --wd=${wd} \
           --max-epochs=${max_epochs} \
           --vision-model=${vision_model} \
-          --mask-ratio=${mask_ratio} \
           ${use_augment} \
-          --text-model=${text_model}
+          --text-model=${text_model} \
+          --use-flash-attention  # activate FlashAttention

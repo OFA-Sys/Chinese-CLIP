@@ -66,7 +66,8 @@ class BertConfig(object):
                  initializer_range=0.02,
                  layer_norm_eps=1e-12,
                  output_attentions=False,
-                 output_hidden_states=False
+                 output_hidden_states=False,
+                 use_flash_attention=False
                  ):
         self.vocab_size = vocab_size_or_config_json_file
         self.hidden_size = hidden_size
@@ -82,3 +83,4 @@ class BertConfig(object):
         self.layer_norm_eps = layer_norm_eps
         self.output_attentions = output_attentions
         self.output_hidden_states = output_hidden_states
+        self.use_flash_attention = use_flash_attention

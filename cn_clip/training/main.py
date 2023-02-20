@@ -13,7 +13,7 @@ import torch.backends.cudnn as cudnn
 from torch.cuda.amp import GradScaler
 
 from cn_clip.clip import load
-from cn_clip.clip.model import convert_weights, resize_pos_embed, CLIP
+from cn_clip.clip.model import convert_weights, convert_state_dict, resize_pos_embed, CLIP
 from cn_clip.training.train import train, evaluate
 from cn_clip.training.data import get_data
 from cn_clip.training.params import parse_args
@@ -88,13 +88,14 @@ def main():
             model_info['vision_layers'] = eval(model_info['vision_layers'])         
         for k, v in json.load(ft).items():
             model_info[k] = v
+    model_info['use_flash_attention'] = args.use_flash_attention
 
     model = CLIP(**model_info)
     if args.clip_weight_path is not None:
         assert os.path.exists(args.clip_weight_path), "Pretrained CLIP weight not exists!"
     if args.bert_weight_path is not None:
         assert os.path.exists(args.bert_weight_path), "Pretrained BERT weight not exists!"
-    load(model, clip_path=args.clip_weight_path, bert_path=args.bert_weight_path)
+    load(model, clip_path=args.clip_weight_path, bert_path=args.bert_weight_path, use_flash_attention=args.use_flash_attention)
 
     # See https://discuss.pytorch.org/t/valueerror-attemting-to-unscale-fp16-gradients/81372
     if args.precision == "amp" or args.precision == "fp32":
@@ -116,7 +117,7 @@ def main():
     if args.freeze_vision:
         for k, v in model.visual.named_parameters():
             v.requires_grad = False
-	    # freeze bn running mean and variance
+        # freeze bn running mean and variance
         if args.vision_model in ['RN50']:
             for m in model.visual.modules():
                 if isinstance(m, torch.nn.BatchNorm2d):
@@ -205,6 +206,9 @@ def main():
             sd = {k: v for k, v in checkpoint["state_dict"].items() if "bert.pooler" not in k}
             # Resize the positional embedding by interpolation, if needed
             resize_pos_embed(sd, model, prefix="module.")
+            # Adapt flash attention
+            if args.use_flash_attention:
+                sd = convert_state_dict(sd)
             # Load the state dict
             model.load_state_dict(sd)
             # Restore the epoch and steps info, reload the dataset and dataloader for the resume epoch
@@ -239,7 +243,12 @@ def main():
 
         if args.val_data is not None and args.valid_epoch_interval is not None and ((epoch + 1) % args.valid_epoch_interval) == 0:
             assert "val" in data, "Error: Valid dataset has not been built."
-            evaluate(model, data, epoch, args, steps)
+            if not args.use_flash_attention:
+                evaluate(model, data, epoch, args, steps)
+            else:
+                # fp16 is needed in flash attention
+                with torch.cuda.amp.autocast():
+                    evaluate(model, data, epoch, args, steps)
 
         # if exists next epoch, reload the dataset and dataloader for the next epoch
         if epoch + 1 < args.max_epochs:
@@ -257,7 +266,7 @@ def main():
                         "epoch": epoch + 1,
                         "step": steps,
                         "name": args.name,
-                        "state_dict": model.state_dict(),
+                        "state_dict": model.state_dict() if not args.use_flash_attention else convert_state_dict(model.state_dict()),
                         "optimizer": optimizer.state_dict(),
                     },
                     save_path,
@@ -272,7 +281,7 @@ def main():
                     "epoch": epoch + 1,
                     "step": steps,
                     "name": args.name,
-                    "state_dict": model.state_dict(),
+                    "state_dict": model.state_dict() if not args.use_flash_attention else convert_state_dict(model.state_dict()),
                     "optimizer": optimizer.state_dict(),
                 },
                 save_path,
