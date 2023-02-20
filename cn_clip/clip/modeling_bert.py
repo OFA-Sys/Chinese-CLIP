@@ -27,7 +27,10 @@ from io import open
 import torch
 from torch import nn
 from torch.utils.checkpoint import checkpoint
-from flash_attn.flash_attention import FlashMHA
+
+import importlib.util
+if importlib.util.find_spec('flash_attn'):
+    FlashMHA = importlib.import_module('flash_attn.flash_attention').FlashMHA
 
 from .configuration_bert import BertConfig
 

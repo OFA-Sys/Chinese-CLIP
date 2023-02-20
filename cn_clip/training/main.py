@@ -5,6 +5,7 @@ from pathlib import Path
 import json
 import time
 from time import gmtime, strftime
+import importlib.util
 
 import torch
 from torch import optim
@@ -110,6 +111,10 @@ def main():
             "Currently our grad_checkpointing is not compatible with torch version <= 1.8.0."        
         model.set_grad_checkpointing()
         logging.info("Grad-checkpointing activated.")
+
+    if args.use_flash_attention:
+        assert importlib.util.find_spec("flash_attn"), "flash_attn is not installed."
+        logging.info("Using FlashAttention.")
 
     if args.use_bn_sync:
         model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
