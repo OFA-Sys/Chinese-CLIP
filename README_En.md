@@ -347,6 +347,7 @@ The configuration for training includes:
   + `valid-step-interval` and `valid-epoch-interval`: validation step / epoch frequency, if set to -1 then validation will be disabled during finetuning.
   + `grad-checkpointing`: <span id="checkpointing"></span>use [gradient checkpointing]((https://pytorch.org/docs/stable/checkpoint.html)) which does not keep the activations during forward computation, this strategy trades more computation and iteration time for less GPU memory cost. (`store_true` argument, just add `--grad-checkpointing` in the script to activate it, requires Pytorch>1.8.0)
   + `mask-ratio`: <span id="FLIP"></span>use [FLIP](https://arxiv.org/abs/2212.00794) strategy which randomly masks a ratio of image patches to save GPU memory and speed up training. Default to 0.0, which disables the strategy.
+  + `use-flash-attention`: whether to use [FlashAttention](https://arxiv.org/abs/2205.14135), which can significantly speed up the finetune process and reduce the memory usage. (`store_true` argument, after configuring the environment, just add `--use-flash-attention` in the script to activate it, please see [flash_attention_En.md](flash_attention_En.md) for more information)
 + Ouputs
   + `name`: specified output path. Hyperparameter logs, training logs, and checkpoints will be saved at `${DATAPATH}/experiments/${name}/`.
   + `save-step-frequency` and `save-epoch-frequency`: the intervals for saving checkpoints.

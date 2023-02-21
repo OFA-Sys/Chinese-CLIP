@@ -17,7 +17,7 @@ Applying FlashAttention to the finetune process of Chinese-CLIP is very simple, 
 
 ## Training Speed and Memory Usage Comparison
 
-Enabling FlashAttention can significantly speed up the finetune process of Chinese-CLIP and reduce the memory usage without affecting the precision. Our experiments are conducted on an 8-card A100 GPU (80GB memory) machine.
+Enabling FlashAttention can significantly speed up the finetune process and reduce the memory usage of Chinese-CLIP without affecting the precision. Our experiments are conducted on an 8-card A100 GPU (80GB memory) machine.
 
 We present the comparison of the batch time and memory usage of FP16 precision finetune for each scale model. The improvement in training speed and reduction in memory usage are more significant for larger models.
 

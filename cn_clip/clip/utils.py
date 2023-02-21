@@ -82,11 +82,14 @@ def available_models() -> List[str]:
 
 
 def load_from_name(name: str, device: Union[str, torch.device] = "cuda" if torch.cuda.is_available() else "cpu",
-                   download_root: str = None):
+                   download_root: str = None, vision_model_name: str = None, text_model_name: str = None, input_resolution: int = None):
     if name in _MODELS:
         model_path = _download(_MODELS[name], download_root or os.path.expanduser("~/.cache/clip"))
+        model_name, model_input_resolution = _MODEL_INFO[name]['struct'], _MODEL_INFO[name]['input_resolution']
     elif os.path.isfile(name):
+        assert vision_model_name and text_model_name and input_resolution, "Please specify specific 'vision_model_name', 'text_model_name', and 'input_resolution'"
         model_path = name
+        model_name, model_input_resolution = f'{vision_model_name}@{text_model_name}', input_resolution
     else:
         raise RuntimeError(f"Model {name} not found; available models = {available_models()}")
 
@@ -94,12 +97,12 @@ def load_from_name(name: str, device: Union[str, torch.device] = "cuda" if torch
         # loading saved checkpoint
         checkpoint = torch.load(opened_file, map_location="cpu")
 
-    model = create_model(_MODEL_INFO[name]['struct'], checkpoint)
+    model = create_model(model_name, checkpoint)
     if str(device) == "cpu":
         model.float()
     else:
         model.to(device)
-    return model, image_transform(_MODEL_INFO[name]['input_resolution'])
+    return model, image_transform(model_input_resolution)
 
 
 def load(model, device: Union[str, torch.device] = "cuda" if torch.cuda.is_available() else "cpu", clip_path=None,
