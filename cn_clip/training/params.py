@@ -174,6 +174,12 @@ def parse_args():
         action="store_true",
         help="Enable flash attention."
     )
+    parser.add_argument(
+        "--accum-freq",
+        type=int,
+        default=1,
+        help="Update the model every --acum-freq steps."
+    )
     # arguments for distributed training
     parser.add_argument(
         "--local_rank", 

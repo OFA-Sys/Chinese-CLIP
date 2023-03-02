@@ -16,8 +16,16 @@ from cn_clip.clip.model import convert_state_dict
 def is_master(args):
     return args.rank == 0
 
-def get_loss(model, images, texts, loss_img, loss_txt, args):
-    image_features, text_features, logit_scale = model(images, texts, args.mask_ratio)
+def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_features=None, accum_text_features=None, accum_idx=-1):
+    if args.accum_freq == 1:
+        image_features, text_features, logit_scale = model(images, texts, args.mask_ratio)
+    else:
+        assert accum_image_features and accum_text_features and accum_idx != -1
+        chunk_image_features, chunk_text_features, logit_scale = model(images, texts, args.mask_ratio)
+        image_features = torch.cat(
+            accum_image_features[:accum_idx] + [chunk_image_features] + accum_image_features[accum_idx + 1:])
+        text_features = torch.cat(
+            accum_text_features[:accum_idx] + [chunk_text_features] + accum_text_features[accum_idx + 1:])
     logit_scale = logit_scale.mean()
     if args.aggregate:
         world_size = dist.get_world_size()
@@ -94,17 +102,22 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
     if sampler is not None:
         sampler.set_epoch(epoch)
 
-    num_batches_per_epoch = dataloader.num_batches
+    num_steps_per_epoch = dataloader.num_batches // args.accum_freq
     data_iter = iter(dataloader)
+
+    if args.accum_freq > 1:
+        accum_images, accum_texts, accum_image_features, accum_text_features = [], [], [], []
 
     end = time.time()
     epoch_trained_steps = 0
-    for i in range(global_trained_steps - num_batches_per_epoch * epoch, num_batches_per_epoch):
+    for i in range(0, dataloader.num_batches):
         batch = next(data_iter)
-        step = num_batches_per_epoch * epoch + i
+
+        i_accum = i // args.accum_freq
+        step = num_steps_per_epoch * epoch + i_accum
         # reach the args.max_steps, exit training:
         if step >= args.max_steps:
-            logging.info("Stopping training due to step {} has reached max_steps {}".format(step, args.max_steps))
+            logging.info("Stopping training due to step {} has reached max_steps {}".format(step, args.max_steps // args.accum_freq))
             return epoch_trained_steps
         scheduler(step)
 
@@ -120,18 +133,60 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
 
         m = model.module
 
-        # with automatic mixed precision.
-        if args.precision == "amp":
-            with autocast():
-                total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
-                scaler.scale(total_loss).backward()
-                scaler.step(optimizer)
-            scaler.update()
+        if args.accum_freq == 1:
+            # with automatic mixed precision.
+            if args.precision == "amp":
+                with autocast():
+                    total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
+                    scaler.scale(total_loss).backward()
+                    scaler.step(optimizer)
+                scaler.update()
 
+            else:
+                total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
+                total_loss.backward()
+                optimizer.step()
         else:
-            total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
-            total_loss.backward()
-            optimizer.step()
+            # First, cache the features without any gradient tracking.
+            with torch.no_grad():
+                with autocast(enabled=(args.precision == "amp")):
+                    chunk_image_features, chunk_text_features, _ = model(images, texts)
+                accum_image_features.append(chunk_image_features)
+                accum_text_features.append(chunk_text_features)
+
+                accum_images.append(images)
+                accum_texts.append(texts)
+
+            # If (i + 1) % accum_freq is not zero, move on to the next batch.
+            if ((i + 1) % args.accum_freq) > 0:
+                # FIXME this makes data time logging unreliable when accumulating
+                continue
+
+            # Now, ready to take gradients for the last accum_freq batches.
+            # Re-do the forward pass for those batches, and use the cached features from the other batches as negatives.
+            # Call backwards each time, but only step optimizer at the end.
+            optimizer.zero_grad()
+            for j in range(args.accum_freq):
+                images = accum_images[j]
+                texts = accum_texts[j]
+                with autocast(enabled=(args.precision == "amp")):
+                    # `total_loss` and `acc` are coarsely sampled, taking only the last result in the loop.
+                    # Although each result should be the same in theory, it will be slightly different in practice
+                    total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_features, accum_text_features, j)
+                if args.precision == "amp":
+                    scaler.scale(total_loss).backward()
+                else:
+                    total_loss.backward()
+
+            if args.precision == "amp":
+                scaler.step(optimizer)
+                scaler.update()
+            else:
+                optimizer.step()
+
+        # reset gradient accum, if enabled
+        if args.accum_freq > 1:
+            accum_images, accum_texts, accum_image_features, accum_text_features = [], [], [], []
 
         # Note: we clamp to 4.6052 = ln(100), as in the original paper.
         m.logit_scale.data = torch.clamp(m.logit_scale.data, 0, 4.6052)
@@ -142,10 +197,11 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
         epoch_trained_steps += 1
 
         if is_master(args) and ((step + 1) % args.log_interval) == 0:
-            num_samples = (i + 1) * len(images) * args.world_size
+            batch_size = len(images) * args.accum_freq
+            num_samples = (i_accum + 1) * batch_size * args.world_size
             samples_per_epoch = dataloader.num_samples
-            percent_complete = 100.0 * (i + 1) / num_batches_per_epoch
-            
+            percent_complete = 100.0 * (i_accum + 1) / num_steps_per_epoch
+
             logging.info(
                 f"Global Steps: {step + 1}/{args.max_steps} | " +
                 f"Train Epoch: {epoch + 1} [{num_samples}/{samples_per_epoch} ({percent_complete:.0f}%)] | " +
@@ -156,7 +212,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
                 f"Batch Time: {batch_time:.3f}s | " +
                 f"LR: {optimizer.param_groups[0]['lr']:5f} | " +
                 f"logit_scale: {m.logit_scale.data:.3f} | " +
-                f"Global Batch Size: {len(images) * args.world_size}"
+                f"Global Batch Size: {batch_size * args.world_size}"
             )
 
         if args.val_data is not None and args.valid_step_interval is not None and ((step + 1) % args.valid_step_interval) == 0:
