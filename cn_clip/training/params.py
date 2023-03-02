@@ -180,6 +180,12 @@ def parse_args():
         default=1,
         help="Update the model every --acum-freq steps."
     )
+    parser.add_argument(
+        "--gather-with-grad",
+        default=False,
+        action="store_true",
+        help="enable full distributed gradient for feature gather"
+    )
     # arguments for distributed training
     parser.add_argument(
         "--local_rank", 
