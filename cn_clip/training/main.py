@@ -163,10 +163,10 @@ def main():
         )
         num_batches = data["train"].dataloader.num_batches
         if args.max_steps is not None:
-            args.max_epochs = ceil(args.max_steps / num_batches)
+            args.max_epochs = ceil(args.max_steps * args.accum_freq / num_batches)
         else:
             assert args.max_epochs is not None and args.max_epochs > 0
-            args.max_steps = num_batches * args.max_epochs
+            args.max_steps = (num_batches // args.accum_freq) * args.max_epochs
         total_steps = args.max_steps
         scheduler = cosine_lr(optimizer, args.lr, args.warmup, total_steps)
 

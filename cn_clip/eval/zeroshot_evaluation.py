@@ -192,7 +192,7 @@ if __name__ == "__main__":
             model_info[k] = v
 
     model = CLIP(**model_info)
-    convert_weights(model)    
+    convert_weights(model)
 
     # See https://discuss.pytorch.org/t/valueerror-attemting-to-unscale-fp16-gradients/81372
     if args.precision == "amp" or args.precision == "fp32":

@@ -16,6 +16,7 @@
 <br><br>
 
 # 新闻
+* 2023.3.20 新增对比学习的[梯度累积](#gradient_accumulation)支持，可模拟更大batch size的训练效果
 * 2023.2.16 新增[FlashAttention](https://github.com/HazyResearch/flash-attention)支持，提升训练速度，降低显存占用，详见[flash_attention.md](flash_attention.md)
 * 2023.1.15 新增部署[ONNX](https://onnx.ai/)和[TensorRT](https://developer.nvidia.com/tensorrt)模型支持（并提供预训练TensorRT模型），提升特征推理速度，满足部署需求，详见[deployment.md](deployment.md)
 * 2022.12.12 新增实现[FLIP](https://arxiv.org/abs/2212.00794)训练策略，在finetune训练时可[激活使用](#FLIP)（感谢[@zwkkk](https://github.com/zwkkk)同学[贡献代码](https://github.com/OFA-Sys/Chinese-CLIP/pull/26)❤️）
@@ -345,8 +346,10 @@ bash run_scripts/muge_finetune_vit-b-16_rbt-base.sh ${DATAPATH}
   + `valid-batch-size`: 验证时单机batch-size。（请保证`验证集样本总数 > batch-size * GPU数`，至少满足1个验证batch）
   + `valid-step-interval`和`valid-epoch-interval`: 验证step/epoch频率，指定为-1时则在训练中不进行验证。
   + `grad-checkpointing`: <span id="checkpointing"></span>使用[重计算策略](https://pytorch.org/docs/stable/checkpoint.html)，在前向过程中不保存中间结果，以训练时间换取更小的显存开销，适用于显存不足的情况。（`store_true`参数，直接在脚本中加上`--grad-checkpointing`即可，目前要求Pytorch>1.8.0）
-  + `mask-ratio`: <span id="FLIP"></span>参照[FLIP](https://arxiv.org/abs/2212.00794)的策略，在finetune时可指定随机mask一定比例的图像patch，以降低显存开销、加快训练速度。默认为0.0，即不激活这一策略
+  + `mask-ratio`: <span id="FLIP"></span>参照[FLIP](https://arxiv.org/abs/2212.00794)的策略，在finetune时可指定随机mask一定比例的图像patch，以降低显存开销、加快训练速度。默认为0.0，即不激活这一策略。
   + `use-flash-attention`: 使用[FlashAttention](https://arxiv.org/abs/2205.14135)，可在不影响效果的条件下为Chinese-CLIP的finetune过程显著提速以及降低显存占用。（`store_true`参数，配置好环境后，在脚本中加上`--use-flash-attention`即可，请详见[flash_attention.md](flash_attention.md)）
+  + `accum-freq`: <span id="gradient_accumulation"></span>梯度累积频率，默认为1。指定为大于1的整数时开启对比学习梯度累积，模拟更大的batch size。如果单卡batch size为`m`，则总的batch size为`accum_freq * m * GPU数`。
+  + `gather-with-grad`: 是否在分布式训练时进行带有完整梯度的特征gather，默认关闭。
 + 输出选项
   + `name`: 指定输出路径。超参日志, 训练日志以及产出ckpt均会存放至 `${DATAPATH}/experiments/${name}/`。
   + `save-step-frequency`及`save-epoch-frequency`: 存ckpt的步数或轮数间隔。

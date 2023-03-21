@@ -46,6 +46,7 @@ context_length=52
 warmup=6
 batch_size=1024
 valid_batch_size=128
+accum_freq=1
 lr=3e-5
 wd=0.001
 max_epochs=20
@@ -75,6 +76,7 @@ python3 -m torch.distributed.launch --nproc_per_node=${GPUS_PER_NODE} --nnodes=$
           --valid-batch-size=${valid_batch_size} \
           --valid-step-interval=${valid_step_interval} \
           --valid-epoch-interval=${valid_epoch_interval} \
+          --accum-freq=${accum_freq} \
           --lr=${lr} \
           --wd=${wd} \
           --max-epochs=${max_epochs} \
