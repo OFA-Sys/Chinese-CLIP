@@ -40,9 +40,9 @@ class LMDBDataset(Dataset):
 
         # assert LMDB directories exist
         assert os.path.isdir(lmdb_path), "The LMDB directory {} of {} split does not exist!".format(lmdb_path, split)
-        lmdb_pairs = os.path.join(lmdb_path, "pairs")
+        lmdb_pairs = os.path.join(lmdb_path, split, "pairs")
         assert os.path.isdir(lmdb_pairs), "The LMDB directory {} of {} image-text pairs does not exist!".format(lmdb_pairs, split)
-        lmdb_imgs = os.path.join(lmdb_path, "imgs")
+        lmdb_imgs = os.path.join(lmdb_path, split, "imgs")
         assert os.path.isdir(lmdb_imgs), "The LMDB directory {} of {} image base64 strings does not exist!".format(lmdb_imgs, split)
 
         # open LMDB files
