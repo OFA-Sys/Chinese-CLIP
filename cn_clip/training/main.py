@@ -218,7 +218,7 @@ def main():
             model.load_state_dict(sd)
             # Restore the epoch and steps info, reload the dataset and dataloader for the resume epoch
             if not args.reset_data_offset:
-                start_epoch = checkpoint["epoch"] - 1
+                start_epoch = checkpoint["epoch"]
                 steps = checkpoint["step"]
                 data = get_data(args, 
                                 epoch_id=start_epoch, 
