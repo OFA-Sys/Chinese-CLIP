@@ -48,7 +48,7 @@ def main():
     args = parse_args()
 
     # Set distributed group
-    args.local_device_rank = max(args.local_rank, 0)
+    args.local_device_rank = int(os.environ["LOCAL_RANK"])
     torch.cuda.set_device(args.local_device_rank)
     args.device = torch.device("cuda", args.local_device_rank)
 
@@ -108,7 +108,10 @@ def main():
 
     if args.grad_checkpointing:
         assert not torch_version_str_compare_lessequal(torch.__version__, "1.8.0"), \
-            "Currently our grad_checkpointing is not compatible with torch version <= 1.8.0."        
+            "Currently our grad_checkpointing is not compatible with torch version <= 1.8.0."
+        # TODO: Adaption to Pytorch 2
+        assert torch_version_str_compare_lessequal(torch.__version__, "1.14.0"), \
+            "Currently our grad_checkpointing is not compatible with torch version >= 2.0.0."
         model.set_grad_checkpointing()
         logging.info("Grad-checkpointing activated.")
 

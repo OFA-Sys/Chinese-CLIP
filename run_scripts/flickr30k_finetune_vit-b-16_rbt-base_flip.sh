@@ -58,7 +58,7 @@ mask_ratio=0.5 # use flip: set mask ratio
 use_augment="--use-augment"
 # use_augment=""
 
-python3 -m torch.distributed.launch --nproc_per_node=${GPUS_PER_NODE} --nnodes=${WORKER_CNT} --node_rank=${RANK} \
+python3 -m torch.distributed.launch --use_env --nproc_per_node=${GPUS_PER_NODE} --nnodes=${WORKER_CNT} --node_rank=${RANK} \
           --master_addr=${MASTER_ADDR} --master_port=${MASTER_PORT} cn_clip/training/main.py \
           --train-data=${train_data} \
           --val-data=${val_data} \
