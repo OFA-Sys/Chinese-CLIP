@@ -16,6 +16,7 @@
 <br><br>
 
 # 新闻
+* 2023.5.9 Chinese-CLIP适配Pytorch2.0。
 * 2023.3.20 新增对比学习的[梯度累积](#gradient_accumulation)支持，可模拟更大batch size的训练效果
 * 2023.2.16 新增[FlashAttention](https://github.com/HazyResearch/flash-attention)支持，提升训练速度，降低显存占用，详见[flash_attention.md](flash_attention.md)
 * 2023.1.15 新增部署[ONNX](https://onnx.ai/)和[TensorRT](https://developer.nvidia.com/tensorrt)模型支持（并提供预训练TensorRT模型），提升特征推理速度，满足部署需求，详见[deployment.md](deployment.md)
