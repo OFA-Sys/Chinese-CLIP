@@ -188,12 +188,6 @@ def parse_args():
     )
     # arguments for distributed training
     parser.add_argument(
-        "--local_rank", 
-        type=int, 
-        default=-1, 
-        help="For distributed training: local_rank."
-    )
-    parser.add_argument(
         "--skip-aggregate",
         default=False,
         action="store_true",

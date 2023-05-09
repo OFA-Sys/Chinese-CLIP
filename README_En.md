@@ -16,6 +16,7 @@ This is the Chinese version of CLIP. We use a large-scale Chinese image-text pai
 <br><br>
 
 # News
+* 2023.5.9 Chinese-CLIP has been adapted to Pytorch2.0.
 * 2023.3.20 Support [gradient accumulation](#gradient-accumulation) in contrastive learning to simulate the training effect of a larger batch size.
 * 2023.2.16 Support [FlashAttention](https://github.com/HazyResearch/flash-attention) to improve training speed and reduce memory usage. See [flash_attention_En.md](flash_attention_En.md) for more information.
 * 2023.1.15 Support the conversion of Pytorch models into [ONNX](https://onnx.ai/) or [TensorRT](https://developer.nvidia.com/tensorrt) formats (and provide pretrained TensorRT models) to improve inference speed and meet deployment requirements. See [deployment_En.md](deployment_En.md) for more information.

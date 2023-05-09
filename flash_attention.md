@@ -6,9 +6,12 @@ Chinese-CLIP训练现已支持通过[FlashAttention](https://github.com/HazyRese
 
 ## 环境准备
 
-+ **Volta**或**Ampere**架构的Nvidia GPU显卡（如A100、RTX 3090、T4、RTX 2080），Nvidia各架构对应显卡型号可参见[此文档表格](https://en.wikipedia.org/wiki/CUDA#GPUs_supported)。
-+ CUDA 11，NVCC
-+ **FlashAttention**：通过执行`pip install flash-attn`安装FlashAttention，可参见[FlashAttention项目仓库](https://github.com/HazyResearch/flash-attention)。
++ **Turing**、**Ampere**、**Ada**、**Hopper**架构的Nvidia GPU显卡（如H100、A100、RTX 3090、T4、RTX 2080），Nvidia各架构对应显卡型号可参见[此文档表格](https://en.wikipedia.org/wiki/CUDA#GPUs_supported)。
++ CUDA 11.4及以上版本。
++ Pytorch 1.12及以上版本。
++ **FlashAttention**：通过执行`pip install flash-attn`安装FlashAttention。
+
+更多信息可参见[FlashAttention项目仓库](https://github.com/HazyResearch/flash-attention)。
 
 ## 在Chinese-CLIP中用起来！
 
@@ -17,7 +20,7 @@ Chinese-CLIP训练现已支持通过[FlashAttention](https://github.com/HazyRese
 
 ## 训练速度和显存占用对比
 
-启用FlashAttention可在不影响效果的条件下为Chinese-CLIP的finetune过程显著提速以及降低显存占用。我们的实验在一台8卡A100 GPU（80GB显存）机器进行。
+启用FlashAttention可在不影响效果的条件下为Chinese-CLIP的finetune过程显著提速以及降低显存占用。我们的实验在一台8卡A100 GPU（80GB显存）机器进行，FlashAttention 0.2.8，Pytorch 1.10.1。
 
 我们分别列出finetune过程中，相同batch size下启用FlashAttention前后每个规模模型的FP16精度finetune的batch time和显存占用对比，可以看到启用FlashAttention后，训练速度有所提升，也更加节约显存。对于更大规模模型的训练速度提升和显存占用降低更为显著。
 
@@ -31,7 +34,7 @@ Chinese-CLIP训练现已支持通过[FlashAttention](https://github.com/HazyRese
         <td width="120%">CN-CLIP<sub>RN50</sub></td><td>1200*8</td><td>1.710</td><td>1.680</td><td>1.02×</td>
     </tr>  
     <tr align="center">
-        <td width="120%">CN-CLIP<sub>ViT-B/16</sub></td><td>400*8</td><td>1.477</td><td>0.960</td><td>1.54×</td>
+        <td width="120%">CN-CLIP<sub>ViT-B/16</sub></td><td>450*8</td><td>1.477</td><td>0.960</td><td>1.54×</td>
     </tr>  
     <tr align="center">
         <td width="120%">CN-CLIP<sub>ViT-L/14</sub></td><td>128*8</td><td>1.293</td><td>0.785</td><td>1.65×</td>
@@ -55,7 +58,7 @@ Chinese-CLIP训练现已支持通过[FlashAttention](https://github.com/HazyRese
         <td width="120%">CN-CLIP<sub>RN50</sub></td><td>1200*8</td><td>79</td><td>75</td>
     </tr>  
     <tr align="center">
-        <td width="120%">CN-CLIP<sub>ViT-B/16</sub></td><td>400*8</td><td>80</td><td>56</td>
+        <td width="120%">CN-CLIP<sub>ViT-B/16</sub></td><td>450*8</td><td>80</td><td>56</td>
     </tr>  
     <tr align="center">
         <td width="120%">CN-CLIP<sub>ViT-L/14</sub></td><td>128*8</td><td>77</td><td>50</td>

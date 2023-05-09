@@ -48,7 +48,7 @@ def main():
     args = parse_args()
 
     # Set distributed group
-    args.local_device_rank = max(args.local_rank, 0)
+    args.local_device_rank = int(os.environ["LOCAL_RANK"])
     torch.cuda.set_device(args.local_device_rank)
     args.device = torch.device("cuda", args.local_device_rank)
 
@@ -108,7 +108,7 @@ def main():
 
     if args.grad_checkpointing:
         assert not torch_version_str_compare_lessequal(torch.__version__, "1.8.0"), \
-            "Currently our grad_checkpointing is not compatible with torch version <= 1.8.0."        
+            "Currently our grad_checkpointing is not compatible with torch version <= 1.8.0."
         model.set_grad_checkpointing()
         logging.info("Grad-checkpointing activated.")
 
@@ -133,6 +133,9 @@ def main():
     # In other cases, set find_unused_parameters to False
     find_unused_parameters = torch_version_str_compare_lessequal(torch.__version__, "1.8.0")
     model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_device_rank], find_unused_parameters=find_unused_parameters)
+    # Have to set this when activating grad checkpointing in Pytorch >= 2.0.0
+    if args.grad_checkpointing and not torch_version_str_compare_lessequal(torch.__version__, "1.14.0"):
+        model._set_static_graph()
 
     if args.precision == "fp16":
         convert_weights(model)
@@ -218,7 +221,7 @@ def main():
             model.load_state_dict(sd)
             # Restore the epoch and steps info, reload the dataset and dataloader for the resume epoch
             if not args.reset_data_offset:
-                start_epoch = checkpoint["epoch"] - 1
+                start_epoch = checkpoint["epoch"]
                 steps = checkpoint["step"]
                 data = get_data(args, 
                                 epoch_id=start_epoch, 
