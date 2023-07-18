@@ -112,6 +112,8 @@ if __name__ == '__main__':
     if args.convert_text:
         # convert text FP32 ONNX model
         text_fp32_onnx_path = f"{args.save_onnx_path}.txt.fp32.onnx"
+        # support handle texts in batch
+        dynamic_axes = {"text": {0: "batch"}}
         torch.onnx.export(model,
                     (None, text),
                     text_fp32_onnx_path,
@@ -119,7 +121,8 @@ if __name__ == '__main__':
                     output_names=['unnorm_text_features'],
                     export_params=True,
                     opset_version=13,
-                    verbose=True)
+                    verbose=True,
+                    dynamic_axes=dynamic_axes)
         # convert text FP16 ONNX model based on the FP32 model
         text_fp16_onnx_path = f"{args.save_onnx_path}.txt.fp16.onnx"
         text_fp32_onnx_model = load_model(text_fp32_onnx_path)
