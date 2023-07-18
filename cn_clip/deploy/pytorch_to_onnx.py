@@ -136,6 +136,8 @@ if __name__ == '__main__':
         # convert vision FP32 ONNX model
         vision_fp32_onnx_path = f"{args.save_onnx_path}.img.fp32.onnx"
         vision_fp32_onnx_hasextra = False
+        # support handle images in batch
+        dynamic_axes = {"image": {0: "batch"}}
         torch.onnx.export(model,
                     (image, None),
                     vision_fp32_onnx_path,
@@ -144,7 +146,8 @@ if __name__ == '__main__':
                     export_params=True,
                     do_constant_folding=False,
                     opset_version=13,
-                    verbose=True)
+                    verbose=True,
+                    dynamic_axes=dynamic_axes)
         # for ViT-H-14 FP32 model, make another conversion to deal with the generated small files
         if args.model_arch == "ViT-H-14":
             packing_small_onnx_files(vision_fp32_onnx_path)
