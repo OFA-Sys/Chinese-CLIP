@@ -62,7 +62,7 @@ Notice that some of the ONNX model files also come with an extra_file, which is 
 ### Run the Model
 
 #### Extraction of Image-side Features
-We use the following sample code in the `Chinese-CLIP/` directory to read the converted ViT-B-16 size ONNX image-side model `vit-b-16.img.fp16.onnx` and extract the features of the [Pikachu image](examples/pokemon.jpeg) in Readme. 
+We use the following sample code in the `Chinese-CLIP/` directory to read the converted ViT-B-16 size ONNX image-side model `vit-b-16.img.fp16.onnx` and extract the features of the [Pikachu image](examples/pokemon.jpeg) in Readme. Note that the converted ONNX model only accepts inputs with a batch size of 1, i.e. only one input image is processed in one call.
 
 ```python
 # Complete the necessary import (omitted below)
