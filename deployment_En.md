@@ -62,7 +62,7 @@ Notice that some of the ONNX model files also come with an extra_file, which is 
 ### Run the Model
 
 #### Extraction of Image-side Features
-We use the following sample code in the `Chinese-CLIP/` directory to read the converted ViT-B-16 size ONNX image-side model `vit-b-16.img.fp16.onnx` and extract the features of the [Pikachu image](examples/pokemon.jpeg) in Readme. Note that the converted ONNX model only accepts inputs with a batch size of 1, i.e. only one input image is processed in one call.
+We use the following sample code in the `Chinese-CLIP/` directory to read the converted ViT-B-16 size ONNX image-side model `vit-b-16.img.fp16.onnx` and extract the features of the [Pikachu image](examples/pokemon.jpeg) in Readme. 
 
 ```python
 # Complete the necessary import (omitted below)
@@ -99,7 +99,7 @@ print(image_features.shape) # Torch Tensor shape: [1, feature dimension]
 
 #### Extraction of Text-side Features
 
-Similarly, we use the following code to complete the loading and feature calculation of the text-side ONNX model. As with the image-side model, the text-side ONNX model only accepts inputs with a batch size of 1, i.e., only one input text is processed in a single call.
+Similarly, we use the following code to complete the loading and feature calculation of the text-side ONNX model. 
 
 ```python
 # Load ONNX text-side model（**Please replace ${DATAPATH} with the actual path**）
@@ -211,7 +211,7 @@ When running the TensorRT model, if the conversion and running are not in the sa
 
 #### Extraction of Image-side Features
 
-Similar to the process of ONNX models, we use the following sample code in the `Chinese-CLIP/` directory to read the converted ViT-B-16 size TensorRT image-side model `vit-b-16.img.fp16.trt` and extract the features of the [Pikachu image](examples/pokemon.jpeg) in Readme. The converted TensorRT model here also accepts only inputs with a batch size of 1, i.e. only one input image is processed in one call.
+Similar to the process of ONNX models, we use the following sample code in the `Chinese-CLIP/` directory to read the converted ViT-B-16 size TensorRT image-side model `vit-b-16.img.fp16.trt` and extract the features of the [Pikachu image](examples/pokemon.jpeg) in Readme. The converted TensorRT model here accepts only inputs with a batch size of 1, i.e. only one input image is processed in one call.
 
 ```python
 # Complete the necessary import (omitted below)
