@@ -205,6 +205,13 @@ def parse_args():
         default=123, 
         help="Random seed."
     )
+    # arguments for distllation
+    parser.add_argument(
+        "--distllation",
+        default=False,
+        action="store_true",
+        help="If true, more information is logged."
+    )
     args = parser.parse_args()
     args.aggregate = not args.skip_aggregate
 
