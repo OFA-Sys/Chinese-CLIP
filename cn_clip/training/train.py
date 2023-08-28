@@ -17,12 +17,25 @@ from cn_clip.clip.model import convert_state_dict
 def is_master(args):
     return args.rank == 0
 
-def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_features=None, accum_text_features=None, accum_idx=-1):
+def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_features=None, accum_text_features=None, accum_idx=-1, teacher_model=None, teacher_accum_image_features=[]):
     if args.accum_freq == 1:
         image_features, text_features, logit_scale = model(images, texts, args.mask_ratio)
+
+        if args.distllation:
+            with torch.no_grad():
+                _, _, teacher_image_features, _ = teacher_model.module.get_feature(
+                        None, None, images)
     else:
         assert accum_image_features and accum_text_features and accum_idx != -1
         chunk_image_features, chunk_text_features, logit_scale = model(images, texts, args.mask_ratio)
+
+        if args.distllation:
+            with torch.no_grad():
+                _, _, teacher_chunk_image_features, _ = teacher_model.module.get_feature(
+                        None, None, images)
+            teacher_image_features = torch.cat(
+            teacher_accum_image_features[:accum_idx] + [teacher_chunk_image_features] + teacher_accum_image_features[accum_idx + 1:])
+        
         image_features = torch.cat(
             accum_image_features[:accum_idx] + [chunk_image_features] + accum_image_features[accum_idx + 1:])
         text_features = torch.cat(
@@ -36,6 +49,9 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
         if args.gather_with_grad:
             all_image_features = torch.cat(torch.distributed.nn.all_gather(image_features), dim=0)
             all_text_features = torch.cat(torch.distributed.nn.all_gather(text_features), dim=0)
+
+            if args.distllation:
+                all_teacher_image_features = torch.cat(torch.distributed.nn.all_gather(teacher_image_features), dim=0)
         else:
             gathered_image_features = [
                 torch.zeros_like(image_features) for _ in range(world_size)
@@ -43,6 +59,7 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
             gathered_text_features = [
                 torch.zeros_like(text_features) for _ in range(world_size)
             ]
+            
             dist.all_gather(gathered_image_features, image_features)
             dist.all_gather(gathered_text_features, text_features)
 
@@ -61,9 +78,24 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
         logits_per_image = logit_scale * all_image_features @ all_text_features.t()
         logits_per_text = logits_per_image.t()
 
+        if args.distllation:
+            gathered_teacher_image_features = [
+                torch.zeros_like(teacher_image_features) for _ in range(world_size)
+            ]
+            dist.all_gather(gathered_teacher_image_features, teacher_image_features)
+            all_teacher_image_features = torch.cat(
+                [teacher_image_features]
+                + gathered_teacher_image_features[:rank]
+                + gathered_teacher_image_features[rank + 1 :]
+            )
+            kd_loss = cosineSimilarityLoss(all_teacher_image_features, all_image_features.detach())
+
     else:
         logits_per_image = logit_scale * image_features @ text_features.t()
         logits_per_text = logit_scale * text_features @ image_features.t()
+
+        if args.distllation:
+            kd_loss = cosineSimilarityLoss(teacher_image_features, image_features.detach())
 
     ground_truth = torch.arange(len(logits_per_image)).long()
     ground_truth = ground_truth.cuda(args.local_device_rank, non_blocking=True)
@@ -79,6 +111,9 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
         t2i_acc = (logits_per_text.argmax(-1) == ground_truth).sum() / len(logits_per_text)
         acc = {"i2t": i2t_acc, "t2i": t2i_acc}
 
+    if args.distllation:
+        total_loss += kd_loss * args.kd_loss_weight
+
     return total_loss, acc
 
 def freeze_vision_bn(args, model):
@@ -89,7 +124,7 @@ def freeze_vision_bn(args, model):
             if isinstance(m, nn.BatchNorm2d):
                 m.eval()
 
-def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained_steps):
+def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained_steps, teacher_model):
     # os.environ["WDS_EPOCH"] = str(epoch)
 
     model.train()
@@ -112,6 +147,8 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
 
     if args.accum_freq > 1:
         accum_images, accum_texts, accum_image_features, accum_text_features = [], [], [], []
+        if args.distllation:
+            teacher_accum_image_features = []
 
     end = time.time()
     epoch_trained_steps = 0
@@ -142,13 +179,19 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
             # with automatic mixed precision.
             if args.precision == "amp":
                 with autocast():
-                    total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
+                    if args.distllation:
+                        total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args,teacher_model=teacher_model,teacher_accum_image_features=teacher_accum_image_features)
+                    else:
+                        total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
                     scaler.scale(total_loss).backward()
                     scaler.step(optimizer)
                 scaler.update()
 
             else:
-                total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
+                if args.distllation:
+                    total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args,teacher_model=teacher_model,teacher_accum_image_features=teacher_accum_image_features)
+                else:
+                    total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
                 total_loss.backward()
                 optimizer.step()
         else:
@@ -156,8 +199,13 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
             with torch.no_grad():
                 with autocast(enabled=(args.precision == "amp")):
                     chunk_image_features, chunk_text_features, _ = model(images, texts)
+                if args.distllation:
+                    _, _, teacher_chunk_image_features, _ = teacher_model.module.get_feature(
+                    None, None, images)
                 accum_image_features.append(chunk_image_features)
                 accum_text_features.append(chunk_text_features)
+                if args.distllation:
+                    teacher_accum_image_features.append(teacher_chunk_image_features)
 
                 accum_images.append(images)
                 accum_texts.append(texts)
@@ -177,7 +225,10 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
                 with autocast(enabled=(args.precision == "amp")):
                     # `total_loss` and `acc` are coarsely sampled, taking only the last result in the loop.
                     # Although each result should be the same in theory, it will be slightly different in practice
-                    total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_features, accum_text_features, j)
+                    if args.distllation:
+                        total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_features, accum_text_features, j, teacher_model, teacher_accum_image_features)
+                    else:
+                        total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_features, accum_text_features, j)
                 if args.precision == "amp":
                     scaler.scale(total_loss).backward()
                 else:
@@ -192,6 +243,8 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
         # reset gradient accum, if enabled
         if args.accum_freq > 1:
             accum_images, accum_texts, accum_image_features, accum_text_features = [], [], [], []
+            if args.distllation:
+                teacher_accum_image_features = []
 
         # Note: we clamp to 4.6052 = ln(100), as in the original paper.
         m.logit_scale.data = torch.clamp(m.logit_scale.data, 0, 4.6052)
@@ -337,3 +390,18 @@ def evaluate(model, data, epoch, args, steps):
             f"logit_scale: {model.module.logit_scale.data:.3f} | "
             f"Valid Batch Size: {batch_size}"
         )
+
+def cosineSimilarityLoss(feature1, feature2):
+    scale_factor_h = feature1.shape[0] / feature2.size(0)
+    scale_factor_w = feature1.shape[1] / feature2.size(1)
+
+    feature2_interpolated = F.interpolate(feature2.unsqueeze(0).unsqueeze(0),
+                            size=(feature1.shape[0], feature1.shape[1]),
+                            mode='bilinear',
+                            align_corners=False)
+    feature2_interpolated = feature2_interpolated.squeeze(0).squeeze(0)
+    
+
+    cosine_sim = F.cosine_similarity(feature1, feature2_interpolated, dim=1)
+    similarity_loss = 1 - cosine_sim.mean()
+    return similarity_loss
