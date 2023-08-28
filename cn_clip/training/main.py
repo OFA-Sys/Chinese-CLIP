@@ -13,6 +13,8 @@ import torch.distributed as dist
 import torch.backends.cudnn as cudnn
 from torch.cuda.amp import GradScaler
 
+from modelscope.models import Model
+
 from cn_clip.clip import load
 from cn_clip.clip.model import convert_weights, convert_state_dict, resize_pos_embed, CLIP
 from cn_clip.training.train import train, evaluate
@@ -243,10 +245,24 @@ def main():
     # only do so if it is the 0th worker.
     args.should_save = (args.logs is not None and args.logs != '' and args.logs.lower() != 'none') and is_master(args)
 
+    # load teacher model to distllation
+    if args.distllation:
+        teacher_model = Model.from_pretrained('damo/multi-modal_team-vit-large-patch14_multi-modal-similarity').model
+        for k, v in teacher_model.state_dict().items():
+            v.requires_grad = False
+        teacher_model.cuda(args.local_device_rank)
+        teacher_model = torch.nn.parallel.DistributedDataParallel(teacher_model, device_ids=[args.local_device_rank])
+    else:
+        teacher_model = None
+
+
     for epoch in range(start_epoch, args.max_epochs):
         if is_master(args) == 0:
             logging.info(f'Start epoch {epoch + 1}')
-        num_steps_this_epoch = train(model, data, epoch, optimizer, scaler, scheduler, args, steps)
+        if args.distllation:
+            num_steps_this_epoch = train(model, data, epoch, optimizer, scaler, scheduler, args, steps, teacher_model)
+        else:
+            num_steps_this_epoch = train(model, data, epoch, optimizer, scaler, scheduler, args, steps)
         steps += num_steps_this_epoch
 
         if args.val_data is not None and args.valid_epoch_interval is not None and ((epoch + 1) % args.valid_epoch_interval) == 0:
