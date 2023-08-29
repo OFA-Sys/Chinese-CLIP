@@ -271,7 +271,6 @@ def main():
             if hasattr(model_instance, mapping["clip_model"]):
                 setattr(teacher_model, "get_feature", getattr(model_instance, mapping["clip_model"]))
 
-
         teacher_model.cuda(args.local_device_rank)
         teacher_model = torch.nn.parallel.DistributedDataParallel(teacher_model, device_ids=[args.local_device_rank])
         logging.info(f"Teacher model loaded from {args.teacher_model_name}")

@@ -24,8 +24,9 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
 
         if args.distllation:
             with torch.no_grad():
+                # different teacher model has different output
                 output = teacher_model.module.get_feature(images)
-                if(len(output) == 2):
+                if(isinstance(output, tuple)):
                     teacher_image_features = output[0]
                 else:
                     teacher_image_features = output
@@ -35,8 +36,9 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
 
         if args.distllation:
             with torch.no_grad():
+                # different teacher model has different output
                 output = teacher_model.module.get_feature(images)
-                if(len(output) == 2):
+                if(isinstance(output, tuple)):
                     teacher_chunk_image_features = output[0]
                 else:
                     teacher_chunk_image_features = output
