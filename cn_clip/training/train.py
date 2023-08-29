@@ -125,7 +125,7 @@ def freeze_vision_bn(args, model):
             if isinstance(m, nn.BatchNorm2d):
                 m.eval()
 
-def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained_steps, teacher_model):
+def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained_steps, teacher_model=None):
     # os.environ["WDS_EPOCH"] = str(epoch)
 
     model.train()
