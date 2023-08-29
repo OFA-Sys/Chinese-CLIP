@@ -10,6 +10,7 @@ import torch.nn as nn
 from torch.cuda.amp import autocast
 import torch.distributed.nn
 import torch.distributed as dist
+import torch.nn.functional as F
 
 from cn_clip.clip.model import convert_state_dict
 
@@ -17,7 +18,7 @@ from cn_clip.clip.model import convert_state_dict
 def is_master(args):
     return args.rank == 0
 
-def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_features=None, accum_text_features=None, accum_idx=-1, teacher_model=None, teacher_accum_image_features=[]):
+def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_features=None, accum_text_features=None, accum_idx=-1, teacher_model=None, teacher_accum_image_features=None):
     if args.accum_freq == 1:
         image_features, text_features, logit_scale = model(images, texts, args.mask_ratio)
 
@@ -180,7 +181,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
             if args.precision == "amp":
                 with autocast():
                     if args.distllation:
-                        total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args,teacher_model=teacher_model,teacher_accum_image_features=teacher_accum_image_features)
+                        total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args, teacher_model=teacher_model)
                     else:
                         total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
                     scaler.scale(total_loss).backward()
@@ -189,7 +190,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
 
             else:
                 if args.distllation:
-                    total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args,teacher_model=teacher_model,teacher_accum_image_features=teacher_accum_image_features)
+                    total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args, teacher_model=teacher_model)
                 else:
                     total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
                 total_loss.backward()

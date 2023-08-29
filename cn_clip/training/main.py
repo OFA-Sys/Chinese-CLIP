@@ -247,11 +247,12 @@ def main():
 
     # load teacher model to distllation
     if args.distllation:
-        teacher_model = Model.from_pretrained('damo/multi-modal_team-vit-large-patch14_multi-modal-similarity').model
+        teacher_model = Model.from_pretrained(args.teacher_model_name).model
         for k, v in teacher_model.state_dict().items():
             v.requires_grad = False
         teacher_model.cuda(args.local_device_rank)
         teacher_model = torch.nn.parallel.DistributedDataParallel(teacher_model, device_ids=[args.local_device_rank])
+        logging.info(f"Teacher model loaded from {args.teacher_model_name}")
     else:
         teacher_model = None
 

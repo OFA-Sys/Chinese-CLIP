@@ -212,6 +212,18 @@ def parse_args():
         action="store_true",
         help="If true, more information is logged."
     )
+    parser.add_argument(
+        "--teacher-model-name",
+        type=str,
+        default=None,
+        help="The name of teacher model."
+    )
+    parser.add_argument(
+        "--kd_loss_weight",
+        type=float,
+        default=0.5,
+        help="Weight of KD loss."
+    )
     args = parser.parse_args()
     args.aggregate = not args.skip_aggregate
 
