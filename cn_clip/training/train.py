@@ -24,16 +24,22 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
 
         if args.distllation:
             with torch.no_grad():
-                _, _, teacher_image_features, _ = teacher_model.module.get_feature(
-                        None, None, images)
+                output = teacher_model.module.get_feature(images)
+                if(len(output) == 2):
+                    teacher_image_features = output[0]
+                else:
+                    teacher_image_features = output
     else:
         assert accum_image_features and accum_text_features and accum_idx != -1
         chunk_image_features, chunk_text_features, logit_scale = model(images, texts, args.mask_ratio)
 
         if args.distllation:
             with torch.no_grad():
-                _, _, teacher_chunk_image_features, _ = teacher_model.module.get_feature(
-                        None, None, images)
+                output = teacher_model.module.get_feature(images)
+                if(len(output) == 2):
+                    teacher_chunk_image_features = output[0]
+                else:
+                    teacher_chunk_image_features = output
             teacher_image_features = torch.cat(
             teacher_accum_image_features[:accum_idx] + [teacher_chunk_image_features] + teacher_accum_image_features[accum_idx + 1:])
         
@@ -201,8 +207,11 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
                 with autocast(enabled=(args.precision == "amp")):
                     chunk_image_features, chunk_text_features, _ = model(images, texts)
                 if args.distllation:
-                    _, _, teacher_chunk_image_features, _ = teacher_model.module.get_feature(
-                    None, None, images)
+                    output = teacher_model.module.get_feature(images)
+                    if(len(output) == 2):
+                        teacher_chunk_image_features = output[0]
+                    else:
+                        teacher_chunk_image_features = output
                 accum_image_features.append(chunk_image_features)
                 accum_text_features.append(chunk_text_features)
                 if args.distllation:
