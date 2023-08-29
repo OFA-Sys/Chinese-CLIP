@@ -247,9 +247,31 @@ def main():
 
     # load teacher model to distllation
     if args.distllation:
-        teacher_model = Model.from_pretrained(args.teacher_model_name).model
+        
+        teacher_model_dict = {
+            "damo/multi-modal_team-vit-large-patch14_multi-modal-similarity" : {"model": "image_model"},
+            "damo/multi-modal_rleg-vit-large-patch14" : {"model": "encode_image"},
+            "damo/multi-modal_clip-vit-huge-patch14_zh" : {"clip_model": "encode_image"},
+            "damo/multi-modal_clip-vit-large-patch14_zh" : {"clip_model": "encode_image"},
+        }
+        assert args.teacher_model_name in teacher_model_dict, "Error: Valid teacher model name has not been built."
+
+        teacher_model = Model.from_pretrained(args.teacher_model_name)
         for k, v in teacher_model.state_dict().items():
             v.requires_grad = False
+        
+        # mapping different extract_features function to same name
+        mapping = teacher_model_dict[class_name]
+        if "model" in mapping and hasattr(teacher_model, "model"):
+            model_instance = getattr(teacher_model, "model")
+            if hasattr(model_instance, mapping["model"]):
+                setattr(teacher_model, "get_feature", getattr(model_instance, mapping["model"]))
+        elif "clip_model" in mapping and hasattr(teacher_model, "clip_model"):
+            model_instance = getattr(teacher_model, "clip_model")
+            if hasattr(model_instance, mapping["clip_model"]):
+                setattr(teacher_model, "get_feature", getattr(model_instance, mapping["clip_model"]))
+
+
         teacher_model.cuda(args.local_device_rank)
         teacher_model = torch.nn.parallel.DistributedDataParallel(teacher_model, device_ids=[args.local_device_rank])
         logging.info(f"Teacher model loaded from {args.teacher_model_name}")
