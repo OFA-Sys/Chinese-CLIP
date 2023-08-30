@@ -261,7 +261,7 @@ def main():
             v.requires_grad = False
         
         # mapping different extract_features function to same name
-        mapping = teacher_model_dict[class_name]
+        mapping = teacher_model_dict[args.teacher_model_name]
         if "model" in mapping and hasattr(teacher_model, "model"):
             model_instance = getattr(teacher_model, "model")
             if hasattr(model_instance, mapping["model"]):
