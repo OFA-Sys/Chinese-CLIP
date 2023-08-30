@@ -13,8 +13,6 @@ import torch.distributed as dist
 import torch.backends.cudnn as cudnn
 from torch.cuda.amp import GradScaler
 
-from modelscope.models import Model
-
 from cn_clip.clip import load
 from cn_clip.clip.model import convert_weights, convert_state_dict, resize_pos_embed, CLIP
 from cn_clip.training.train import train, evaluate
@@ -247,7 +245,8 @@ def main():
 
     # load teacher model to distllation
     if args.distllation:
-        
+        from modelscope.models import Model
+
         teacher_model_dict = {
             "damo/multi-modal_team-vit-large-patch14_multi-modal-similarity" : {"model": "image_model"},
             "damo/multi-modal_rleg-vit-large-patch14" : {"model": "encode_image"},
