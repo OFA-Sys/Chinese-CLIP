@@ -245,7 +245,10 @@ def main():
 
     # load teacher model to distllation
     if args.distllation:
-        from modelscope.models import Model
+        try:
+            from modelscope.models import Model
+        except:
+            raise ImportError("modelscope is not installed. Please install it by `pip install modelscope`.")
 
         teacher_model_dict = {
             "damo/multi-modal_team-vit-large-patch14_multi-modal-similarity" : {"model": "image_model"},
