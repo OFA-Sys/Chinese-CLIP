@@ -50,14 +50,12 @@ Image retrieval Top10 results of our model (finetune+distillation)/pre-trained m
 Advantages of our approach:
 + Meet the basic requirements of the retrieval task: under the premise of ensuring the category similarity, the image similarity is well realized.
 + Good performance and fast speed: Through the distillation method, the base model has a retrieval effect similar to that of the large model. And deployed to the CPU, the retrieval reasoning time is controlled within 100ms.
-<p>
-    <br>
-    <img src="examples/image_retrieval_result1.jpg" width="400" />
-    <img src="examples/image_retrieval_result3.jpg" width="400" />
-    <img src="examples/image_retrieval_result2.jpg" width="400" />
-    <br>
-<p>
-<br>
+
+<p style="text-align: center;">
+    <img src="examples/image_retrieval_result1.jpg" width="400" /><br>
+    <img src="examples/image_retrieval_result3.jpg" width="400" /><br>
+    <img src="examples/image_retrieval_result2.jpg" width="400" /><br>
+</p>
 
 ## Todo
 The Jupyter Notebook of related solutions will be launched on the Alibaba Cloud official website.
