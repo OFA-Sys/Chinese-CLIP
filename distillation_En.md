@@ -42,7 +42,22 @@ The configuration items are defined as follows:
 + `teacher-model-name`: Specify the Teacher model to use. Currently supports the above four Teacher models, such as filling in `damo/multi-modal_team-vit-large-patch14_multi-modal-similarity`.
 + `kd_loss_weight` (optional): Distillation loss weight, default value is 0.5.
 
-We provide a sample script `run_scripts/muge_finetune_vit-b-16_rbt-base_distllation.sh`.
+We provide a sample script `run_scripts/muge_finetune_vit-b-16_rbt-base_distllation.sh`, we take the `TEAM image-text retrieval model-Chinese-large` as Teacher model.
+
+## Effect verification
+Image retrieval Top10 results of our model (finetune+distillation)/pre-trained model/finetune model. The image in the upper left corner is used as a query, and the search results are in order from Top1 to Top10 on the right. The support data set in this experiment has 100,000 e-commerce data (including shoes, clothes, pants, etc.).
+
+Advantages of our approach:
++ Meet the basic requirements of the retrieval task: under the premise of ensuring the category similarity, the image similarity is well realized.
++ Good performance and fast speed: Through the distillation method, the base model has a retrieval effect similar to that of the large model. And deployed to the CPU, the retrieval reasoning time is controlled within 100ms.
+<p>
+    <br>
+    <img src="examples/image_retrieval_result1.jpg" width="400" />
+    <img src="examples/image_retrieval_result3.jpg" width="400" />
+    <img src="examples/image_retrieval_result2.jpg" width="400" />
+    <br>
+<p>
+<br>
 
 ## Todo
 The Jupyter Notebook of related solutions will be launched on the Alibaba Cloud official website.
