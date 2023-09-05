@@ -47,19 +47,18 @@ Chinese-CLIP结合知识蒸馏进行微调训练，进一步提升ChineseClip的
 我们提供了样例脚本`run_scripts/muge_finetune_vit-b-16_rbt-base_distllation.sh`，使用的是`TEAM图文检索模型-中文-large`作为Teacher model。
 
 ## 效果验证
-我们模型(finetune+distillation)/预训练模型/finetune模型的图像检索Top10结果。左上角图像作为query，右边按顺序Top1到Top10检索结果。本次实验的support数据集有10万电商数据量（包括鞋子、衣服、裤子等物品）。
+这里是我们模型(finetune+distillation)/预训练模型/finetune模型的图像检索Top10结果。左上角图像作为query，右边按顺序Top1到Top10检索结果。本次实验的support数据集有10万电商数据量（包括鞋子、衣服、裤子等物品）。
 
 我们方法的优势：
 + 符合检索任务基本要求：在保证了类目相似性的前提下，很好实现了图像相似性。
 + 性能好且速度快：通过蒸馏的方法，使得base模型有着large模型类似的检索效果。并且部署到CPU，检索推理时间控制在了100ms以内。
-<p>
-    <br>
-    <img src="examples/image_retrieval_result1.jpg" width="400" />
-    <img src="examples/image_retrieval_result3.jpg" width="400" />
-    <img src="examples/image_retrieval_result2.jpg" width="400" />
-    <br>
-<p>
-<br>
+
+<p style="text-align: center;">
+    <img src="examples/image_retrieval_result1.jpg" width="400" /><br>
+    <img src="examples/image_retrieval_result3.jpg" width="400" /><br>
+    <img src="examples/image_retrieval_result2.jpg" width="400" /><br>
+</p>
+
 
 ## Todo
 将会在阿里云官网上线相关的解决方案的Jupyter Notebook。
