@@ -2,7 +2,7 @@
 
 # 使用知识蒸馏提升Chinese-CLIP图像检索能力
 
-Chinese-CLIP结合知识蒸馏进行微调训练，进一步提升ChineseClip的图像检索(image2image)能力。使用的Teacher model全都来自[ModelScope](https://github.com/modelscope/modelscope)。
+本文档提供了一个结合ModelScope模型库，支持Chinese-CLIP利用知识蒸馏的方法进行微调训练的示例。通过知识蒸馏的功能，可以使用大模型（如较大规模版本的Chinese-CLIP或其他ModelScope支持的图像表征模型）蒸馏较小规模Chinese-CLIP，进一步提升Chinese-CLIP的图像检索(image2image)能力。使用的Teacher model由[ModelScope](https://github.com/modelscope/modelscope)提供，Chinese-CLIP全系列目前均已上线ModelScope。
 
 ## 环境准备
 
@@ -15,7 +15,7 @@ Chinese-CLIP结合知识蒸馏进行微调训练，进一步提升ChineseClip的
 ## 在Chinese-CLIP中用起来！
 
 在Chinese-CLIP finetune中对于图像端应用知识蒸馏并不复杂。只需要在finetune的sh脚本中加入`--distllation`配置项。
-然后在配置项`--teacher-model-name`填入所要使用的Teacher model名称。现在支持的Teacher mode包括以下四种。
+然后在配置项`--teacher-model-name`填入所要使用的Teacher model名称。现在支持的Teacher model包括以下四种。
 <table border="1" width="120%">
     <tr align="center">
         <td><b>Teacher model</b></td><td><b>模型介绍</b></td>
@@ -47,7 +47,7 @@ Chinese-CLIP结合知识蒸馏进行微调训练，进一步提升ChineseClip的
 我们提供了样例脚本`run_scripts/muge_finetune_vit-b-16_rbt-base_distllation.sh`，使用的是`TEAM图文检索模型-中文-large`作为Teacher model。
 
 ## 效果验证
-这里是我们模型(finetune+distillation)/预训练模型/finetune模型的图像检索Top10结果。左上角图像作为query，右边按顺序Top1到Top10检索结果。本次实验的support数据集有10万电商数据量（包括鞋子、衣服、裤子等物品）。
+这里是我们模型(finetune+distillation) vs 预训练模型 vs finetune模型的图像检索Top10结果。左上角图像作为query，右边按顺序Top1到Top10检索结果。本次实验的support数据集有10万电商数据量（包括鞋子、衣服、裤子等物品）。
 
 我们方法的优势：
 + 符合检索任务基本要求：在保证了类目相似性的前提下，很好实现了图像相似性。
@@ -60,5 +60,5 @@ Chinese-CLIP结合知识蒸馏进行微调训练，进一步提升ChineseClip的
 </p>
 
 
-## Todo
-将会在阿里云官网上线相关的解决方案的Jupyter Notebook。
+## Future Action
+将会在阿里云官网上线相关的解决方案的Jupyter Notebook，提供更加清晰的实例教学，敬请期待。
