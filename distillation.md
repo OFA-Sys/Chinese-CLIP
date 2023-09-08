@@ -2,7 +2,7 @@
 
 # 使用知识蒸馏提升Chinese-CLIP图像检索能力
 
-本文档提供了一个结合ModelScope模型库，支持Chinese-CLIP利用知识蒸馏的方法进行微调训练的示例。通过知识蒸馏的功能，可以使用大模型（如较大规模版本的Chinese-CLIP或其他ModelScope支持的图像表征模型）蒸馏较小规模Chinese-CLIP，进一步提升Chinese-CLIP的图像检索(image2image)能力。使用的Teacher model由[ModelScope](https://github.com/modelscope/modelscope)提供，Chinese-CLIP全系列目前均已上线ModelScope。
+本文档提供了一个结合ModelScope模型库，支持Chinese-CLIP利用知识蒸馏的方法进行微调训练的示例。通过知识蒸馏的功能，可以使用大模型（如较大规模版本的Chinese-CLIP或其他ModelScope支持的图像表征模型）蒸馏较小规模Chinese-CLIP，进一步提升Chinese-CLIP的图像检索（图到图召回）能力。使用的Teacher model由[ModelScope](https://github.com/modelscope/modelscope)提供，Chinese-CLIP全系列目前均已上线ModelScope。
 
 ## 环境准备
 
