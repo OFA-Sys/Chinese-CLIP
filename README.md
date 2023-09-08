@@ -16,6 +16,7 @@
 <br><br>
 
 # 新闻
+* 2023.9.8 Chinese-CLIP支持了基于[ModelScope](https://github.com/modelscope/modelscope)库的[知识蒸馏微调功能](distillation.md)。（感谢阿里云PAI团队[@wuziheng](https://github.com/wuziheng)和[@Jaskr616](https://github.com/Jaskr616)同学[贡献代码](https://github.com/OFA-Sys/Chinese-CLIP/pull/195)❤️）
 * 2023.5.9 Chinese-CLIP适配Pytorch2.0。
 * 2023.3.20 新增对比学习的[梯度累积](#gradient_accumulation)支持，可模拟更大batch size的训练效果
 * 2023.2.16 新增[FlashAttention](https://github.com/HazyResearch/flash-attention)支持，提升训练速度，降低显存占用，详见[flash_attention.md](flash_attention.md)
