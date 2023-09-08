@@ -2,7 +2,7 @@
 
 # Improving Chinese-CLIP Image Retrieval Ability Using Knowledge Distillation
 
-Chinese-CLIP combines knowledge distillation for fine-tuning training to further improve the image retrieval (image-to-image retrieval) ability of ChineseClip. The Teacher models used are all from [ModelScope](https://github.com/modelscope/modelscope).
+Here we provide an example of knowledge distillation for Chinese-CLIP fine-tuning training, based on [ModelScope](https://github.com/modelscope/modelscope) model library. By using knowledge distillation, smaller Chinese-CLIP models (with better inference speed) can learn from larger models (including larger Chinese-CLIP or other image embedding models on ModelScope) to further improve the image-to-image retrieval ability. The Teacher models used are all from [ModelScope](https://github.com/modelscope/modelscope). Currently, all the Chinese-CLIP have been supported on ModelScope.
 
 ## Environmental Preparation
 
@@ -57,4 +57,4 @@ Advantages of our approach:
 </p>
 
 ## Future Action
-The Jupyter Notebook of related solutions will be launched on the Alibaba Cloud official website.
+The Jupyter Notebook of related solutions will be launched on the Alibaba Cloud official website, which will provide a more clear example for usage. Stay tuned for this!
