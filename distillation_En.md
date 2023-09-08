@@ -2,7 +2,7 @@
 
 # Improving Chinese-CLIP Image Retrieval Ability Using Knowledge Distillation
 
-Chinese-CLIP combines knowledge distillation for fine-tuning training to further improve the image retrieval (image2image) ability of ChineseClip. The Teacher models used are all from [ModelScope](https://github.com/modelscope/modelscope).
+Chinese-CLIP combines knowledge distillation for fine-tuning training to further improve the image retrieval (image-to-image retrieval) ability of ChineseClip. The Teacher models used are all from [ModelScope](https://github.com/modelscope/modelscope).
 
 ## Environmental Preparation
 
@@ -14,24 +14,23 @@ Chinese-CLIP combines knowledge distillation for fine-tuning training to further
 
 ## Use it in Chinese-CLIP!
 It is not complicated to apply knowledge distillation to the image side in Chinese-CLIP finetune. Just add the `--distllation` configuration item to the sh script of finetune.
-Then fill in the name of the Teacher model to be used in the configuration item `--teacher-model-name`. The currently supported Teacher modes include the following four.
+Then fill in the name of the Teacher model to be used in the configuration item `--teacher-model-name`. The currently supported Teacher models include the following four ModelScope-supported models.
 <table border="1" width="120%">
     <tr align="center">
-        <td><b>Teacher model</b></td><td><b>模型介绍</b></td>
-    </tr>
-	<tr align="center">
-        <td>damo/multi-modal_team-vit-large-patch14_multi-modal-similarity</td><td><a href="https://www.modelscope.cn/models/damo/multi-modal_team-vit-large-patch14_multi-modal-similarity/summary">TEAM image-text retrieval model-Chinese-large</a></td>
-    </tr>  
-	<tr align="center">
-        <td>damo/multi-modal_rleg-vit-large-patch14</td><td><a href="https://www.modelscope.cn/models/damo/multi-modal_rleg-vit-large-patch14/summary">RLEG Generative Multimodal Representation Model-English-large
-</a></td>
+        <td><b>Teacher model</b></td><td><b>Model Info</b></td>
     </tr>  
 	<tr align="center">
         <td>damo/multi-modal_clip-vit-huge-patch14_zh</td><td><a href="https://www.modelscope.cn/models/damo/multi-modal_clip-vit-huge-patch14_zh/summary">CLIP model-Chinese-general field-huge</a></td>
     </tr>
 	<tr align="center">
         <td>damo/multi-modal_clip-vit-large-patch14_zh</td><td><a href="https://www.modelscope.cn/models/damo/multi-modal_clip-vit-large-patch14_zh/summary">CLIP model-Chinese-general field-large</a></td>
+    </tr>	    
     </tr>
+	<tr align="center">
+        <td>damo/multi-modal_team-vit-large-patch14_multi-modal-similarity</td><td><a href="https://www.modelscope.cn/models/damo/multi-modal_team-vit-large-patch14_multi-modal-similarity/summary">TEAM image-text retrieval model-Chinese-large</a></td>
+    </tr>  
+	<tr align="center">
+        <td>damo/multi-modal_rleg-vit-large-patch14</td><td><a href="https://www.modelscope.cn/models/damo/multi-modal_rleg-vit-large-patch14/summary">RLEG Generative Multimodal Representation Model-English-large</a></td>
 </table>
 <br>
 
@@ -45,7 +44,7 @@ The configuration items are defined as follows:
 We provide a sample script `run_scripts/muge_finetune_vit-b-16_rbt-base_distllation.sh`, we take the `TEAM image-text retrieval model-Chinese-large` as Teacher model.
 
 ## Effect verification
-Image retrieval Top10 results of our model (finetune+distillation)/pre-trained model/finetune model. The image in the upper left corner is used as a query, and the search results are in order from Top1 to Top10 on the right. The support data set in this experiment has 100,000 e-commerce data (including shoes, clothes, pants, etc.).
+Image retrieval Top10 results of our model (finetune+distillation) v.s. pre-trained model v.s. finetune model. The image in the upper left corner is used as a query, and the search results are in order from Top1 to Top10 on the right. The support data set in this experiment has 100,000 e-commerce data (including shoes, clothes, pants, etc.).
 
 Advantages of our approach:
 + Meet the basic requirements of the retrieval task: under the premise of ensuring the category similarity, the image similarity is well realized.
@@ -57,5 +56,5 @@ Advantages of our approach:
     <img src="examples/image_retrieval_result2.jpg" width="400" /><br>
 </p>
 
-## Todo
+## Future Action
 The Jupyter Notebook of related solutions will be launched on the Alibaba Cloud official website.
