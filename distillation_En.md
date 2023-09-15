@@ -56,5 +56,5 @@ Advantages of our approach:
     <img src="examples/image_retrieval_result2.jpg" width="400" /><br>
 </p>
 
-## Future Action
-The Jupyter Notebook of related solutions will be launched on the Alibaba Cloud official website, which will provide a more clear example for usage. Stay tuned for this!
+## Quick Start
+Related solutions have been launched on Alibaba Cloud [PAI-DSW Gallery](https://gallery.pai-ml.com/#/preview/deepLearning/cv/cn_clip_distillation). The corresponding Notebook is provided in PAI-DSW Gallery to support users to build exclusive search models using their own data.

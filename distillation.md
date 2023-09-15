@@ -59,5 +59,5 @@
 </p>
 
 
-## Future Action
-将会在阿里云官网上线相关的解决方案的Jupyter Notebook，提供更加清晰的实例教学，敬请期待。
+## 快速体验
+相关解决方案已经上线阿里云[PAI-DSW Gallery](https://gallery.pai-ml.com/#/preview/deepLearning/cv/cn_clip_distillation)。在PAI-DSW Gallery提供对应的Notebook，支持用户利用自有数据构建专属搜索模型。
