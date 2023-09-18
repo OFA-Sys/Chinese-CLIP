@@ -258,7 +258,12 @@ def main():
         }
         assert args.teacher_model_name in teacher_model_dict, "Error: Valid teacher model name has not been built."
 
-        teacher_model = Model.from_pretrained(args.teacher_model_name)
+        try:
+            teacher_model = Model.from_pretrained(args.teacher_model_name)
+        except Exception as e:
+            print("An error occurred while loading the model:", e)
+            print("Maybe the transformer version is not compatible, recommend to use transformers >= 4.10.0 and <= 4.30.2")
+
         for k, v in teacher_model.state_dict().items():
             v.requires_grad = False
         
