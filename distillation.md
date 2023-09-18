@@ -11,6 +11,7 @@
 + Pytorch 1.12及以上版本。
 + [requirements.txt](requirements.txt)要求的其他依赖项
 + **ModelScope**：通过执行`pip install modelscope`安装ModelScope。
++ 为了配合**ModelScope**的使用，**transformers**版本最好控制在(4.10.0, 4.30.2)之间。
 
 ## 在Chinese-CLIP中用起来！
 

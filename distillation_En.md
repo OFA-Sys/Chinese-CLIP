@@ -9,8 +9,9 @@ Here we provide an example of knowledge distillation for Chinese-CLIP fine-tunin
 + Nvidia GPUs **with Turning, Ampere, Ada or Hopper architecture** (such as H100, A100, RTX 3090, T4, and RTX 2080). Please refer to [this document](https://en.wikipedia.org/wiki/CUDA#GPUs_supported) for the corresponding GPUs of each Nvidia architecture.
 + CUDA 11.4 and above.
 + PyTorch 1.12 and above.
-+ **ModelScope**：Install FlashAttention by executing `pip install modelscope`.
 + Other dependencies as required in [requirements.txt](requirements.txt).
++ **ModelScope**：Install FlashAttention by executing `pip install modelscope`.
++ In order to cooperate with the use of **ModelScope**, the version of **transformers** is best controlled between (4.10.0, 4.30.2).
 
 ## Use it in Chinese-CLIP!
 It is not complicated to apply knowledge distillation to the image side in Chinese-CLIP finetune. Just add the `--distllation` configuration item to the sh script of finetune.
