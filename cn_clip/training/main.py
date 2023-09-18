@@ -261,12 +261,12 @@ def main():
         try:
             teacher_model = Model.from_pretrained(args.teacher_model_name)
         except Exception as e:
-            error_message = (
-                "An error occurred while loading the model: {}\n"
-                "Maybe the transformer version is not compatible, "
-                "recommend to use transformers >= 4.10.0 and <= 4.30.2".format(e)
-            )
-            raise RuntimeError(error_message)
+            if "Unexpected key(s) in state_dict" in str(e):
+                error_message = (
+                    "An error occurred while loading the model: {}\n"
+                    "Maybe you should update modelscope. ".format(e)
+                )
+                raise RuntimeError(error_message)
 
         for k, v in teacher_model.state_dict().items():
             v.requires_grad = False

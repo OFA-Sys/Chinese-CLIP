@@ -11,7 +11,6 @@ Here we provide an example of knowledge distillation for Chinese-CLIP fine-tunin
 + PyTorch 1.12 and above.
 + Other dependencies as required in [requirements.txt](requirements.txt).
 + **ModelScope**：Install FlashAttention by executing `pip install modelscope`.
-+ In order to cooperate with the use of **ModelScope**, the version of **transformers** is best controlled between (4.10.0, 4.30.2).
 
 ## Use it in Chinese-CLIP!
 It is not complicated to apply knowledge distillation to the image side in Chinese-CLIP finetune. Just add the `--distllation` configuration item to the sh script of finetune.
