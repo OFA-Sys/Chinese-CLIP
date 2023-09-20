@@ -9,8 +9,8 @@ Here we provide an example of knowledge distillation for Chinese-CLIP fine-tunin
 + Nvidia GPUs **with Turning, Ampere, Ada or Hopper architecture** (such as H100, A100, RTX 3090, T4, and RTX 2080). Please refer to [this document](https://en.wikipedia.org/wiki/CUDA#GPUs_supported) for the corresponding GPUs of each Nvidia architecture.
 + CUDA 11.4 and above.
 + PyTorch 1.12 and above.
-+ **ModelScope**：Install FlashAttention by executing `pip install modelscope`.
 + Other dependencies as required in [requirements.txt](requirements.txt).
++ **ModelScope**：Install FlashAttention by executing `pip install modelscope`.
 
 ## Use it in Chinese-CLIP!
 It is not complicated to apply knowledge distillation to the image side in Chinese-CLIP finetune. Just add the `--distllation` configuration item to the sh script of finetune.
@@ -56,5 +56,5 @@ Advantages of our approach:
     <img src="examples/image_retrieval_result2.jpg" width="400" /><br>
 </p>
 
-## Future Action
-The Jupyter Notebook of related solutions will be launched on the Alibaba Cloud official website, which will provide a more clear example for usage. Stay tuned for this!
+## Quick Start
+Related solutions have been launched on Alibaba Cloud [PAI-DSW Gallery](https://gallery.pai-ml.com/#/preview/deepLearning/cv/cn_clip_distillation). The corresponding Notebook is provided in PAI-DSW Gallery to support users to build exclusive search models using their own data.
