@@ -61,7 +61,7 @@ Finished PyTorch to ONNX conversion...
 ### 运行模型
 
 #### 提取图像侧特征
-我们在`Chinese-CLIP/`目录下，使用以下的示例代码，读取刚刚转换好的ViT-B-16规模ONNX图像侧模型`vit-b-16.img.fp16.onnx`，并为Readme中示例的[皮卡丘图片](examples/pokemon.jpeg)提取图像侧特征。注意转换好的ONNX模型只接受batch大小为1的输入，即一次调用只处理一张输入图片
+我们在`Chinese-CLIP/`目录下，使用以下的示例代码，读取刚刚转换好的ViT-B-16规模ONNX图像侧模型`vit-b-16.img.fp16.onnx`，并为Readme中示例的[皮卡丘图片](examples/pokemon.jpeg)提取图像侧特征。
 
 ```python
 # 完成必要的import（下文省略）
@@ -98,7 +98,7 @@ print(image_features.shape) # Torch Tensor shape: [1, 特征向量维度]
 
 #### 提取文本侧特征
 
-类似地，我们用如下代码完成文本侧ONNX模型的载入与特征计算，与图像侧相同，文本侧ONNX部署模型只接受batch大小为1的输入，即一次调用只处理一条输入文本。我们为4条候选文本依次计算ViT-B-16规模模型的文本特征。import相关代码与上文相同，这里省略：
+类似地，我们用如下代码完成文本侧ONNX模型的载入与特征计算。我们为4条候选文本依次计算ViT-B-16规模模型的文本特征。import相关代码与上文相同，这里省略：
 
 ```python
 # 载入ONNX文本侧模型（**请替换${DATAPATH}为实际的路径**）
@@ -208,7 +208,7 @@ Finished ONNX to TensorRT conversion...
 
 #### 提取图像侧特征
 
-类似于ONNX模型运行的流程，我们在`Chinese-CLIP/`目录下，使用以下的示例代码，读取刚刚转换好的ViT-B-16规模TensorRT图像侧模型`vit-b-16.img.fp16.trt`，并为Readme中示例的[皮卡丘图片](examples/pokemon.jpeg)提取图像侧特征。和ONNX模型一样，这里转换好的TensorRT模型也只接受batch大小为1的输入，即一次调用只处理一张输入图片
+类似于ONNX模型运行的流程，我们在`Chinese-CLIP/`目录下，使用以下的示例代码，读取刚刚转换好的ViT-B-16规模TensorRT图像侧模型`vit-b-16.img.fp16.trt`，并为Readme中示例的[皮卡丘图片](examples/pokemon.jpeg)提取图像侧特征。这里转换好的TensorRT模型只接受batch大小为1的输入，即一次调用只处理一张输入图片
 
 ```python
 # 完成必要的import（下文省略）
