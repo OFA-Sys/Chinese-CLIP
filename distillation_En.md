@@ -13,7 +13,7 @@ Here we provide an example of knowledge distillation for Chinese-CLIP fine-tunin
 + Other dependencies as required in [requirements.txt](requirements.txt).
 
 ## Use it in Chinese-CLIP!
-It is not complicated to apply knowledge distillation to the image side in Chinese-CLIP finetune. Just add the `--distllation` configuration item to the sh script of finetune.
+It is not complicated to apply knowledge distillation to the image side in Chinese-CLIP finetune. Just add the `--distillation` configuration item to the sh script of finetune.
 Then fill in the name of the Teacher model to be used in the configuration item `--teacher-model-name`. The currently supported Teacher models include the following four ModelScope-supported models.
 <table border="1" width="120%">
     <tr align="center">
@@ -37,11 +37,11 @@ Then fill in the name of the Teacher model to be used in the configuration item 
 Finally, fill in the weight of the distillation loss in the configuration item `--kd_loss_weight`, the default value is 0.5.
 
 The configuration items are defined as follows:
-+ `distllation`: Whether to enable knowledge distillation to fine-tune the image side of the model.
++ `distillation`: Whether to enable knowledge distillation to fine-tune the image side of the model.
 + `teacher-model-name`: Specify the Teacher model to use. Currently supports the above four Teacher models, such as filling in `damo/multi-modal_team-vit-large-patch14_multi-modal-similarity`.
 + `kd_loss_weight` (optional): Distillation loss weight, default value is 0.5.
 
-We provide a sample script `run_scripts/muge_finetune_vit-b-16_rbt-base_distllation.sh`, we take the `TEAM image-text retrieval model-Chinese-large` as Teacher model.
+We provide a sample script `run_scripts/muge_finetune_vit-b-16_rbt-base_distillation.sh`, we take the `TEAM image-text retrieval model-Chinese-large` as Teacher model.
 
 ## Effect verification
 Image retrieval Top10 results of our model (finetune+distillation) v.s. pre-trained model v.s. finetune model. The image in the upper left corner is used as a query, and the search results are in order from Top1 to Top10 on the right. The support data set in this experiment has 100,000 e-commerce data (including shoes, clothes, pants, etc.).

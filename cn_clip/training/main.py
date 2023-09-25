@@ -243,8 +243,8 @@ def main():
     # only do so if it is the 0th worker.
     args.should_save = (args.logs is not None and args.logs != '' and args.logs.lower() != 'none') and is_master(args)
 
-    # load teacher model to distllation
-    if args.distllation:
+    # load teacher model to distillation
+    if args.distillation:
         try:
             from modelscope.models import Model
         except:
@@ -292,7 +292,7 @@ def main():
     for epoch in range(start_epoch, args.max_epochs):
         if is_master(args) == 0:
             logging.info(f'Start epoch {epoch + 1}')
-        if args.distllation:
+        if args.distillation:
             num_steps_this_epoch = train(model, data, epoch, optimizer, scaler, scheduler, args, steps, teacher_model)
         else:
             num_steps_this_epoch = train(model, data, epoch, optimizer, scaler, scheduler, args, steps)
