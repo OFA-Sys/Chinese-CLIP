@@ -16,7 +16,7 @@
 <br><br>
 
 # 新闻
-* 2023.11.30 Chinese-CLIP添加了转换Pytorch模型为coreml格式的[脚本](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/cn_clip/deploy/pytorch_to_coreml.py)。（感谢[@manymuch](https://github.com/manymuch)贡献代码❤️）
+* 2023.11.30 Chinese-CLIP添加了转换Pytorch模型为coreml格式的[转换脚本](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/cn_clip/deploy/pytorch_to_coreml.py)，用于部署。（感谢[@manymuch](https://github.com/manymuch)贡献代码❤️）
 * 2023.9.8 Chinese-CLIP支持了基于[ModelScope](https://github.com/modelscope/modelscope)库的[知识蒸馏微调功能](distillation.md)。（感谢阿里云PAI团队[@wuziheng](https://github.com/wuziheng)和[@Jaskr616](https://github.com/Jaskr616)同学[贡献代码](https://github.com/OFA-Sys/Chinese-CLIP/pull/195)❤️）
 * 2023.5.9 Chinese-CLIP适配Pytorch2.0。
 * 2023.3.20 新增对比学习的[梯度累积](#gradient_accumulation)支持，可模拟更大batch size的训练效果
