@@ -16,6 +16,7 @@ This is the Chinese version of CLIP. We use a large-scale Chinese image-text pai
 <br><br>
 
 # News
+* 2023.11.30 Chinese-CLIP has added the [conversion script](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/cn_clip/deploy/pytorch_to_coreml.py) to transform Pytorch models into coreml format for deployment. (Thanks [@manymuch](https://github.com/manymuch) for [the PR](https://github.com/OFA-Sys/Chinese-CLIP/pull/230) ❤️）
 * 2023.9.8 Chinese-CLIP has supported [knowledge distillation fine-tuning](distillation_En.md) based on [ModelScope](https://github.com/modelscope/modelscope). (Thanks [@wuziheng](https://github.com/wuziheng) and [@Jaskr616](https://github.com/Jaskr616) from Aliyun PAI Team for [the PR](https://github.com/OFA-Sys/Chinese-CLIP/pull/195)❤️)
 * 2023.5.9 Chinese-CLIP has been adapted to Pytorch2.0.
 * 2023.3.20 Support [gradient accumulation](#gradient-accumulation) in contrastive learning to simulate the training effect of a larger batch size.
