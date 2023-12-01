@@ -22,7 +22,7 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
     if args.accum_freq == 1:
         image_features, text_features, logit_scale = model(images, texts, args.mask_ratio)
 
-        if args.distllation:
+        if args.distillation:
             with torch.no_grad():
                 # different teacher model has different output
                 output = teacher_model.module.get_feature(images)
@@ -34,7 +34,7 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
         assert accum_image_features and accum_text_features and accum_idx != -1
         chunk_image_features, chunk_text_features, logit_scale = model(images, texts, args.mask_ratio)
 
-        if args.distllation:
+        if args.distillation:
             with torch.no_grad():
                 # different teacher model has different output
                 output = teacher_model.module.get_feature(images)
@@ -59,7 +59,7 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
             all_image_features = torch.cat(torch.distributed.nn.all_gather(image_features), dim=0)
             all_text_features = torch.cat(torch.distributed.nn.all_gather(text_features), dim=0)
 
-            if args.distllation:
+            if args.distillation:
                 all_teacher_image_features = torch.cat(torch.distributed.nn.all_gather(teacher_image_features), dim=0)
         else:
             gathered_image_features = [
@@ -87,7 +87,7 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
         logits_per_image = logit_scale * all_image_features @ all_text_features.t()
         logits_per_text = logits_per_image.t()
 
-        if args.distllation:
+        if args.distillation:
             gathered_teacher_image_features = [
                 torch.zeros_like(teacher_image_features) for _ in range(world_size)
             ]
@@ -103,7 +103,7 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
         logits_per_image = logit_scale * image_features @ text_features.t()
         logits_per_text = logit_scale * text_features @ image_features.t()
 
-        if args.distllation:
+        if args.distillation:
             kd_loss = cosineSimilarityLoss(teacher_image_features, image_features)
 
     ground_truth = torch.arange(len(logits_per_image)).long()
@@ -120,7 +120,7 @@ def get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_feature
         t2i_acc = (logits_per_text.argmax(-1) == ground_truth).sum() / len(logits_per_text)
         acc = {"i2t": i2t_acc, "t2i": t2i_acc}
 
-    if args.distllation:
+    if args.distillation:
         total_loss += kd_loss * args.kd_loss_weight
 
     return total_loss, acc
@@ -156,7 +156,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
 
     if args.accum_freq > 1:
         accum_images, accum_texts, accum_image_features, accum_text_features = [], [], [], []
-        if args.distllation:
+        if args.distillation:
             teacher_accum_image_features = []
 
     end = time.time()
@@ -188,7 +188,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
             # with automatic mixed precision.
             if args.precision == "amp":
                 with autocast():
-                    if args.distllation:
+                    if args.distillation:
                         total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args, teacher_model=teacher_model)
                     else:
                         total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
@@ -197,7 +197,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
                 scaler.update()
 
             else:
-                if args.distllation:
+                if args.distillation:
                     total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args, teacher_model=teacher_model)
                 else:
                     total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args)
@@ -208,7 +208,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
             with torch.no_grad():
                 with autocast(enabled=(args.precision == "amp")):
                     chunk_image_features, chunk_text_features, _ = model(images, texts)
-                if args.distllation:
+                if args.distillation:
                     output = teacher_model.module.get_feature(images)
                     if(len(output) == 2):
                         teacher_chunk_image_features = output[0]
@@ -216,7 +216,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
                         teacher_chunk_image_features = output
                 accum_image_features.append(chunk_image_features)
                 accum_text_features.append(chunk_text_features)
-                if args.distllation:
+                if args.distillation:
                     teacher_accum_image_features.append(teacher_chunk_image_features)
 
                 accum_images.append(images)
@@ -237,7 +237,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
                 with autocast(enabled=(args.precision == "amp")):
                     # `total_loss` and `acc` are coarsely sampled, taking only the last result in the loop.
                     # Although each result should be the same in theory, it will be slightly different in practice
-                    if args.distllation:
+                    if args.distillation:
                         total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_features, accum_text_features, j, teacher_model, teacher_accum_image_features)
                     else:
                         total_loss, acc = get_loss(model, images, texts, loss_img, loss_txt, args, accum_image_features, accum_text_features, j)
@@ -255,7 +255,7 @@ def train(model, data, epoch, optimizer, scaler, scheduler, args, global_trained
         # reset gradient accum, if enabled
         if args.accum_freq > 1:
             accum_images, accum_texts, accum_image_features, accum_text_features = [], [], [], []
-            if args.distllation:
+            if args.distillation:
                 teacher_accum_image_features = []
 
         # Note: we clamp to 4.6052 = ln(100), as in the original paper.

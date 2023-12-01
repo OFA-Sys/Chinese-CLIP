@@ -14,7 +14,7 @@
 
 ## 在Chinese-CLIP中用起来！
 
-在Chinese-CLIP finetune中对于图像端应用知识蒸馏并不复杂。只需要在finetune的sh脚本中加入`--distllation`配置项。
+在Chinese-CLIP finetune中对于图像端应用知识蒸馏并不复杂。只需要在finetune的sh脚本中加入`--distillation`配置项。
 然后在配置项`--teacher-model-name`填入所要使用的Teacher model名称。现在支持的Teacher model包括以下四种。
 <table border="1" width="120%">
     <tr align="center">
@@ -39,11 +39,11 @@
 
 
 其中各配置项定义如下：
-+ `distllation`: 是否启用知识蒸馏微调模型图像端。
++ `distillation`: 是否启用知识蒸馏微调模型图像端。
 + `teacher-model-name`: 指定使用的Teacher model。目前支持以上四个Teacher model，如填入`damo/multi-modal_team-vit-large-patch14_multi-modal-similarity`。
 + `kd_loss_weight`（可选）: 蒸馏损失的权值，默认值是0.5。
 
-我们提供了样例脚本`run_scripts/muge_finetune_vit-b-16_rbt-base_distllation.sh`，使用的是`TEAM图文检索模型-中文-large`作为Teacher model。
+我们提供了样例脚本`run_scripts/muge_finetune_vit-b-16_rbt-base_distillation.sh`，使用的是`TEAM图文检索模型-中文-large`作为Teacher model。
 
 ## 效果验证
 这里是我们模型(finetune+distillation) vs 预训练模型 vs finetune模型的图像检索Top10结果。左上角图像作为query，右边按顺序Top1到Top10检索结果。本次实验的support数据集有10万电商数据量（包括鞋子、衣服、裤子等物品）。
