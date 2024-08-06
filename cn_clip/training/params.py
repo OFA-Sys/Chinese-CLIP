@@ -205,9 +205,9 @@ def parse_args():
         default=123, 
         help="Random seed."
     )
-    # arguments for distllation
+    # arguments for distillation
     parser.add_argument(
-        "--distllation",
+        "--distillation",
         default=False,
         action="store_true",
         help="If true, more information is logged."
