@@ -9,11 +9,17 @@
 + **GPU硬件要求**：请准备**Volta架构及以上**的Nvidia GPU显卡（配备FP16 Tensor Core），Nvidia各架构对应显卡型号请参见[此文档表格](https://en.wikipedia.org/wiki/CUDA#GPUs_supported)。本文我们以T4显卡为例
 + **CUDA**：推荐[CUDA](https://developer.nvidia.com/cuda-11-6-0-download-archive)版本11.6及以上，本文以11.6为例
 + **CUDNN**：推荐[CUDNN](https://developer.nvidia.com/rdp/cudnn-archive) 8.6.0及以上，本文以8.6.0为例。请注意TensorRT和CUDNN有版本match关系，如TensorRT 8.5.x必须使用CUDNN 8.6.0，详见TensorRT的版本要求
-+ **ONNX**：请安装`pip install onnx onnxruntime-gpu onnxmltools`。注意我们转换TensorRT模型时，将沿着Pytorch → ONNX → TensorRT的步骤，所以准备TensorRT模型也需要先安装ONNX库。本文以onnx版本1.13.0，onnxruntime-gpu版本1.13.1，onnxmltools版本1.11.1为例
-+ **TensorRT**：推荐[TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html#trt_8)版本8.5.x，本文以8.5.2.2为例，使用pip即可安装`pip install tensorrt==8.5.2.2`。TensorRT各版本对应的CUDNN匹配版本，请从[文档页面](https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html#trt_8)，查阅此TensorRT版本的"NVIDIA TensorRT Support Matrix"
++ **ONNX**：注意我们转换TensorRT模型时，将沿着Pytorch → ONNX → TensorRT的步骤，所以准备TensorRT模型也需要先安装ONNX库。本文以onnx版本1.13.0，onnxruntime-gpu版本1.13.1，onnxmltools版本1.11.1为例
++ **TensorRT**：推荐[TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html#trt_8)版本8.5.x，本文以8.5.2.2为例。TensorRT各版本对应的CUDNN匹配版本，请从[文档页面](https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html#trt_8)，查阅此TensorRT版本的"NVIDIA TensorRT Support Matrix"
 + **Pytorch**：推荐1.12.1及以上，本文以1.12.1为例（建议直接pip安装1.12.1+cu116，环境尽量不要再使用conda安装cudatoolkit，避免环境CUDNN版本变化，导致TensorRT报错）
 + [requirements.txt](requirements.txt)要求的其他依赖项
 
+执行代码
+``` 
+pip install tensorrt==8.5.2.2 onnx==1.13.0 onnxruntime-gpu==1.13.1 onnxmltools==1.11.1
+pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 torchaudio==0.12.1 -f https://download.pytorch.org/whl/torch_stable.html
+pip install -r requirements.txt 
+```
 
 ## 转换和运行ONNX模型
 

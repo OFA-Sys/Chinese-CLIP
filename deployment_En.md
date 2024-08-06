@@ -9,11 +9,17 @@ Our latest Chinese-CLIP code supports the conversion of Pytorch models of all sc
 + **GPU hardware requirements**: Please prepare Nvidia GPUs **with Volta architecture and above** (equipped with FP16 Tensor Core). Please refer to [this document](https://en.wikipedia.org/wiki/CUDA#GPUs_supported) for the corresponding GPUs of each Nvidia architecture. Here we take T4 GPU as an example.
 + **CUDA**: [CUDA](https://developer.nvidia.com/cuda-11-6-0-download-archive) version 11.6 and above is recommended. We take version 11.6 as an example.
 + **CUDNN**: [CUDNN](https://developer.nvidia.com/rdp/cudnn-archive) version 8.6.0 and above is recommended. We take version 8.6.0 as an example. Please note that TensorRT and CUDNN have version correspondence, e.g. TensorRT 8.5.x must correspond to CUDNN 8.6.0, see the TensorRT version requirements for details.
-+ **ONNX**: Please run `pip install onnx onnxruntime-gpu onnxmltools` to install. Note that when we convert the TensorRT model, we will follow the steps Pytorch → ONNX → TensorRT, so preparing the TensorRT model also requires installing the ONNX library first. Here we take onnx version 1.13.0, onnxruntime-gpu version 1.13.1, and onnxmltools version 1.11.1 as examples.
-+ **TensorRT**: The recommended [TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html#trt_8) version is 8.5.x. We use 8.5.2.2 as an example, using pip to install `pip install tensorrt==8.5.2.2`. For the CUDNN version corresponding to each TensorRT version, please refer to the "NVIDIA TensorRT Support Matrix" from this [documentation page]((https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html#trt_8)).
++ **ONNX**: Note that when we convert the TensorRT model, we will follow the steps Pytorch → ONNX → TensorRT, so preparing the TensorRT model also requires installing the ONNX library first. Here we take onnx version 1.13.0, onnxruntime-gpu version 1.13.1, and onnxmltools version 1.11.1 as examples.
++ **TensorRT**: The recommended [TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html#trt_8) version is 8.5.x. We use 8.5.2.2 as an example. For the CUDNN version corresponding to each TensorRT version, please refer to the "NVIDIA TensorRT Support Matrix" from this [documentation page]((https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html#trt_8)).
 + **Pytorch**: Pytorch version 1.12.1 and above is recommended. We take version 1.12.1 as an example. (It is recommended to directly pip install 1.12.1 + cu116, and try not to use conda to install cudatoolkit, avoiding TensorRT errors due to CUDNN version changes. )
 + Other dependencies as required in [requirements.txt](requirements.txt).
 
+executable code
+``` 
+pip install tensorrt==8.5.2.2 onnx==1.13.0 onnxruntime-gpu==1.13.1 onnxmltools==1.11.1
+pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 torchaudio==0.12.1 -f https://download.pytorch.org/whl/torch_stable.html
+pip install -r requirements.txt 
+```
 
 ## Converting and Running ONNX Models
 
