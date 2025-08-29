@@ -189,19 +189,19 @@ Finished ONNX to TensorRT conversion...
         <td><b>模型规模</b></td><td><b>TensorRT图像侧模型</b></td><td><b>TensorRT文本侧模型</b></td>
     </tr>
 	<tr align="center">
-        <td>CN-CLIP<sub>RN50</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/rn50.img.fp16.trt">Download</a></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/rn50.img.fp16.trt">Download</a></td>
+        <td>CN-CLIP<sub>RN50</sub></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-trt/resolve/main/rn50.img.fp16.trt">🤗Download</a></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-trt/resolve/main/rn50.txt.fp16.trt">🤗Download</a></td>
     </tr>  
 	<tr align="center">
-        <td>CN-CLIP<sub>ViT-B/16</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-b-16.img.fp16.trt">Download</a></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-b-16.txt.fp16.trt">Download</a></td>
+        <td>CN-CLIP<sub>ViT-B/16</sub></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-trt/resolve/main/vit-b-16.img.fp16.trt">🤗Download</a></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-trt/resolve/main/vit-b-16.txt.fp16.trt">🤗Download</a></td>
     </tr>  
 	<tr align="center">
-        <td>CN-CLIP<sub>ViT-L/14</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-l-14.img.fp16.trt">Download</a></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-l-14.txt.fp16.trt">Download</a></td>
+        <td>CN-CLIP<sub>ViT-L/14</sub></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-trt/resolve/main/vit-l-14.img.fp16.trt">🤗Download</a></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-trt/resolve/main/vit-l-14.txt.fp16.trt">🤗Download</a></td>
     </tr>
 	<tr align="center">
-        <td>CN-CLIP<sub>ViT-L/14@336px</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-l-14-336.img.fp16.trt">Download</a></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-l-14-336.txt.fp16.trt">Download</a></td>
+        <td>CN-CLIP<sub>ViT-L/14@336px</sub></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-trt/resolve/main/vit-l-14-336.img.fp16.trt">🤗Download</a></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-trt/resolve/main/vit-l-14-336.txt.fp16.trt">🤗Download</a></td>
     </tr>
 	<tr align="center">
-        <td>CN-CLIP<sub>ViT-H/14</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-h-14.img.fp16.trt">Download</a></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/vit-h-14.txt.fp16.trt">Download</a></td>
+        <td>CN-CLIP<sub>ViT-H/14</sub></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-trt/resolve/main/vit-h-14.img.fp16.trt">🤗Download</a></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-trt/resolve/main/vit-h-14.txt.fp16.trt">🤗Download</a></td>
     </tr>  
 </table>
 <br>
