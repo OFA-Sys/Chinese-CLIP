@@ -4,9 +4,9 @@
 
 The collection of dataset is the Chinese version of the Image Classification in the Wild in the [ELEVATER Benchmark](https://eval.ai/web/challenges/challenge-page/1832). It consists of 20 datasets, including Caltech-101, CIFAR-10, CIFAR-100, MNIST, etc. We provide our organized datasets, which enable direct usage of our codes on the datasets. 
 
-Download link: [Click here](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ELEVATER_all.zip)
+Download link: <https://huggingface.co/datasets/OFA-Sys/chinese-clip-eval/resolve/main/ELEVATER_all.zip> (37GB)
 
-For the ImageNet data, please visit the official website ([link](http://image-net.org)). You can refer to [this doc](https://gist.github.com/antoinebrl/7d00d5cb6c95ef194c737392ef7e476a) to prepare the validation set into ImageFolder format. This project only provides the label names in [Chinese](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label_cn.txt) and [English](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label.txt).
+For the ImageNet data, please visit the official website ([link](http://image-net.org)). You can refer to [this doc](https://gist.github.com/antoinebrl/7d00d5cb6c95ef194c737392ef7e476a) to prepare the validation set into ImageFolder format. This project only provides the label names in [Chinese](datasets/ImageNet-1K/label_cn.txt) and [English](datasets/ImageNet-1K/label.txt).
 
 ## Notes
 We have organized 20 datasets into 20 directories, and zipped and uploaded them. Users can click the link above to download all the datasets. After unzipping the `ELEVATER_all.zip`, you will get the zipped files of each dataset in ELEVATER. Once again after unzipping the dataset zipfile, you will get the dataset directory with the following folder structure:

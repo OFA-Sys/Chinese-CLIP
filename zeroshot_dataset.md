@@ -4,9 +4,9 @@
 
 本数据集为[ELEVATER Benchmark](https://eval.ai/web/challenges/challenge-page/1832)的图像分类基准的**中文版**，共包括20个图像分类数据集，包括Caltech-101、CIFAR-10、CIFAR-100、MNIST等。我们提供整理好的数据集，可以直接接入Chinese CLIP的代码进行零样本分类。
 
-下载链接：[点击这里](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ELEVATER_all.zip)
+下载链接：<https://huggingface.co/datasets/OFA-Sys/chinese-clip-eval/resolve/main/ELEVATER_all.zip> (37GB)
 
-ImageNet的原始数据请自行到官网下载（可参考[此文档](https://gist.github.com/antoinebrl/7d00d5cb6c95ef194c737392ef7e476a)下载并将验证集转为ImageFolder格式），本项目仅提供[中文标签](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label_cn.txt)和[英文标签](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/ImageNet-1K/label.txt)。
+ImageNet的原始数据请自行到官网下载（可参考[此文档](https://gist.github.com/antoinebrl/7d00d5cb6c95ef194c737392ef7e476a)下载并将验证集转为ImageFolder格式），本项目仅提供[中文标签](datasets/ImageNet-1K/label_cn.txt)和[英文标签](datasets/ImageNet-1K/label.txt)。
 
 
 ## 数据集说明

@@ -8,7 +8,7 @@
 <br>
 
 <p align="center">
-        <a href="https://www.modelscope.cn/models?name=clip&tasks=multi-modal-embedding">ModelScope</a>&nbsp ｜ &nbsp<a href="https://www.modelscope.cn/studios/damo/chinese_clip_applications/summary">Demo</a>&nbsp ｜ &nbsp<a href="https://arxiv.org/abs/2211.01335">Paper</a>&nbsp ｜ &nbspBlog
+        <a href="https://www.modelscope.cn/models?name=clip&tasks=multi-modal-embedding">ModelScope</a>&nbsp; ｜ &nbsp;<a href="https://www.modelscope.cn/studios/damo/chinese_clip_applications/summary">Demo</a>&nbsp; ｜ &nbsp;<a href="https://arxiv.org/abs/2211.01335">Paper</a>&nbsp; ｜ &nbsp;<a href="https://qwenlm.github.io/zh/blog/chinese-clip/">Blog</a>
 </p>
 <br><br>
 
@@ -39,25 +39,28 @@ Chinese-CLIP目前开源5个不同规模，其模型信息和下载方式见下�
 
 <table border="1" width="100%">
     <tr align="center">
-        <th>模型规模</th><th>下载链接</th><th>参数量</th><th>视觉侧骨架</th><th>视觉侧参数量</th><th>文本侧骨架</th><th>文本侧参数量</th><th>分辨率</th>
+        <th>模型名称</th><th>模型规模</th><th>下载链接</th><th>参数量</th><th>视觉侧骨架</th><th>视觉侧参数量</th><th>文本侧骨架</th><th>文本侧参数量</th><th>分辨率</th>
     </tr>
     <tr align="center">
-        <td>CN-CLIP<sub>RN50</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_rn50.pt">Download</a></td><td>77M</td><td>ResNet50</td><td>38M</td><td>RBT3</td><td>39M</td><td>224</td>
+        <td>chinese-clip-rn50</td><td>CN-CLIP<sub>RN50</sub></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-rn50">🤗</a> <a href="https://www.modelscope.cn/models/AI-ModelScope/chinese-clip-rn50">🤖</a></td><td>77M</td><td>ResNet50</td><td>38M</td><td>RBT3</td><td>39M</td><td>224</td>
     </tr>
     <tr align="center">
-        <td>CN-CLIP<sub>ViT-B/16</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-b-16.pt">Download</a></td><td>188M</td><td>ViT-B/16</td><td>86M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>224</td>
+        <td>chinese-clip-vit-base-patch16</td><td>CN-CLIP<sub>ViT-B/16</sub></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-vit-base-patch16">🤗</a> <a href="https://www.modelscope.cn/models/AI-ModelScope/chinese-clip-vit-base-patch16">🤖</a></td><td>188M</td><td>ViT-B/16</td><td>86M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>224</td>
     </tr>
     <tr align="center">
-        <td>CN-CLIP<sub>ViT-L/14</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-l-14.pt">Download</a></td><td>406M</td><td>ViT-L/14</td><td>304M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>224</td>
+        <td>chinese-clip-vit-large-patch14</td><td>CN-CLIP<sub>ViT-L/14</sub></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-vit-large-patch14">🤗</a> <a href="https://www.modelscope.cn/models/AI-ModelScope/chinese-clip-vit-large-patch14">🤖</a></td><td>406M</td><td>ViT-L/14</td><td>304M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>224</td>
     </tr>
     <tr align="center">
-        <td>CN-CLIP<sub>ViT-L/14@336px</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-l-14-336.pt">Download</a></td><td>407M</td><td>ViT-L/14</td><td>304M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>336</td>
+        <td>chinese-clip-vit-large-patch14-336px</td><td>CN-CLIP<sub>ViT-L/14@336px</sub></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-vit-large-patch14-336px">🤗</a> <a href="https://www.modelscope.cn/models/AI-ModelScope/chinese-clip-vit-large-patch14-336px">🤖</a></td><td>407M</td><td>ViT-L/14</td><td>304M</td><td>RoBERTa-wwm-Base</td><td>102M</td><td>336</td>
     </tr>
     <tr align="center">
-        <td>CN-CLIP<sub>ViT-H/14</sub></td><td><a href="https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-h-14.pt">Download</a></td><td>958M</td><td>ViT-H/14</td><td>632M</td><td>RoBERTa-wwm-Large</td><td>326M</td><td>224</td>
+        <td>chinese-clip-vit-huge-patch14</td><td>CN-CLIP<sub>ViT-H/14</sub></td><td><a href="https://huggingface.co/OFA-Sys/chinese-clip-vit-huge-patch14">🤗</a> <a href="https://www.modelscope.cn/models/AI-ModelScope/chinese-clip-vit-huge-patch14">🤖</a></td><td>958M</td><td>ViT-H/14</td><td>632M</td><td>RoBERTa-wwm-Large</td><td>326M</td><td>224</td>
     </tr>
 </table>
-<br></br>
+
+- 🤗 Hugging Face Hub
+- 🤖 魔搭社区
+
 
 ## 实验结果
 针对图文检索任务，我们在[MUGE Retrieval](https://tianchi.aliyun.com/muge)、[Flickr30K-CN](https://github.com/li-xirong/cross-lingual-cap)和[COCO-CN](https://github.com/li-xirong/coco-cn)上进行了zero-shot和finetune的实验。针对图像零样本分类，我们在[ELEVATER](https://eval.ai/web/challenges/challenge-page/1832)的10个数据集上进行了实验。实验结果如下表所示。篇幅所限，我们这里给出baseline模型和Chinese-CLIP的最优规模模型结果，关于Chinese-CLIP各规模的详细结果指标，请详见[Results.md](Results.md)。
@@ -194,7 +197,8 @@ print("Available models:", available_models())
 # Available models: ['ViT-B-16', 'ViT-L-14', 'ViT-L-14-336', 'ViT-H-14', 'RN50']
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
-model, preprocess = load_from_name("ViT-B-16", device=device, download_root='./')
+# 如本地模型不存在，自动从ModelScope下载模型，需要提前安装`modelscope`包
+model, preprocess = load_from_name("ViT-B-16", device=device, download_root='./', use_modelscope=True)
 model.eval()
 image = preprocess(Image.open("examples/pokemon.jpeg")).unsqueeze(0).to(device)
 text = clip.tokenize(["杰尼龟", "妙蛙种子", "小火龙", "皮卡丘"]).to(device)
@@ -251,7 +255,7 @@ ${DATAPATH}
 
 #### 预训练CKPT
 
-请参考前文[模型规模 & 下载链接](#model_card)部分，下载对应模型ckpt。推荐将下载的ckpt文件存放于`${DATAPATH}/pretrained_weights/`目录下。
+请参考前文[模型规模 & 下载链接](#model_card)部分，下载对应模型ckpt（`.pt`后缀文件即可）。推荐将下载的ckpt文件存放于`${DATAPATH}/pretrained_weights/`目录下。
 
 #### 数据集格式预处理
 
@@ -314,7 +318,7 @@ ${DATAPATH}
             └── test
 ```
 
-为了降低上手难度，我们也提供了按上述步骤预处理好的MUGE数据（[下载链接](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/MUGE.zip)）和Flickr30K-CN数据（[下载链接](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/Flickr30k-CN.zip)）压缩包，直接下载解压并放置于`${DATAPATH}/datasets/`目录下即可。如果需要[COCO-CN](https://github.com/li-xirong/coco-cn)数据，请向原作者进行申请许可完成后，邮件联系我们吧。
+为了降低上手难度，我们也提供了按上述步骤预处理好的MUGE数据（[🤗下载链接](https://huggingface.co/datasets/OFA-Sys/chinese-clip-eval/blob/main/MUGE.zip)）和Flickr30K-CN数据（[🤗下载链接](https://huggingface.co/datasets/OFA-Sys/chinese-clip-eval/resolve/main/Flickr30k-CN.zip)）压缩包，直接下载解压并放置于`${DATAPATH}/datasets/`目录下即可。如果需要[COCO-CN](https://github.com/li-xirong/coco-cn)数据，请向原作者进行申请许可完成后，邮件联系我们吧。
 
 ### 模型finetune
 
@@ -478,7 +482,7 @@ cat output.json
 {"success": true, "score": 85.67, "scoreJson": {"score": 85.67, "mean_recall": 85.67, "r1": 71.2, "r5": 90.5, "r10": 95.3}}
 ```
 
-关于整套跨模态检索的训练和测试流程，我们以MUGE检索数据集（[多模态电商图文挑战赛](https://tianchi.aliyun.com/competition/entrance/532031/introduction)）为例，也提供了一个包含上述全部流程并可运行的Jupyter Notebook（[下载链接](https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/others/Chinese-CLIP-on-MUGE-Retrieval.ipynb)），欢迎大家上手实践。
+关于整套跨模态检索的训练和测试流程，我们以MUGE检索数据集（[多模态电商图文挑战赛](https://tianchi.aliyun.com/competition/entrance/532031/introduction)）为例，也提供了一个包含上述全部流程并可运行的Jupyter Notebook（[下载链接](Chinese-CLIP-on-MUGE-Retrieval.ipynb)），欢迎大家上手实践。
 
 <br>
 
@@ -517,7 +521,7 @@ ${DATAPATH}
 锚
 ...
 ```
-每行的标签对应的label id为`行号-1`，如第1行的标签的id为0，第二行的标签的id为1。如果标签总数大于10，则统一向左补零到3位数，比如标签个数为100，标签id则为`000-099`。用户需为每个label id生成对应的文件夹，并将标注该label的样本放入其中。我们以ELEVATER中的**CIFAR-100数据集**为样例，请点击[链接](http://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/datasets/cifar-100.zip)下载处理好的数据。如果想尝试在其他ELEVATER包含的数据集上测试Chinese-CLIP，请参见我们的[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)。
+每行的标签对应的label id为`行号-1`，如第1行的标签的id为0，第二行的标签的id为1。如果标签总数大于10，则统一向左补零到3位数，比如标签个数为100，标签id则为`000-099`。用户需为每个label id生成对应的文件夹，并将标注该label的样本放入其中。我们以ELEVATER中的**CIFAR-100数据集**为样例，请访问数据集[🤗OFA-Sys/chinese-clip-eval](https://huggingface.co/datasets/OFA-Sys/chinese-clip-eval)或点击[🤗链接](https://huggingface.co/datasets/OFA-Sys/chinese-clip-eval/resolve/main/cifar-100.zip)下载处理好的数据。如果想尝试在其他ELEVATER包含的数据集上测试Chinese-CLIP，请参见我们的[数据文档](https://github.com/OFA-Sys/Chinese-CLIP/blob/master/zeroshot_dataset.md)。
 <br>
 
 ### 预测和评估
